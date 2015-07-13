@@ -11,4 +11,13 @@ namespace App\Events;
 class UpdateEvent extends Event
 {
 
+
+    /**
+     * UpdateEvent constructor.
+     */
+    public function __construct($list, $list_daily)
+    {
+        $this->list = $list;
+        $this->list_daily = $list_daily;
+    }
 }

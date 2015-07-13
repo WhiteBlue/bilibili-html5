@@ -6,6 +6,7 @@ namespace App\dao;
 use App\Models\Save;
 use App\Models\Sort;
 use DOMDocument;
+use Exception;
 use Guzzle\Http\Message\Request;
 use Guzzle\Service\Client;
 
@@ -17,90 +18,90 @@ use Guzzle\Service\Client;
  */
 class BiliGetter
 {
-    static $APPKEY = '03fc8eb101b091fb';
 
-    static function getUrl($av)
+    private static $APPKEY = '03fc8eb101b091fb';
+
+    static function getUrl($av, $quality)
     {
-        $back_json = array();
+        try {
+            $client = new Client();
+            $request = new Request('GET', 'http://interface.bilibili.com/playurl?platform=android&cid=' . $av . '&quality=' . $quality . '&otype=json&appkey=' . BiliGetter::$APPKEY . "&type=mp4");
+            $response = $client->send($request, ['timeout' => 2]);
 
-        $client = new Client();
+            $json_back = json_decode($response->getBody(), true);
 
-        $request = new Request('GET', 'http://interface.bilibili.tv/playurl?appkey=' . BiliGetter::$APPKEY . '&cid=' . $av);
-        $response = $client->send($request, ['timeout' => 2]);
+            if ($response->getStatusCode() == '200') {
 
-        $xmlDoc = new DOMDocument();
+                if (!$json_back['result'] == 'success')
+                    return 1;
 
-        $xmlDoc->loadXML($response->getBody());
+                return $json_back;
 
-        $titles = $xmlDoc->getElementsByTagName("durl");
-
-        foreach ($titles as $node) {
-
-            $url = $node->getElementsByTagName('url');
-
-            echo $url[0]->textContent . '<br>';
-
+            } else {
+                return 0;
+            }
+        } catch (Exception $e) {
+            return 0;
         }
+    }
 
 
-        $back_json['url'] = xml($response->getBody());
+    /**
+     * 得到视频基本信息
+     *
+     * @param $aid
+     * @return bool|mixed
+     */
+    static function getInfo($aid)
+    {
+        try {
+            $client = new Client();
+            $request = new Request('GET', 'http://api.bilibili.cn/view?id=' . $aid . '&appkey=' . BiliGetter::$APPKEY);
+            $response = $client->send($request, ['timeout' => 2]);
 
-        return $back_json;
+            if ($response->getStatusCode() == '200') {
+                $back_json = json_decode($response->getBody());
+
+                return $back_json;
+            } else {
+                return false;
+            }
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
 
     static function pusher()
     {
-
-        date_default_timezone_set('UTC');//时间格式化
-
         $client = new Client();
         $request = new Request('GET', 'http://api.bilibili.cn/index');
         $response = $client->send($request, ['timeout' => 2]);
         $json = json_decode($response->getBody());
 
-        $count = 0;
-
+        $list = array();
         foreach ($json as $type => $value) {
             $sort = Sort::where('type', '=', $type)->first();
-
             if ($sort != null) {
+                $temp = array();
                 foreach ($value as $id => $content) {
-                    if (is_object($content)) {
-                        $save = Save::where('aid', '=', $content->aid)->first();
-
-                        if ($save == null) {
-                            $save = new Save();
-                            $save->aid = $content->aid;
-                            $save->title = $content->title;
-                            if (strlen($content->description) > 70) {
-                                $save->content = mb_substr($content->description, 0, 70, 'utf-8') . '....';
-                            } else {
-                                $save->content = $content->description;
-                            }
-                            $save->href = 'http://www.bilibili.com/video/av' . $content->aid;
-                            $save->img = $content->pic;
-                            $save->author = $content->author;
-
-                            $save->create = $content->create;
-                            $save->play = $content->play;
-
-
-                            $sort->saves()->save($save);
-
-                            $count++;
-                        } else {
-                            $save->touch();
-
-                            $count++;
-                        }
-                    }
+                    if (!is_string($content))
+                        array_push($temp, $content);
                 }
-                $sort->touch();
+                $list[$sort->title] = $temp;
             }
         }
+        return $list;
+    }
 
-        return $count;
 
+    static function getDaily()
+    {
+        $client = new Client();
+        $request = new Request('GET', 'http://api.bilibili.cn/bangumi?appkey=' . BiliGetter::$APPKEY . '&btype=2&weekday=1');
+        $response = $client->send($request, ['timeout' => 2]);
+        $json = json_decode($response->getBody());
+
+        dd($json);
     }
 }

@@ -22,7 +22,10 @@ $app->get('/about', 'HomeController@about');
 $app->get('/pump', ['middleware' => 'baseLogin', 'uses' => 'HomeController@pump']);
 
 
-$app->get('/catch', 'HomeController@catchUrl');
+$app->get('/play/{aid}-{quality}', 'HomeController@play');
+
+
+$app->get('/view/{aid}', 'HomeController@info');
 
 
 /*

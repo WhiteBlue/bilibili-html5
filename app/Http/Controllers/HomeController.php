@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Validator;
 use Laravel\Lumen\Routing\Controller;
 use Symfony\Component\Translation\Tests\StringClass;
 
@@ -63,28 +64,42 @@ class HomeController extends Controller
     }
 
 
-    public function catchUrl()
+    public function play($aid, $quality)
     {
-        $back = BiliGetter::getUrl(567824);
+        $back = BiliGetter::getUrl($aid, $quality);
 
-        $html = file_get_html($back->offsite);
+        if ($back == 0) {
+            return response()->json(false);
+        } elseif ($back == 1) {
+            return response()->json(1);
+        }
 
-        dd($html);
+        return response()->json($back);
+    }
 
-        // Find all images
-        foreach ($html->find('img') as $element)
-            echo $element->src . '<br>';
+    public function info($aid)
+    {
+        $back_json = BiliGetter::getInfo($aid);
+
+        if (!$back_json) {
+            return '404';
+        }
+
+        return view('pusher.play')->with('info', $back_json);
     }
 
 
-    //定时任务
     public function pump()
     {
-        $count = BiliGetter::pusher();
+        $list = BiliGetter::pusher();
 
-        event(new UpdateEvent());
+        dd($list);
+//
+//        event(new UpdateEvent());
+//
+//        return 'update : ' . $count . ' saves.';
 
-        return 'update : ' . $count . ' saves.';
+        BiliGetter::getDaily();
     }
 
 }

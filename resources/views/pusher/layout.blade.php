@@ -6,14 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>BiliPusher</title>
 
-    <link href="{{ url('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
-    <link href="{{ url('css/bili.css') }}" rel="stylesheet">
-    <link href="{{ url('css/flat-ui.min.css') }}" rel="stylesheet">
+    @section('css')
+        <link href="{{ url('bootstrap/css/bootstrap.css') }}" rel="stylesheet">
+        <link href="{{ url('css/bili.css') }}" rel="stylesheet">
+        <link href="{{ url('css/flat-ui.min.css') }}" rel="stylesheet">
 
-    <!--[if lt IE 9]>
-    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+        <!--[if lt IE 9]>
+        <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+    @show
+
 </head>
 <body>
 
@@ -65,9 +68,11 @@
 
 </div>
 
+@section('javascript')
+    <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{{ url('bootstrap/js/bootstrap.js') }}"></script>
+    <script src="{{ url('js/flat-ui.min.js') }}"></script>
+@show
 
-<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-<script src="{{ url('bootstrap/js/bootstrap.min.js') }}"></script>
-<script src="{{ url('js/flat-ui.min.js') }}"></script>
 </body>
 </html>
