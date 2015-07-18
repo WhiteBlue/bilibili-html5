@@ -7,11 +7,14 @@
 
         <div class="panel panel-default">
             <div class="panel-body">
-                <h2>关于 "Bili Pusher" </h2>
+                <h2>关于 "BiliH5" </h2>
 
-                <p>作者一时脑洞大开的产物，未完成填坑中...有兴趣不妨关注一下</p>
+                <p>施工第三天，感觉不能再爱，B站你把API文档好好写一写不好么，你给我个APIkey不好么....目前主要着力搞定搜索以及暴力破解版权番，有何意见欢迎戳我~</p>
 
-                <p><a class="btn btn-primary btn-lg" href="#" role="button">Git</a></p>
+                <div class="row text-center">
+                    <a class="btn btn-primary btn-lg" href="https://github.com/WhiteBlue/BiliPusher" role="button">Git</a>
+                    <a class="btn btn-success btn-lg" href="http://blog.whiteblue.xyz" role="button">Me</a>
+                </div>
             </div>
 
         </div>

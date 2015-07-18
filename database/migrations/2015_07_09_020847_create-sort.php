@@ -16,6 +16,7 @@ class CreateSort extends Migration
             $table->increments('id');
             $table->string('title', 50);
             $table->string('content', 200);
+            $table->string('type', 200);
         });
     }
 

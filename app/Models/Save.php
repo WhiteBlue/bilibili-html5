@@ -15,11 +15,6 @@ class Save extends Model
 
     protected $table = 'saves';
 
-
-    public function sort()
-    {
-        //模型名 外键 本键
-        return $this->hasOne('App\Models\Sort', 'id', 'sort_id');
-    }
+    public $timestamps = false;
 
 }

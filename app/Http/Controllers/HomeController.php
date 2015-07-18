@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\dao\BiliGetter;
+use App\Dao\SaveDao;
+use App\Utils\BiliGetter;
 use App\Events\UpdateEvent;
 use App\Models\Save;
 use App\Models\Sort;
 use App\Models\User;
+use App\Utils\CacheSetter;
+use Exception;
 use Guzzle\Service\Client;
 use Illuminate\Http\Request as BaseRequest;
 use Guzzle\Http\Message\Request;
@@ -30,25 +33,21 @@ class HomeController extends Controller
 
     public function index()
     {
-        $list = null;
-        if (!Cache::has('index_list')) {
-            $list = array();
-
-            foreach (Sort::all() as $sort) {
-                $innerList = array();
-                $innerList['sort'] = $sort;
-                $innerList['list'] = $sort->saves()->orderBy('updated_at', 'desc')->orderBy('create', 'desc')->orderBy('play', 'desc')->take(4)->get();
-
-                array_push($list, $innerList);
+        try {
+            if (!CacheSetter::hasCache()) {
+                CacheSetter::freshCache();
             }
 
-            Cache::forever('index_list', $list);
-        } else {
-            $list = Cache::get('index_list');
+            $index_list = CacheSetter::getIndex();
+
+
+            $time = CacheSetter::getTime();
+
+            return view('pusher.index')->with('list', $index_list)->with('time', $time);
+
+        } catch (Exception $e) {
+            abort(500);
         }
-
-
-        return view('pusher.index')->with('list', $list);
     }
 
 
@@ -64,42 +63,140 @@ class HomeController extends Controller
     }
 
 
+    /**
+     * 视频获取json
+     *
+     * @param $aid
+     * @param $quality
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function play($aid, $quality)
     {
-        $back = BiliGetter::getUrl($aid, $quality);
+        try {
+            $back = BiliGetter::getUrl($aid, $quality);
 
-        if ($back == 0) {
-            return response()->json(false);
-        } elseif ($back == 1) {
-            return response()->json(1);
+            if (!$back) {
+                return response()->json(false);
+            }
+
+            $json = array();
+
+            $json['mode'] = $quality;
+            $json['url'] = $back->durl[0]->url;
+            $json['from'] = $back->from;
+
+            return response()->json($json);
+
+
+        } catch (Exception $e) {
+            abort(500);
         }
-
-        return response()->json($back);
     }
 
+
+    /**
+     * 视频播放
+     *
+     * @param $aid
+     * @return $this
+     */
     public function info($aid)
     {
-        $back_json = BiliGetter::getInfo($aid);
+        try {
+            $aid = str_replace('av', '', trim(strtolower($aid)));
 
-        if (!$back_json) {
-            return '404';
+
+            if (strlen($aid) > 10 || strlen($aid) < 4) {
+                return redirect('/')->with('message', 'AV号不大对吧');
+            }
+
+
+            $result = SaveDao::getSave($aid);
+
+            if ($result == null) {
+                $result = BiliGetter::getInfo($aid);
+
+                if (isset($result->message) || isset($result->code)) {
+                    return redirect('/')->with('message', '视频不存在的说');
+                }
+
+                $result = SaveDao::saveNew($result, $aid);
+            }
+
+            return view('pusher.play')->with('info', $result)->with('aid', $aid);
+
+        } catch (Exception $e) {
+            abort(404);
         }
+    }
 
-        return view('pusher.play')->with('info', $back_json);
+
+    /**
+     * 新番获取
+     *
+     * @return $this
+     * @throws Exception
+     */
+    public function getNews()
+    {
+        try {
+
+            if (!CacheSetter::hasCache()) {
+                CacheSetter::freshCache();
+            }
+
+            $back_json = CacheSetter::getNews();
+
+            date_default_timezone_set('PRC');
+
+            $weekday = date('w');
+
+            $time = CacheSetter::getTime();
+
+            return view('pusher.new')->with('list', $back_json)->with("weekday", $weekday)->with('time', $time);
+
+        } catch (Exception $e) {
+            abort(404);
+        }
+    }
+
+
+    public function infoNew($spId)
+    {
+        $back_json = BiliGetter::getForNew($spId);
+    }
+
+
+    public function search($content)
+    {
+//        try {
+        $page = Input::get('page', 1);
+
+        $back_json = BiliGetter::getSearch($content, $page);
+
+
+        return view('pusher.search')->with('back', $back_json)->with('search', $content);
+
+//        } catch (Exception $e) {
+//            abort(404);
+//        }
+    }
+
+    public function searchPage($content)
+    {
+        $page = Input::get('page', 1);
+
+        $back_json = BiliGetter::getSearch($content, $page);
+
+        return response()->json($back_json);
     }
 
 
     public function pump()
     {
-        $list = BiliGetter::pusher();
+        event(new UpdateEvent());
 
-        dd($list);
-//
-//        event(new UpdateEvent());
-//
-//        return 'update : ' . $count . ' saves.';
-
-        BiliGetter::getDaily();
+        return response()->json(true);
     }
 
 }

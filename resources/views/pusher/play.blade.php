@@ -11,22 +11,38 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="col-md-8 text-center">
-                <h3>{{ $info->title }}
-                    <small>{{ $info->description }}</small>
-                </h3>
+                <h4>{{ $info->title }}</h4>
+                <small><span class="glyphicon glyphicon-tags"> 分区:{{ $info->typename }}</span>&nbsp;&nbsp;&nbsp;<span
+                            class="glyphicon glyphicon-play"> 播放:{{ $info->play }}</span>&nbsp;&nbsp;&nbsp;<span
+                            class="glyphicon glyphicon-font"> 弹幕:{{ $info->video_review }}</span></small>
             </div>
             <div class="col-md-4 text-center visible-md visible-lg">
                 <h3>
-                    <a href="#" class="btn btn-success next">去B站看>></a>
+                    <a href="http://www.bilibili.com/video/av{{ $aid }}" class="btn btn-success next">去B站看>></a>
                 </h3>
             </div>
         </div>
     </div>
 
-    <div class="jumbotron" id="container">
+    <div class="jumbotron text-center">
 
 
-        <div id="load-player" id="viewer"></div>
+
+        <div id='load-player'>
+        </div>
+
+        <div id="viewer">
+        </div>
+
+
+        <div class="row text-center" id="chooser">
+            <nav>
+                <ul class="pager">
+                    <li class=""><a href="#" id="cho-danku"> H5播放器 </a></li>
+                    <li class="next"><a href="#" id="cho-flash"> Flash播放器 </a></li>
+                </ul>
+            </nav>
+        </div>
 
     </div>
 
@@ -46,11 +62,18 @@
         </div>
         <div class="col-md-8">
             <div class="list-group">
-                <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-                <a href="#" class="list-group-item">Morbi leo risus</a>
-                <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-                <a href="#" class="list-group-item">Vestibulum at eros</a>
+
+                <a href="#" class="download list-group-item"><span class="glyphicon glyphicon-save"></span>
+                    点我下载Part1</a>
             </div>
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p>{{ $info->description }}</p>
+                </div>
+            </div>
+
+
         </div>
 
     </div>
@@ -59,51 +82,73 @@
 
 @section('javascript')
     @parent
+
     <script>
         $(document).ready(function () {
-
             var $_ = function (e) {
                 return document.getElementById(e);
             };
-            window.addEventListener("load", function () {
 
-                function launchHtml5() {
-                    ABP.create(document.getElementById("load-player"), {
-                        "src": {
-                            "playlist": [
-                                {
-                                    "video": document.getElementById("video-1"),
-                                    "comments": "comment-otsukimi.xml"
-                                }
-                            ]
-                        },
-                        "width": $('#viewer').offsetWidth,
-                        "height": 522
-                    });
-                }
+            var player_width = parseInt($('#container').css('width'));
 
-                alert('获取开始');
-                /**
-                 * 获取视频地址
-                 */
-                $.get("{{ url('/play/2553270-1') }}", function (data, status) {
-                    if (data == false) {
-                        alert("请重新载入");
-                    }
-                    if (data == 1) {
-                        $('#viewer').append("<object width=" + $('#viewer').offsetWidth + " height='522'><param value='{{ $info->offsite }}' name='movie'>" +
-                                "</object>");
+            function launch_flash() {
+                $('#viewer').append("<object width='90%' height='550px'><param value='{{ $info->offsite }}' name='movie'>" +
+                        "</object>");
+            }
+
+            function launch_h5() {
+                $.get("{{ url('/play/'.$info->cid.'-1') }}", function (data, status) {
+                    if (!data) {
+                        launch_flash();
                     } else {
-                        $('#container').append("<video id='video-1' autobuffer='true' data-setup='{}' width='800' height='450'>"
-                                + "<source src='" + data['durl'][0]['url'] + "' type='video/mp4'>" +
-                                "<p>Your browser does not support html5 video!</p>" +
+                        $('#viewer').append("<video class='video-js' preload='auto' poster='assets/img/video/poster.jpg' data-setup='{}'>" +
+                                "<source src='" + data['url'] + "' type='video/mp4'>" +
+                                "<p> = = 少年该换浏览器了~</p>" +
                                 "</video>");
-                        launchHtml5();
                     }
                 });
+
+            }
+
+            function launch_danku() {
+                $.get("{{ url('/play/'.$info->cid.'-1') }}", function (data, status) {
+                    if (!data) {
+                        launch_flash();
+                    } else {
+                        $('#viewer').append("<video id='video-danku' autobuffer='true' data-setup='{}' poster='{{ $info->pic }}'>" +
+                                "<source src='" + data['url'] + "' type='video/mp4'><p> = = 少年该换浏览器了~</p></video>");
+                        ABP.create(document.getElementById('load-player'), {
+                            "src": {
+                                "playlist": [
+                                    {
+                                        "video": document.getElementById('video-danku'),
+                                        "comments": "http://comment.bilibili.cn/{{ $info->cid }}.xml"
+                                    }
+                                ]
+                            },
+                            "width": player_width * 0.85,
+                            "height": 522
+                        });
+                    }
+                });
+            }
+
+
+            $('#cho-h5').click(function () {
+                launch_h5();
+                $('#chooser').hide();
             });
 
+            $('#cho-danku').click(function () {
+                launch_danku();
 
+                $('#chooser').hide();
+            });
+
+            $('#cho-flash').click(function () {
+                launch_flash();
+                $('#chooser').hide();
+            });
         });
     </script>
 @endsection

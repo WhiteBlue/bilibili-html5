@@ -14,18 +14,30 @@
 
 $app->get('/', 'HomeController@index');
 
-
 //关于Pusher
 $app->get('/about', 'HomeController@about');
+
+//获取新番列表
+$app->get('/new', 'HomeController@getNews');
 
 //定时任务
 $app->get('/pump', ['middleware' => 'baseLogin', 'uses' => 'HomeController@pump']);
 
+//获取信息
+$app->get('/view/{aid}', 'HomeController@info');
 
+//播放(ajax)
 $app->get('/play/{aid}-{quality}', 'HomeController@play');
 
+//获得番剧Aid
+//$app->get('/view-new/{spId}', 'HomeController@infoNew');
 
-$app->get('/view/{aid}', 'HomeController@info');
+//搜索
+$app->get('/search/{content}', 'HomeController@search');
+
+
+$app->get('/searchPage/{content}', 'HomeController@searchPage');
+
 
 
 /*

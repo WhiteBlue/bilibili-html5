@@ -14,11 +14,6 @@ class Sort extends Model
 {
     protected $table = 'sorts';
 
+    public $timestamps = false;
 
-
-
-    public function saves()
-    {
-        return $this->hasMany('App\Models\Save', 'sort_id');
-    }
 }

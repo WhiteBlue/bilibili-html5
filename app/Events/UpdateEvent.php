@@ -15,9 +15,7 @@ class UpdateEvent extends Event
     /**
      * UpdateEvent constructor.
      */
-    public function __construct($list, $list_daily)
+    public function __construct()
     {
-        $this->list = $list;
-        $this->list_daily = $list_daily;
     }
 }

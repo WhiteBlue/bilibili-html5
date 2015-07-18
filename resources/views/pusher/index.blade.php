@@ -1,20 +1,41 @@
 @extends('pusher.layout')
 
+
+@section('css')
+    @parent
+    <style>
+        .caption {
+            height: 120px;
+            text-overflow: ellipsis;
+        }
+
+    </style>
+@endsection
+
+
 @section('content')
 
-    <div class="jumbotron">
-        <h1>BiliBili Pusher</h1>
+    <div class="jumbotron bili-logo">
+        <h1>BiliBili Html5</h1>
 
-        <p class="lead">关注喜欢的Up主，一旦有更新，我们会第一时间邮件通知。</p>
+        <p class="lead">全浏览器支持，破解会员限制，目标=>流畅，两种播放器可选</p>
 
-        <p><a class="btn btn-lg btn-success" href="#" role="button">加入我们</a></p>
+            <div class="input-group input-group-hg input-group-rounded bili-search">
+            <span class="input-group-btn">
+                <button id="search-submit" class="btn"><span class="fui-search"></span></button>
+            </span>
+                <input type="text" id="search-content" class="form-control" placeholder="输入av号" id="search-query-2">
+            </div>
+
+
     </div>
 
 
     @foreach ($list as $li)
         <blockquote>
             <h2>{{ $li['sort']->title }}</h2>
-            <footer><cite title="Source Title">{{ $li['sort']->content }}</cite>  更新于: {{ $li['sort']->updated_at }}</footer>
+            <footer><cite title="Source Title">{{ $li['sort']->content }}</cite> 更新于: {{ $time }}
+            </footer>
         </blockquote>
         <div class="panel panel-default">
             <div class="panel-body">
@@ -22,17 +43,14 @@
                     @foreach( $li['list'] as $save)
 
                         <div class="col-sm-6 col-md-3">
-                            <div class="thumbnail">
-                                <img class="minImg" style="height: 100px;" src="{{ $save->img }}">
+                            <a href="{{ url('/view/'.$save->aid) }}" target="_blank" class="thumbnail bili-tile">
+                                <img class="minImg" style="height: 100px;" src="{{ $save->pic }}">
 
                                 <div class="caption">
-                                    <h4 class="tile-title">{{ $save->title }}</h4>
+                                    <b class="tile-title" style="font-size: 90%">{{ $save->title }}</b>
 
-                                    <p class="biliContent">{{ $save->content }}</p>
                                 </div>
-                                <p><a class="btn btn-primary btn-large btn-block" href="{{ $save->href }}">立即观看</a>
-                                </p>
-                            </div>
+                            </a>
                         </div>
 
                     @endforeach
@@ -44,4 +62,13 @@
     @endforeach
 
 
+@endsection
+
+@section('javascript')
+    @parent
+    <script>
+        $('#search-submit').click(function () {
+            window.location='{{ url('/search') }}/' + $('#search-content').val();
+        });
+    </script>
 @endsection

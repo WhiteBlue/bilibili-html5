@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\UpdateEvent;
+use App\Utils\CacheSetter;
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -16,7 +17,7 @@ class UpdateListener extends Listener
 
     public function handle(UpdateEvent $event)
     {
-        Cache::forget('index_list');
+        CacheSetter::freshCache();
     }
 
 }
