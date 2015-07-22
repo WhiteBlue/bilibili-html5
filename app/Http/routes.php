@@ -35,9 +35,18 @@ $app->get('/play/{aid}-{quality}', 'HomeController@play');
 //搜索
 $app->get('/search/{content}', 'HomeController@search');
 
+//分类信息
+$app->get('/list', 'HomeController@getList');
 
+
+/*
+|--------------------------------------------------------------------------
+| Ajax加载
+|--------------------------------------------------------------------------
+*/
+
+//搜索页
 $app->get('/searchPage/{content}', 'HomeController@searchPage');
-
 
 
 /*

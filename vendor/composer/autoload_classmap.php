@@ -6,10 +6,9 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'AddSort' => $baseDir . '/database/migrations/2015_07_09_184043_add-sort.php',
+    'Category' => $baseDir . '/database/migrations/2015_07_22_071940_category.php',
     'CreateSave' => $baseDir . '/database/migrations/2015_07_09_021340_create-save.php',
     'CreateSort' => $baseDir . '/database/migrations/2015_07_09_020847_create-sort.php',
-    'CreateUser' => $baseDir . '/database/migrations/2015_07_09_031021_create-user.php',
     'CreateUsers' => $baseDir . '/database/migrations/2015_07_08_125219_create-users.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'ExampleTest' => $baseDir . '/tests/ExampleTest.php',
@@ -411,7 +410,6 @@ return array(
     'PHP_Token_XOR_EQUAL' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD_FROM' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
-    'SavesUpdate' => $baseDir . '/database/migrations/2015_07_10_024745_saves-update.php',
     'SebastianBergmann\\Comparator\\ArrayComparator' => $vendorDir . '/sebastian/comparator/src/ArrayComparator.php',
     'SebastianBergmann\\Comparator\\Comparator' => $vendorDir . '/sebastian/comparator/src/Comparator.php',
     'SebastianBergmann\\Comparator\\ComparisonFailure' => $vendorDir . '/sebastian/comparator/src/ComparisonFailure.php',
@@ -450,8 +448,6 @@ return array(
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Resources/stubs/SessionHandlerInterface.php',
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
-    'UodateSave' => $baseDir . '/database/migrations/2015_07_09_021840_uodate-save.php',
-    'UpdateSort' => $baseDir . '/database/migrations/2015_07_09_055916_update-sort.php',
     'simple_html_dom' => $vendorDir . '/shark/simple_html_dom/simple_html_dom.php',
     'simple_html_dom_node' => $vendorDir . '/shark/simple_html_dom/simple_html_dom.php',
 );

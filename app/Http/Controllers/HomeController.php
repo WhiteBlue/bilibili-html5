@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Dao\SaveDao;
+use App\Dao\DataAccess;
 use App\Utils\BiliGetter;
 use App\Events\UpdateEvent;
 use App\Models\Save;
 use App\Models\Sort;
 use App\Models\User;
 use App\Utils\CacheSetter;
+use App\Utils\GlobalVar;
+use Carbon\Carbon;
+use DoctrineTest\InstantiatorTestAsset\ExceptionAsset;
 use Exception;
 use Guzzle\Service\Client;
 use Illuminate\Http\Request as BaseRequest;
 use Guzzle\Http\Message\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
@@ -30,7 +35,10 @@ use Symfony\Component\Translation\Tests\StringClass;
 class HomeController extends Controller
 {
 
-
+    /**
+     * 首页
+     * @return $this
+     */
     public function index()
     {
         try {
@@ -39,7 +47,6 @@ class HomeController extends Controller
             }
 
             $index_list = CacheSetter::getIndex();
-
 
             $time = CacheSetter::getTime();
 
@@ -51,20 +58,18 @@ class HomeController extends Controller
     }
 
 
+    /**
+     * 关于
+     * @return \Illuminate\View\View
+     */
     public function about()
     {
         return view('pusher.about');
     }
 
 
-    public function aboutMe()
-    {
-        return view('pusher.aboutMe');
-    }
-
-
     /**
-     * 视频获取json
+     * 视频获取ajax
      *
      * @param $aid
      * @param $quality
@@ -111,7 +116,7 @@ class HomeController extends Controller
             }
 
 
-            $result = SaveDao::getSave($aid);
+            $result = DataAccess::getSave($aid);
 
             if ($result == null) {
                 $result = BiliGetter::getInfo($aid);
@@ -120,7 +125,7 @@ class HomeController extends Controller
                     return redirect('/')->with('message', '视频不存在的说');
                 }
 
-                $result = SaveDao::saveNew($result, $aid);
+                $result = DataAccess::saveNew($result, $aid);
             }
 
             return view('pusher.play')->with('info', $result)->with('aid', $aid);
@@ -161,29 +166,79 @@ class HomeController extends Controller
     }
 
 
-    public function infoNew($spId)
+    /**
+     * 分区信息
+     *
+     * @return $this
+     */
+    public function getList()
     {
-        $back_json = BiliGetter::getForNew($spId);
+        try {
+            $mid = Input::get('mid');
+            $page = Input::get('page', 1);
+
+            if ($page == 1) {
+                if (Cache::has(GlobalVar::$LIST_CACHE . $mid)) {
+                    $back_json = Cache::get(GlobalVar::$LIST_CACHE . $mid);
+                } else {
+                    $back_json = BiliGetter::getList($mid, 'hot', 1, GlobalVar::$PAGE_SIZE);
+
+                    Cache::add(GlobalVar::$LIST_CACHE . $mid, $back_json, 60);
+                }
+            } else {
+                $back_json = BiliGetter::getList($mid, 'hot', $page, GlobalVar::$PAGE_SIZE);
+            }
+
+            $paginator = new Paginator($back_json['list'], $page);
+            $paginator->setPath('/list');
+
+            $sorts = CacheSetter::getSort();
+            $hot = CacheSetter::getHot();
+
+            return view('pusher.list')->with('sorts', $sorts)->with('list', $back_json['list'])->with("paginator", $paginator)->with('mid', $mid)
+                ->with('hots', $hot);
+
+        } catch (Exception $e) {
+            abort(404);
+        }
     }
 
 
+    /**
+     * 搜索
+     * @param $content
+     * @return $this
+     * @throws Exception
+     */
     public function search($content)
     {
-//        try {
-        $page = Input::get('page', 1);
+        try {
 
-        $back_json = BiliGetter::getSearch($content, $page);
+            $content = urldecode($content);
+
+            $page = Input::get('page', 1);
+
+            $back_json = BiliGetter::getSearch($content, $page);
 
 
-        return view('pusher.search')->with('back', $back_json)->with('search', $content);
+            return view('pusher.search')->with('back', $back_json)->with('search', $content);
 
-//        } catch (Exception $e) {
-//            abort(404);
-//        }
+        } catch (Exception $e) {
+            abort(404);
+        }
     }
 
+
+    /**
+     * 搜索分页加载(ajax)
+     * @param $content
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @throws Exception
+     */
     public function searchPage($content)
     {
+        $content = urldecode($content);
+
         $page = Input::get('page', 1);
 
         $back_json = BiliGetter::getSearch($content, $page);
@@ -192,6 +247,10 @@ class HomeController extends Controller
     }
 
 
+    /**
+     * 刷新缓存(定期)
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function pump()
     {
         event(new UpdateEvent());

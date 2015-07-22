@@ -143,3 +143,12 @@ body {
     height: 40px;
     font-size: 60%;
 }
+
+.grid-item {
+    padding: 11px;
+    width: 230px;
+}
+
+.head-hot{
+    height: 100px;
+}

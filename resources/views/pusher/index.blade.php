@@ -20,12 +20,12 @@
 
         <p class="lead">全浏览器支持，破解会员限制，目标=>流畅，两种播放器可选</p>
 
-            <div class="input-group input-group-hg input-group-rounded bili-search">
+        <div class="input-group input-group-hg input-group-rounded bili-search">
             <span class="input-group-btn">
                 <button id="search-submit" class="btn"><span class="fui-search"></span></button>
             </span>
-                <input type="text" id="search-content" class="form-control" placeholder="输入av号" id="search-query-2">
-            </div>
+            <input type="text" id="search-content" class="form-control" placeholder="这里搜索" id="search-query-2">
+        </div>
 
 
     </div>
@@ -68,7 +68,8 @@
     @parent
     <script>
         $('#search-submit').click(function () {
-            window.location='{{ url('/search') }}/' + $('#search-content').val();
+            if ($('#search-content').val().length > 3)
+                window.location = '{{ url('/search') }}/' + encodeURIComponent($('#search-content').val());
         });
     </script>
 @endsection

@@ -2,7 +2,9 @@
 
 namespace App\Utils;
 
+use App\Models\Sort;
 use App\Utils\BiliGetter;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
 /**
@@ -46,6 +48,29 @@ class CacheSetter
         }
     }
 
+    //热门缓存
+    public static function getHot()
+    {
+        if (Cache::has(GlobalVar::$HOT_CACHE)) {
+            return Cache::get(GlobalVar::$HOT_CACHE);
+        } else {
+            $hot = BiliGetter::getHot();
+            Cache::add(GlobalVar::$HOT_CACHE, $hot, 60);
+            return $hot;
+        }
+    }
+
+    //分类缓存
+    public static function getSort()
+    {
+        if (Cache::has(GlobalVar::$SORT_CACHE)) {
+            return Cache::get(GlobalVar::$SORT_CACHE);
+        } else {
+            $sorts = Sort::all();
+            Cache::forever(GlobalVar::$SORT_CACHE, $sorts);
+            return $sorts;
+        }
+    }
 
     public static function getIndex()
     {

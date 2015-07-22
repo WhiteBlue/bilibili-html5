@@ -17,6 +17,7 @@ class UpdateListener extends Listener
 
     public function handle(UpdateEvent $event)
     {
+        CacheSetter::deleteCache();
         CacheSetter::freshCache();
     }
 

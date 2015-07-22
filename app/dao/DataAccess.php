@@ -2,6 +2,7 @@
 
 namespace App\Dao;
 
+use App\Models\Category;
 use App\Models\Save;
 use App\Utils\CacheSetter;
 use App\Utils\GlobalVar;
@@ -14,8 +15,22 @@ use Illuminate\Support\Facades\Cache;
  * Date: 15/7/18
  * Time: 下午4:36
  */
-class SaveDao
+class DataAccess
 {
+
+    public static function addCategory($title, $mid)
+    {
+        $category = new Category();
+
+        $category->title = $title;
+        $category->mid = $mid;
+
+        $category->sort_id = 1;
+
+        $category->save();
+    }
+
+
     public static function getSave($aid)
     {
         $back_save = Save::where('aid', '=', $aid)->first();

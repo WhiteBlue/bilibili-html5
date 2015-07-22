@@ -33,7 +33,7 @@
         <div class="collapse navbar-collapse" id="navbar-collapse-01">
             <ul class="nav navbar-nav">
                 <li><a href="{{ url('/') }}">首页</a></li>
-                <li><a href="#">分区</a></li>
+                <li><a href="{{ url('/list') }}">分区</a></li>
                 <li><a href="{{ url('/new') }}">新番列表</a></li>
                 <li><a href="{{ url('/about') }}">关于BiliBiliH5</a></li>
             </ul>

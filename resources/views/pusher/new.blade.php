@@ -117,7 +117,8 @@
 
                         @foreach($list[2] as $each)
                             <div class="col-sm-6 col-md-2">
-                                <a href="{{ url('/view-new/'.$each['spid']) }}" class="thumbnail" style="margin: 10px">
+                                <a href="http://www.bilibili.com/sp/{{ $each['title'] }}" class="thumbnail"
+                                   style="margin: 10px">
                                     <img src="{{ $each['mcover'] }}"
                                          alt="...">
 
@@ -151,7 +152,8 @@
 
                         @foreach($list[3] as $each)
                             <div class="col-sm-6 col-md-2">
-                                <a href="{{ url('/view-new/'.$each['spid']) }}" class="thumbnail" style="margin: 10px">
+                                <a href="http://www.bilibili.com/sp/{{ $each['title'] }}" class="thumbnail"
+                                   style="margin: 10px">
                                     <img src="{{ $each['mcover'] }}"
                                          alt="...">
 
@@ -186,7 +188,8 @@
 
                         @foreach($list[4] as $each)
                             <div class="col-sm-6 col-md-2">
-                                <a href="{{ url('/view-new/'.$each['spid']) }}" class="thumbnail" style="margin: 10px">
+                                <a href="http://www.bilibili.com/sp/{{ $each['title'] }}" class="thumbnail"
+                                   style="margin: 10px">
                                     <img src="{{ $each['mcover'] }}"
                                          alt="...">
 
@@ -221,7 +224,8 @@
 
                         @foreach($list[5] as $each)
                             <div class="col-sm-6 col-md-2">
-                                <a href="{{ url('/view-new/'.$each['spid']) }}" class="thumbnail" style="margin: 10px">
+                                <a href="http://www.bilibili.com/sp/{{ $each['title'] }}" class="thumbnail"
+                                   style="margin: 10px">
                                     <img src="{{ $each['mcover'] }}"
                                          alt="...">
 
@@ -256,7 +260,8 @@
 
                         @foreach($list[6] as $each)
                             <div class="col-sm-6 col-md-2">
-                                <a href="{{ url('/view-new/'.$each['spid']) }}" class="thumbnail" style="margin: 10px">
+                                <a href="http://www.bilibili.com/sp/{{ $each['title'] }}" class="thumbnail"
+                                   style="margin: 10px">
                                     <img src="{{ $each['mcover'] }}"
                                          alt="...">
 
@@ -291,7 +296,8 @@
 
                         @foreach($list[0] as $each)
                             <div class="col-sm-6 col-md-2">
-                                <a href="{{ url('/view-new/'.$each['spid']) }}" class="thumbnail" style="margin: 10px">
+                                <a href="http://www.bilibili.com/sp/{{ $each['title'] }}" class="thumbnail"
+                                   style="margin: 10px">
                                     <img src="{{ $each['mcover'] }}"
                                          alt="...">
 

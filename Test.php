@@ -8,25 +8,10 @@
  */
 
 
-function get_sign($params, $app_key, $secret_key)
+function test($a = 1, $b)
 {
-    $_data = array();
-    $params['appkey'] = $app_key;
-
-    ksort($params);
-    reset($params);
-
-    foreach ($params as $k => $v) {
-        $_data[] = $k . '=' . urlencode($v);
-    }
-    $_sign = implode('&', $_data);
-    return array(
-        'sign' => strtolower(md5($_sign . $secret_key)),
-        'params' => $_sign,
-    );
+    echo $a.'\\'.$b;
 }
 
 
-$back = get_sign(['keyword' => '233'], '4ebafd7c4951b366', '8cb98205e9b2ad3669aad0fce12a4c13');
-
-echo $back['sign'] . '||' . $back['params'];
+test(2);

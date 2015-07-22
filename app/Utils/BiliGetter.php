@@ -3,6 +3,8 @@
 namespace App\Utils;
 
 
+use App\Dao\DataAccess;
+use App\Models\Category;
 use App\Models\Save;
 use App\Models\Sort;
 use DOMDocument;
@@ -29,7 +31,7 @@ class BiliGetter
         $client = new Client();
         $request = new Request('GET', 'http://interface.bilibili.com/playurl?platform=android&cid=' . $av . '&quality=' .
             $quality . '&otype=json&appkey=' . BiliGetter::$APPKEY . "&type=mp4");
-        $request->setHeader('UserAgent','BiLiBiLi Html5/bili.whiteblue.xyz');
+        $request->setHeader('UserAgent', 'BiLiBiLi Html5/bili.whiteblue.xyz');
         $response = $client->send($request, ['timeout' => 2]);
 
         $json_back = json_decode($response->getBody());
@@ -54,7 +56,7 @@ class BiliGetter
     {
         $client = new Client();
         $request = new Request('GET', 'http://api.bilibili.cn/view?id=' . $aid . '&appkey=' . BiliGetter::$APPKEY);
-        $request->setHeader('UserAgent','BiLiBiLi Html5/bili.whiteblue.xyz');
+        $request->setHeader('UserAgent', 'BiLiBiLi Html5/bili.whiteblue.xyz');
         $response = $client->send($request, ['timeout' => 2]);
 
         if (!$response->getStatusCode() == '200')
@@ -69,20 +71,21 @@ class BiliGetter
 
     /**
      * 获得首页信息
-     *
      * @return array
+     * @throws Exception
      */
     public static function getIndex()
     {
         $client = new Client();
         $request = new Request('GET', 'http://api.bilibili.cn/index');
-        $request->setHeader('UserAgent','BiLiBiLi Html5/bili.whiteblue.xyz');
+        $request->setHeader('UserAgent', 'BiLiBiLi Html5/bili.whiteblue.xyz');
         $response = $client->send($request, ['timeout' => 2]);
 
         if (!$response->getStatusCode() == '200')
             throw new Exception("Error : Request error...");
 
         $json = json_decode($response->getBody());
+
 
         $list = array();
 
@@ -104,6 +107,32 @@ class BiliGetter
         return $list;
     }
 
+
+    /**
+     * 得到四个热门排序
+     *
+     * @return array
+     * @throws Exception
+     */
+    public static function getHot()
+    {
+        $client = new Client();
+        $request = new Request('GET', 'http://api.bilibili.cn/index');
+        $request->setHeader('UserAgent', 'BiLiBiLi Html5/bili.whiteblue.xyz');
+        $response = $client->send($request, ['timeout' => 2]);
+
+        if (!$response->getStatusCode() == '200')
+            throw new Exception("Error : Request error...");
+
+        $json = json_decode($response->getBody(), true)['type1'];
+
+        $back = array();
+        for ($i = 0; $i < 8; $i++)
+            array_push($back, $json[$i]);
+
+        return $back;
+    }
+
     /**
      * 得到专题
      *
@@ -114,7 +143,7 @@ class BiliGetter
     {
         $client = new Client();
         $request = new Request('GET', 'http://api.bilibili.cn/spview?spid=' . '4016');
-        $request->setHeader('UserAgent','BiLiBiLi Html5/bili.whiteblue.xyz');
+        $request->setHeader('UserAgent', 'BiLiBiLi Html5/bili.whiteblue.xyz');
         $response = $client->send($request, ['timeout' => 2]);
 
         if (!$response->getStatusCode() == '200')
@@ -132,7 +161,7 @@ class BiliGetter
 
         $client = new Client();
         $request = new Request('GET', 'http://api.bilibili.cn/search?' . $back['params'] . '&sign=' . $back['sign']);
-        $request->setHeader('UserAgent','BiLiBiLi Html5/bili.whiteblue.xyz');
+        $request->setHeader('UserAgent', 'BiLiBiLi Html5/bili.whiteblue.xyz');
         $response = $client->send($request, ['timeout' => 2]);
 
         if (!$response->getStatusCode() == '200')
@@ -150,7 +179,7 @@ class BiliGetter
     {
         $client = new Client();
         $request = new Request('GET', 'http://api.bilibili.cn/bangumi?appkey=' . BiliGetter::$APPKEY . '&btype=2');
-        $request->setHeader('UserAgent','BiLiBiLi Html5/bili.whiteblue.xyz');
+        $request->setHeader('UserAgent', 'BiLiBiLi Html5/bili.whiteblue.xyz');
         $response = $client->send($request, ['timeout' => 2]);
 
         if (!$response->getStatusCode() == '200')
@@ -173,6 +202,26 @@ class BiliGetter
 
         return $back_list;
     }
+
+
+    public static function getList($tid, $order, $page, $page_size)
+    {
+        $client = new Client();
+        if ($tid != null)
+            $request = new Request('GET', 'http://api.bilibili.cn/list?type=json&appkey=' . BiliGetter::$APPKEY . '&tid=' . $tid . '&page=' . $page . '&pagesize=' . $page_size . '&order=' . $order);
+        else
+            $request = new Request('GET', 'http://api.bilibili.cn/list?type=json&appkey=' . BiliGetter::$APPKEY . '&page=' . $page . '&pagesize=' . $page_size . '&order=' . $order);
+        $request->setHeader('UserAgent', 'BiLiBiLi Html5/bili.whiteblue.xyz');
+        $response = $client->send($request, ['timeout' => 2]);
+
+        if (!$response->getStatusCode() == '200')
+            throw new Exception("Error : Request error...");
+
+        $json = json_decode($response->getBody(), true);
+
+        return $json;
+    }
+
 
     /**
      * Bilibili的sign加密(改)
