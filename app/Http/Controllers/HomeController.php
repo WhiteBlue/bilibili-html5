@@ -3,28 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Dao\DataAccess;
-use App\Utils\BiliGetter;
 use App\Events\UpdateEvent;
-use App\Models\Save;
-use App\Models\Sort;
-use App\Models\User;
+use App\Utils\BiliGetter;
+use App\Utils\BiliUtil;
 use App\Utils\CacheSetter;
 use App\Utils\GlobalVar;
-use Carbon\Carbon;
-use DoctrineTest\InstantiatorTestAsset\ExceptionAsset;
 use Exception;
-use Guzzle\Service\Client;
-use Illuminate\Http\Request as BaseRequest;
-use Guzzle\Http\Message\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
 use Laravel\Lumen\Routing\Controller;
-use Symfony\Component\Translation\Tests\StringClass;
 
 /**
  * Created by PhpStorm.
@@ -256,6 +244,13 @@ class HomeController extends Controller
         event(new UpdateEvent());
 
         return response()->json(true);
+    }
+
+
+    public function test()
+    {
+        $util = new BiliUtil();
+        $util->getSearch('我的世界',1);
     }
 
 }

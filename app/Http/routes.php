@@ -39,6 +39,10 @@ $app->get('/search/{content}', 'HomeController@search');
 $app->get('/list', 'HomeController@getList');
 
 
+
+$app->get('/test', 'HomeController@test');
+
+
 /*
 |--------------------------------------------------------------------------
 | Ajax加载

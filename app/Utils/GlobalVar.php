@@ -14,6 +14,7 @@ class GlobalVar
     public static $UPDATE_TIME = 'time';//更新时间
 
     public static $PAGE_SIZE = 20;//分页大小
+    public static $SEARCH_SIZE = 6;//分页大小
 
     public static $SAVE_CACHE_PRE = 'save';//更新时间
     public static $SORT_CACHE = 'sort';//分类
