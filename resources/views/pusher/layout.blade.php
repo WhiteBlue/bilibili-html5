@@ -9,7 +9,7 @@
     @section('css')
         <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <link href="{{ url('css/bili.css') }}" rel="stylesheet">
-        <link href="{{ url('css/flat-ui.min.css') }}" rel="stylesheet">
+        <link href="{{ url('css/flat-ui.css') }}" rel="stylesheet">
 
         <!--[if lt IE 9]>
         <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>

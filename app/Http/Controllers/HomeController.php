@@ -3,28 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Dao\DataAccess;
-use App\Utils\BiliGetter;
 use App\Events\UpdateEvent;
-use App\Models\Save;
-use App\Models\Sort;
-use App\Models\User;
+use App\Utils\BiliUtil;
 use App\Utils\CacheSetter;
 use App\Utils\GlobalVar;
-use Carbon\Carbon;
-use DoctrineTest\InstantiatorTestAsset\ExceptionAsset;
 use Exception;
-use Guzzle\Service\Client;
-use Illuminate\Http\Request as BaseRequest;
-use Guzzle\Http\Message\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Request;
 use Laravel\Lumen\Routing\Controller;
-use Symfony\Component\Translation\Tests\StringClass;
 
 /**
  * Created by PhpStorm.
@@ -37,24 +25,16 @@ class HomeController extends Controller
 
     /**
      * 首页
+     *
      * @return $this
      */
     public function index()
     {
-        try {
-            if (!CacheSetter::hasCache()) {
-                CacheSetter::freshCache();
-            }
+        $index_list = Cache::get(GlobalVar::$INDEX_LIST_CACHE);
 
-            $index_list = CacheSetter::getIndex();
+        $time = Cache::get(GlobalVar::$UPDATE_TIME);
 
-            $time = CacheSetter::getTime();
-
-            return view('pusher.index')->with('list', $index_list)->with('time', $time);
-
-        } catch (Exception $e) {
-            abort(500);
-        }
+        return view('pusher.index')->with('list', $index_list)->with('time', $time);
     }
 
 
@@ -69,32 +49,39 @@ class HomeController extends Controller
 
 
     /**
-     * 视频获取ajax
+     * ajax获取视频实际地址
      *
-     * @param $aid
+     * @param $cid
      * @param $quality
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function play($aid, $quality)
+    public function play($cid)
     {
         try {
-            $back = BiliGetter::getUrl($aid, $quality);
+            $quality = Request::input('quality', 1);
 
-            if (!$back) {
-                return response()->json(false);
+            $bili_util = new BiliUtil();
+
+            $result = $bili_util->getVideo($cid, $quality);
+
+            if ($result['result'] == 'suee') {
+                $content = $result['durl'][0];
+                $return_array = [
+                    'code' => 'success',
+                    'content' => $content,
+                ];
+                return response()->json($return_array);
+            } else {
+                $return_array = [
+                    'code' => 'error'
+                ];
+                return response()->json($return_array);
             }
-
-            $json = array();
-
-            $json['mode'] = $quality;
-            $json['url'] = $back->durl[0]->url;
-            $json['from'] = $back->from;
-
-            return response()->json($json);
-
-
         } catch (Exception $e) {
-            abort(500);
+            $return_array = [
+                'code' => 'error'
+            ];
+            return response()->json($return_array);
         }
     }
 
@@ -110,20 +97,18 @@ class HomeController extends Controller
         try {
             $aid = str_replace('av', '', trim(strtolower($aid)));
 
-
             if (strlen($aid) > 10 || strlen($aid) < 4) {
                 return redirect('/')->with('message', 'AV号不大对吧');
             }
 
+            $page = Request::input('page', 1);
 
-            $result = DataAccess::getSave($aid);
-
+            //数据库是否已有记录
+            $result = DataAccess::getSave($aid, $page);
             if ($result == null) {
-                $result = BiliGetter::getInfo($aid);
+                $bili_util = new BiliUtil();
 
-                if (isset($result->message) || isset($result->code)) {
-                    return redirect('/')->with('message', '视频不存在的说');
-                }
+                $result = $bili_util->getInfo($aid, $page);
 
                 $result = DataAccess::saveNew($result, $aid);
             }
@@ -131,7 +116,7 @@ class HomeController extends Controller
             return view('pusher.play')->with('info', $result)->with('aid', $aid);
 
         } catch (Exception $e) {
-            abort(404);
+            return view('pusher.error')->with('error_content', '视频没有找到的说..');
         }
     }
 
@@ -145,18 +130,13 @@ class HomeController extends Controller
     public function getNews()
     {
         try {
-
-            if (!CacheSetter::hasCache()) {
-                CacheSetter::freshCache();
-            }
-
-            $back_json = CacheSetter::getNews();
+            $back_json = Cache::get(GlobalVar::$NEW_LIST_CACHE);
 
             date_default_timezone_set('PRC');
 
             $weekday = date('w');
 
-            $time = CacheSetter::getTime();
+            $time = Cache::get(GlobalVar::$UPDATE_TIME);
 
             return view('pusher.new')->with('list', $back_json)->with("weekday", $weekday)->with('time', $time);
 
@@ -174,19 +154,23 @@ class HomeController extends Controller
     public function getList()
     {
         try {
-            $mid = Input::get('mid');
+            $tid = Input::get('tid', 0);
             $page = Input::get('page', 1);
+            $order = Input::get('order', 'hot');
+
+            $bili_util = new BiliUtil();
 
             if ($page == 1) {
-                if (Cache::has(GlobalVar::$LIST_CACHE . $mid)) {
-                    $back_json = Cache::get(GlobalVar::$LIST_CACHE . $mid);
-                } else {
-                    $back_json = BiliGetter::getList($mid, 'hot', 1, GlobalVar::$PAGE_SIZE);
+                $cache_name = GlobalVar::$LIST_CACHE . $tid;
+                if (!Cache::has($cache_name)) {
+                    $back_json = $bili_util->getPageList($tid, $order, 1, GlobalVar::$PAGE_SIZE);
 
-                    Cache::add(GlobalVar::$LIST_CACHE . $mid, $back_json, 60);
+                    Cache::add($cache_name, $back_json, 60 * 60 * 2);
+                } else {
+                    $back_json = Cache::get($cache_name);
                 }
             } else {
-                $back_json = BiliGetter::getList($mid, 'hot', $page, GlobalVar::$PAGE_SIZE);
+                $back_json = $bili_util->getPageList($tid, $order, $page, GlobalVar::$PAGE_SIZE);
             }
 
             $paginator = new Paginator($back_json['list'], $page);
@@ -195,11 +179,12 @@ class HomeController extends Controller
             $sorts = CacheSetter::getSort();
             $hot = CacheSetter::getHot();
 
-            return view('pusher.list')->with('sorts', $sorts)->with('list', $back_json['list'])->with("paginator", $paginator)->with('mid', $mid)
+
+            return view('pusher.list')->with('sorts', $sorts)->with('list', $back_json['list'])->with("paginator", $paginator)->with('tid', $tid)
                 ->with('hots', $hot);
 
         } catch (Exception $e) {
-            abort(404);
+            return view('pusher.error')->with('error_content', $e->getMessage());
         }
     }
 
@@ -213,18 +198,18 @@ class HomeController extends Controller
     public function search($content)
     {
         try {
-
-            $content = urldecode($content);
+            $key_word = urldecode($content);
 
             $page = Input::get('page', 1);
 
-            $back_json = BiliGetter::getSearch($content, $page);
+            $bili_util = new BiliUtil();
 
+            $back_json = $bili_util->getSearch($key_word, $page);
 
             return view('pusher.search')->with('back', $back_json)->with('search', $content);
 
         } catch (Exception $e) {
-            abort(404);
+            return view('pusher.error')->with('error_content', $e->getMessage());
         }
     }
 
@@ -237,13 +222,29 @@ class HomeController extends Controller
      */
     public function searchPage($content)
     {
-        $content = urldecode($content);
+        try {
+            $key_word = urldecode($content);
 
-        $page = Input::get('page', 1);
+            $page = Input::get('page', 1);
 
-        $back_json = BiliGetter::getSearch($content, $page);
+            $bili_util = new BiliUtil();
 
-        return response()->json($back_json);
+            $back_json = $bili_util->getSearch($key_word, $page);
+
+            $return_array = [
+                'code' => 'success',
+                'content' => $back_json,
+            ];
+
+            return response()->json($return_array);
+        } catch (Exception $e) {
+            $return_array = [
+                'code' => 'error',
+                'msg' => $e->getMessage(),
+            ];
+
+            return response()->json($return_array);
+        }
     }
 
 
@@ -256,6 +257,13 @@ class HomeController extends Controller
         event(new UpdateEvent());
 
         return response()->json(true);
+    }
+
+
+    public function test()
+    {
+        $back = CacheSetter::setSortCache();
+        dd($back);
     }
 
 }

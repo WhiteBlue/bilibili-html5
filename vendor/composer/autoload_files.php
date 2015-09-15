@@ -10,6 +10,6 @@ return array(
     $vendorDir . '/illuminate/support/helpers.php',
     $vendorDir . '/symfony/var-dumper/Resources/functions/dump.php',
     $vendorDir . '/nikic/fast-route/src/functions.php',
-    $vendorDir . '/laravel/lumen-framework/src/helpers.php',
     $vendorDir . '/shark/simple_html_dom/simple_html_dom.php',
+    $vendorDir . '/laravel/lumen-framework/src/helpers.php',
 );

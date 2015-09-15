@@ -3,62 +3,73 @@
 namespace App\Utils;
 
 use App\Models\Sort;
-use App\Utils\BiliGetter;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 
 /**
- * Created by PhpStorm.
- * User: WhiteBlue
- * Date: 15/7/15
- * Time: 下午7:11
+ *
+ * 缓存工具类
+ *
+ * Class CacheSetter
+ * @package App\Utils
  */
 class CacheSetter
 {
-    //刷新缓存
+    //设置首页缓存
+    private static function setIndexCache()
+    {
+        try {
+            $bili_util = new BiliUtil();
+
+            return $bili_util->getIndex();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    //设置新番缓存
+    private static function setNewsCache()
+    {
+        try {
+            $bili_util = new BiliUtil();
+
+            return $bili_util->getDaily();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+
+    //刷新静态缓存
     public static function freshCache()
     {
         date_default_timezone_set('PRC');
 
-        $list_index = BiliGetter::getIndex();
-        $list_news = BiliGetter::getDaily();
+        $list_index = self::setIndexCache();
+        $list_news = self::setNewsCache();
 
-        Cache::forever(GlobalVar::$INDEX_LIST_CACHE, $list_index);
-        Cache::forever(GlobalVar::$NEW_LIST_CACHE, $list_news);
+        if ($list_index) {
+            Cache::forever(GlobalVar::$INDEX_LIST_CACHE, $list_index);
+        }
+
+        if ($list_news) {
+            Cache::forever(GlobalVar::$NEW_LIST_CACHE, $list_news);
+        }
+
         Cache::forever(GlobalVar::$UPDATE_TIME, date('H:m:s'));
     }
 
-    //清除缓存
-    public static function deleteCache()
-    {
-        if (CacheSetter::hasCache()) {
-            Cache::forget(GlobalVar::$INDEX_LIST_CACHE);
-            Cache::forget(GlobalVar::$NEW_LIST_CACHE);
-            Cache::forget(GlobalVar::$UPDATE_TIME);
-        }
-    }
 
-    //判断缓存
+    //判断静态缓存
     public static function hasCache()
     {
-        if (Cache::has(GlobalVar::$INDEX_LIST_CACHE) && Cache::has(GlobalVar::$NEW_LIST_CACHE) && (Cache::has(GlobalVar::$UPDATE_TIME))) {
+        if (Cache::has(GlobalVar::$INDEX_LIST_CACHE) && Cache::has(GlobalVar::$NEW_LIST_CACHE)) {
             return true;
         } else {
             return false;
         }
     }
 
-    //热门缓存
-    public static function getHot()
-    {
-        if (Cache::has(GlobalVar::$HOT_CACHE)) {
-            return Cache::get(GlobalVar::$HOT_CACHE);
-        } else {
-            $hot = BiliGetter::getHot();
-            Cache::add(GlobalVar::$HOT_CACHE, $hot, 60);
-            return $hot;
-        }
-    }
 
     //分类缓存
     public static function getSort()
@@ -72,30 +83,21 @@ class CacheSetter
         }
     }
 
-    public static function getIndex()
+
+    public static function getHot()
     {
-        if (!CacheSetter::hasCache()) {
-            CacheSetter::freshCache();
+        if (!Cache::has(GlobalVar::$HOT_CACHE)) {
+            $bili_util = new BiliUtil();
+
+            $hot_list = $bili_util->getHot();
+
+            Cache::add(GlobalVar::$HOT_CACHE, $hot_list, 60 * 5);
+        } else {
+            $hot_list = Cache::get(GlobalVar::$HOT_CACHE);
         }
-        return Cache::get(GlobalVar::$INDEX_LIST_CACHE);
+
+        return $hot_list;
     }
 
-
-    public static function getNews()
-    {
-        if (!CacheSetter::hasCache()) {
-            CacheSetter::freshCache();
-        }
-        return Cache::get(GlobalVar::$NEW_LIST_CACHE);
-    }
-
-
-    public static function getTime()
-    {
-        if (!CacheSetter::hasCache()) {
-            CacheSetter::freshCache();
-        }
-        return Cache::get(GlobalVar::$UPDATE_TIME);
-    }
 
 }

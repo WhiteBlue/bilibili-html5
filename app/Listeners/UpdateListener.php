@@ -7,17 +7,17 @@ use App\Utils\CacheSetter;
 use Illuminate\Support\Facades\Cache;
 
 /**
- * Created by PhpStorm.
- * User: WhiteBlue
- * Date: 15/7/10
- * Time: 上午1:53
+ *
+ * 监听刷新事件
+ *
+ * Class UpdateListener
+ * @package App\Listeners
  */
 class UpdateListener extends Listener
 {
 
     public function handle(UpdateEvent $event)
     {
-        CacheSetter::deleteCache();
         CacheSetter::freshCache();
     }
 

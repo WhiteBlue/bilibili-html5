@@ -2,9 +2,11 @@
 
 @section('css')
     @parent
-    <link rel="stylesheet" href="{{ url('ABplayer/css/base.min.css?1') }}"/>
-    <script src="{{ url('ABplayer/js/CommentCoreLibrary.min.js') }}"></script>
-    <script src="{{ url('ABplayer/js/ABPlayer.min.js') }}"></script>
+
+    <link href="{{ url('video-js/video-js.css') }}" rel="stylesheet">
+    <link href="{{ url('css/danmaku_style.css') }}" rel="stylesheet">
+    <link href="{{ url('css/video_js_danmaku.css') }}" rel="stylesheet">
+
 @endsection
 
 @section('content')
@@ -24,24 +26,42 @@
         </div>
     </div>
 
-    <div class="jumbotron text-center">
+    <div class="jumbotron">
 
-
-
-        <div id='load-player'>
-        </div>
-
-        <div id="viewer">
-        </div>
-
-
-        <div class="row text-center" id="chooser">
-            <nav>
+        <div class="container">
+            <div class="row text-center">
                 <ul class="pager">
-                    <li class=""><a href="#" id="cho-danku"> H5播放器 </a></li>
-                    <li class="next"><a href="#" id="cho-flash"> Flash播放器 </a></li>
+                    <li class="prev" id="li_1"><a href="#" id="play_1"> 省吃俭用 </a></li>
+                    <li class="next" id="li_2"><a href="#" id="play_2"> 流量杀手 </a></li>
                 </ul>
-            </nav>
+            </div>
+
+            @if($info->pages>1)
+                <div class="pagination pagination-success">
+                    <ul>
+                        @for($i=1;$i<=$info->pages;$i++)
+                            <li><a href="{{ url('/view/'.$aid.'?page='.$i) }}">分集:{{ $i }}</a></li>
+                        @endfor
+                    </ul>
+                </div>
+                <br>
+                <br>
+            @endif
+        </div>
+
+        <div class="container" id="loading" style="display: none">
+            <p>正在准备播放</p>
+
+            <p>播放器稳定</p>
+        </div>
+
+        <div class="container abp" id="player_content" style="height: 600px;display: none">
+            <div class="dialog">
+                <video id="player" class="video-js vjs-default-skin" controls
+                       preload="auto" width="100%" height="600" poster="MY_VIDEO_POSTER.jpg" data-setup="{}">
+                    <p class="vjs-no-js">其实,你的浏览器不支持Html5</p>
+                </video>
+            </div>
         </div>
 
     </div>
@@ -83,72 +103,62 @@
 @section('javascript')
     @parent
 
+    <script src="{{ url('video-js/video.js') }}"></script>
+    <script src="{{ url('js/CommentCoreLibrary.min.js') }}"></script>
+    <script src="{{ url('js/ABPLibxml.js') }}"></script>
+    <script src="{{ url('js/video_js_danmaku.js') }}"></script>
+
     <script>
         $(document).ready(function () {
-            var $_ = function (e) {
-                return document.getElementById(e);
-            };
+            data_insert = [
+                '插入栓 插入',
+                '播放传导系统 准备接触',
+                '探针插入 完毕',
+                '神经同调装置在基准范围内',
+                '插入栓注水',
+                '播放器界面连接',
+                '同步率为100%'
+            ];
 
-            var player_width = parseInt($('#container').css('width'));
+            i = 0;
 
-            function launch_flash() {
-                $('#viewer').append("<object width='90%' height='550px'><param value='{{ $info->offsite }}' name='movie'>" +
-                        "</object>");
-            }
+            $('#player_content').hide();
 
-            function launch_h5() {
-                $.get("{{ url('/play/'.$info->cid.'-1') }}", function (data, status) {
-                    if (!data) {
-                        launch_flash();
+
+            $('#play_1').on('click', function () {
+                $('#li_1').addClass('disabled');
+                $('#loading').show();
+
+                $.get("{{ url('/play/'.$info->cid.'?quality='.'2') }}", function (data, status) {
+                    if (data.code == 'success') {
+                        $('#player_content').show();
+
+                        var player = loadPlayer('player', data.content.url, 'http://comment.bilibili.cn/{{ $info->cid }}.xml');
                     } else {
-                        $('#viewer').append("<video class='video-js' preload='auto' poster='assets/img/video/poster.jpg' data-setup='{}'>" +
-                                "<source src='" + data['url'] + "' type='video/mp4'>" +
-                                "<p> = = 少年该换浏览器了~</p>" +
-                                "</video>");
+                        alert('异常');
+                        $('#loading').append('<p style="color: red">ERROR,同步率下降,请刷新页面</p>');
                     }
                 });
 
-            }
+            });
 
-            function launch_danku() {
-                $.get("{{ url('/play/'.$info->cid.'-1') }}", function (data, status) {
-                    if (!data) {
-                        launch_flash();
+            $('#play_2').on('click', function () {
+                $('#li_2').addClass('disabled');
+                $('#loading').show();
+
+                $.get("{{ url('/play/'.$info->cid.'?quality='.'2') }}", function (data, status) {
+                    if (data.code == 'success') {
+                        var player = loadPlayer('player', data.content.url, 'http://comment.bilibili.cn/{{ $info->cid }}.xml');
+                        $('#player_content').show();
                     } else {
-                        $('#viewer').append("<video id='video-danku' autobuffer='true' data-setup='{}' poster='{{ $info->pic }}'>" +
-                                "<source src='" + data['url'] + "' type='video/mp4'><p> = = 少年该换浏览器了~</p></video>");
-                        ABP.create(document.getElementById('load-player'), {
-                            "src": {
-                                "playlist": [
-                                    {
-                                        "video": document.getElementById('video-danku'),
-                                        "comments": "http://comment.bilibili.cn/{{ $info->cid }}.xml"
-                                    }
-                                ]
-                            },
-                            "width": player_width * 0.85,
-                            "height": 522
-                        });
+                        alert('异常');
+                        $('#loading').append('<p style="color: red">出现异常,神经脉冲逆转,同步率下降,请刷新页面</p>');
                     }
                 });
-            }
 
-
-            $('#cho-h5').click(function () {
-                launch_h5();
-                $('#chooser').hide();
             });
 
-            $('#cho-danku').click(function () {
-                launch_danku();
 
-                $('#chooser').hide();
-            });
-
-            $('#cho-flash').click(function () {
-                launch_flash();
-                $('#chooser').hide();
-            });
         });
     </script>
 @endsection

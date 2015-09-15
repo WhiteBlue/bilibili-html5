@@ -3,20 +3,14 @@
 
 @section('css')
     @parent
-    <style>
-        .caption {
-            height: 120px;
-            text-overflow: ellipsis;
-        }
 
-    </style>
 @endsection
 
 
 @section('content')
 
-    <div class="jumbotron bili-logo">
-        <h1>BiliBili Html5</h1>
+    <div class="jumbotron wb-jumbotron bili-logo">
+        <h1 style="color: whitesmoke">BiliBili Html5</h1>
 
         <p class="lead">全浏览器支持，破解会员限制，目标=>流畅，两种播放器可选</p>
 
@@ -26,7 +20,6 @@
             </span>
             <input type="text" id="search-content" class="form-control" placeholder="这里搜索" id="search-query-2">
         </div>
-
 
     </div>
 
@@ -39,19 +32,22 @@
         </blockquote>
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="row">
+                <div class="row wb-row">
                     @foreach( $li['list'] as $save)
 
-                        <div class="col-sm-6 col-md-3">
-                            <a href="{{ url('/view/'.$save->aid) }}" target="_blank" class="thumbnail bili-tile">
-                                <img class="minImg" style="height: 100px;" src="{{ $save->pic }}">
+                        <a class="wb-show" href="{{ url('/view/'.$save['aid']) }}" target="_blank">
+                            <div class="wb-show-shadow">
+                                <p class="wb-show-intro">{{ $save['description'] }}</p>
 
-                                <div class="caption">
-                                    <b class="tile-title" style="font-size: 90%">{{ $save->title }}</b>
+                                <p class="wb-show-play">播放:{{ $save['play'] }} 弹幕:{{ $save['comment'] }}</p>
+                            </div>
 
-                                </div>
-                            </a>
-                        </div>
+                            <img src="{{ $save['pic'] }}" alt="icon_pic">
+
+                            <div class="caption">
+                                <p>{{ $save['title'] }}</p>
+                            </div>
+                        </a>
 
                     @endforeach
 
@@ -66,10 +62,19 @@
 
 @section('javascript')
     @parent
-    <script>
+
+    <script type="text/javascript" src="{{ url('js/index.js') }}"></script>
+    <script type="text/javascript">
         $('#search-submit').click(function () {
-            if ($('#search-content').val().length > 3)
+            if ($('#search-content').val().length > 0)
                 window.location = '{{ url('/search') }}/' + encodeURIComponent($('#search-content').val());
+        });
+
+        $('.wb-jumbotron').bind('keyup', function (event) {
+            if (event.keyCode == "13") {
+                //回车执行查询
+                window.location = '{{ url('/search') }}/' + encodeURIComponent($('#search-content').val());
+            }
         });
     </script>
 @endsection

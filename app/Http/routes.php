@@ -12,6 +12,7 @@
 */
 
 
+
 $app->get('/', 'HomeController@index');
 
 //关于Pusher
@@ -27,7 +28,7 @@ $app->get('/pump', ['middleware' => 'baseLogin', 'uses' => 'HomeController@pump'
 $app->get('/view/{aid}', 'HomeController@info');
 
 //播放(ajax)
-$app->get('/play/{aid}-{quality}', 'HomeController@play');
+$app->get('/play/{aid}', 'HomeController@play');
 
 //获得番剧Aid
 //$app->get('/view-new/{spId}', 'HomeController@infoNew');
@@ -37,6 +38,10 @@ $app->get('/search/{content}', 'HomeController@search');
 
 //分类信息
 $app->get('/list', 'HomeController@getList');
+
+
+
+$app->get('/test', 'HomeController@test');
 
 
 /*

@@ -31,9 +31,9 @@ class DataAccess
     }
 
 
-    public static function getSave($aid)
+    public static function getSave($aid, $page)
     {
-        $back_save = Save::where('aid', '=', $aid)->first();
+        $back_save = Save::where('aid', '=', $aid)->where('page', '=', $page)->first();
         return $back_save;
     }
 
@@ -45,27 +45,25 @@ class DataAccess
 
         $save->aid = $aid;
 
-        $save->mid = $json->mid;
-        $save->cid = $json->cid;
-        $save->typename = $json->typename;
-        $save->title = $json->title;
-        $save->play = $json->play;
-        $save->review = $json->review;
-        $save->video_review = $json->video_review;
-        $save->favorites = $json->favorites;
-        $save->coins = $json->coins;
-        $save->pages = $json->pages;
-        $save->author = $json->author;
-        $save->face = $json->face;
-        $save->description = $json->description;
-        $save->tag = $json->tag;
-        $save->pic = $json->pic;
-        $save->created_at = date_create($json->created_at);
-        $save->offsite = $json->offsite;
-
+        $save->mid = $json['mid'];
+        $save->cid = $json['cid'];
+        $save->typename = $json['typename'];
+        $save->title = $json['title'];
+        $save->play = $json['play'];
+        $save->review = $json['review'];
+        $save->video_review = $json['video_review'];
+        $save->favorites = $json['favorites'];
+        $save->coins = $json['coins'];
+        $save->pages = $json['pages'];
+        $save->author = $json['author'];
+        $save->face = $json['face'];
+        $save->description = $json['description'];
+        $save->tag = $json['tag'];
+        $save->pic = $json['pic'];
+        $save->created_at = date_create($json['created_at']);
+        $save->offsite = $json['offsite'];
 
         $save->save();
-
 
         return $save;
     }

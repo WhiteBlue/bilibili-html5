@@ -131,6 +131,8 @@ class CommandTest extends \PHPUnit_Framework_TestCase
         $ret = $command->setHelp('help1');
         $this->assertEquals($command, $ret, '->setHelp() implements a fluent interface');
         $this->assertEquals('help1', $command->getHelp(), '->setHelp() sets the help');
+        $command->setHelp('');
+        $this->assertEquals('description', $command->getHelp(), '->getHelp() fallback to the description');
     }
 
     public function testGetProcessedHelp()
@@ -314,8 +316,6 @@ class CommandTest extends \PHPUnit_Framework_TestCase
      */
     public function testLegacyAsText()
     {
-        $this->iniSet('error_reporting', -1 & ~E_USER_DEPRECATED);
-
         $command = new \TestCommand();
         $command->setApplication(new Application());
         $tester = new CommandTester($command);
@@ -328,8 +328,6 @@ class CommandTest extends \PHPUnit_Framework_TestCase
      */
     public function testLegacyAsXml()
     {
-        $this->iniSet('error_reporting', -1 & ~E_USER_DEPRECATED);
-
         $command = new \TestCommand();
         $command->setApplication(new Application());
         $tester = new CommandTester($command);

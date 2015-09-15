@@ -38,7 +38,7 @@ class AuthController extends Controller
         ]);
 
         $user = new User;//实例化User对象
-        $user->name = Input::get('username');
+        $user->username = Input::get('username');
         $user->email = Input::get('email');
         $user->password = Hash::make(Input::get('password'));
         $user->save();
