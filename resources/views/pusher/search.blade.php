@@ -6,29 +6,29 @@
 
 @section('content')
     <ol class="breadcrumb">
-        <li class="active">搜索：{{ $search }}</li>
+        <li class="active">搜索：{{ urldecode($search) }}</li>
     </ol>
 
     <div class="well">
         <div class="row" id="search_result">
-            @foreach($back->result as $li)
-                @if($li->type=='special')
+            @foreach($back['result'] as $li)
+                @if($li['type']=='special')
                     <div class="col-md-6 bili-sp">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title">{{ $li->typename."-".$li->title }}</h3>
+                                <h3 class="panel-title">{{ $li['typename']."-".$li['title'] }}</h3>
                             </div>
                             <div class="panel-body">
                                 <div class="col-xs-6">
-                                    <img style="width: 100%"
-                                         src="{{ $li->pic }}"
+                                    <img class="search_img"
+                                         src="{{ $li['pic'] }}"
                                          alt="...">
                                 </div>
                                 <div class="col-xs-6">
                                     <div class="well bili-sp-content">
-                                        <small>{{ $li->description }}</small>
+                                        <small>{{ $li['description'] }}</small>
                                     </div>
-                                    <a href="http://www.bilibili.com/sp/{{ $li->title }}"
+                                    <a href="http://www.bilibili.com/sp/{{ $li['title'] }}"
                                        class="btn btn-large btn-block btn-primary">查看</a>
                                 </div>
                             </div>
@@ -37,12 +37,12 @@
                     </div>
                 @else
                     <div class="col-md-3">
-                        <a href="{{ url('/view/'.$li->aid) }}" class="thumbnail tex bili-search-a">
-                            <img src="{{ $li->pic }}" alt="..." style="width: 100%;height:130px;">
+                        <a href="{{ url('/view/'.$li['aid']) }}" class="thumbnail tex bili-search-a" target="_blank">
+                            <img src="{{ $li['pic'] }}" alt="..." style="width: 100%;height:130px;">
 
                             <div class="caption bili-search-caption">
-                                <p class="bili-search-content">{{ $li->title }}</p>
-                                <span class="label label-default bottom">{{ $li->typename }}</span>
+                                <p class="bili-search-content">{{ $li['title'] }}</p>
+                                <span class="label label-default bottom">{{ $li['typename'] }}</span>
                             </div>
                         </a>
                     </div>
@@ -77,26 +77,30 @@
                     } else {
                         $.get("{{ url('/searchPage/'.$search.'?page=') }}" + page,
                                 function (data, status) {
-                                    if (data.result.length == 0) {
-                                        lock = false;
-                                    }
-                                    $.each(data.result, function (key, li) {
-                                        if (li.type == 'special') {
-                                            $('#search_result').append("<div class='col-md-6 bili-sp new' style='display: none'><div class='panel panel-default'>" +
-                                                    "<div class='panel-heading'><h3 class='panel-title'>" + li.typename + "-" + li.title + "</h3></div>" +
-                                                    "<div class='panel-body'><div class='col-xs-6'><img style='width: 100%' src='" + li.pic + "' alt='...'> </div><div class='col-xs-6'>" +
-                                                    "<div class='well bili-sp-content'><small>" + li.description + "</small></div> <a href='#' class='btn btn-large btn-block btn-primary'>查看</a>" +
-                                                    "</div></div></div></div>");
-                                        } else {
-                                            $('#search_result').append("<div class='col-md-3 new' style='display: none'>" +
-                                                    "<a href='{{ url('/view/') }}"+li.aid+"' class='thumbnail tex bili-search-a'><img style='width: auto;height:130px;' src='" + li.pic + "'alt='...'>" +
-                                                    "<div class='caption bili-search-caption'><p class='bili-search-content'>" + li.title + "</p><span class='label label-default bottom'>" + li.typename + "</span>" +
-                                                    "</div></a></div>");
+                                    if (data.code == 'success') {
+                                        if (data.content.result.length == 0) {
+                                            lock = false;
                                         }
+                                        $.each(data.content.result, function (key, li) {
+                                            if (li.type == 'special') {
+                                                $('#search_result').append("<div class='col-md-6 bili-sp new' style='display: none'><div class='panel panel-default'>" +
+                                                        "<div class='panel-heading'><h3 class='panel-title'>" + li.typename + "-" + li.title + "</h3></div>" +
+                                                        "<div class='panel-body'><div class='col-xs-6'><img class='search_img' src='" + li.pic + "' alt='...'> </div><div class='col-xs-6'>" +
+                                                        "<div class='well bili-sp-content'><small>" + li.description + "</small></div> <a href='#' class='btn btn-large btn-block btn-primary'>查看</a>" +
+                                                        "</div></div></div></div>");
+                                            } else {
+                                                $('#search_result').append("<div class='col-md-3 new' style='display: none'>" +
+                                                        "<a href='{{ url('/view/') }}" + li.aid + "' target='_blank' class='thumbnail tex bili-search-a'><img style='width: auto;height:130px;' src='" + li.pic + "'alt='...'>" +
+                                                        "<div class='caption bili-search-caption'><p class='bili-search-content'>" + li.title + "</p><span class='label label-default bottom'>" + li.typename + "</span>" +
+                                                        "</div></a></div>");
+                                            }
 
-                                        $(".new").fadeIn("slow");
-                                    });
-                                    page++;
+                                            $(".new").fadeIn("slow");
+                                        });
+                                        page++;
+                                    } else {
+                                        alert('error');
+                                    }
                                 });
                     }
                 }

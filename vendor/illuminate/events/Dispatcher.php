@@ -207,7 +207,7 @@ class Dispatcher implements DispatcherContract
         // If an array is not given to us as the payload, we will turn it into one so
         // we can easily use call_user_func_array on the listeners, passing in the
         // payload to each of them so that they receive each of these arguments.
-        if (!is_array($payload)) {
+        if (! is_array($payload)) {
             $payload = [$payload];
         }
 
@@ -223,7 +223,7 @@ class Dispatcher implements DispatcherContract
             // If a response is returned from the listener and event halting is enabled
             // we will just return this response, and not call the rest of the event
             // listeners. Otherwise we will add the response on the response list.
-            if (!is_null($response) && $halt) {
+            if (! is_null($response) && $halt) {
                 array_pop($this->firing);
 
                 return $response;
@@ -255,7 +255,9 @@ class Dispatcher implements DispatcherContract
         if ($this->queueResolver) {
             $connection = $event instanceof ShouldBroadcastNow ? 'sync' : null;
 
-            $this->resolveQueue()->connection($connection)->push('Illuminate\Broadcasting\BroadcastEvent', [
+            $queue = method_exists($event, 'onQueue') ? $event->onQueue() : null;
+
+            $this->resolveQueue()->connection($connection)->pushOn($queue, 'Illuminate\Broadcasting\BroadcastEvent', [
                 'event' => serialize($event),
             ]);
         }
@@ -271,7 +273,7 @@ class Dispatcher implements DispatcherContract
     {
         $wildcards = $this->getWildcardListeners($eventName);
 
-        if (!isset($this->sorted[$eventName])) {
+        if (! isset($this->sorted[$eventName])) {
             $this->sortListeners($eventName);
         }
 

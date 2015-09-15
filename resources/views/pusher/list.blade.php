@@ -10,7 +10,7 @@
                     <li><a href="{{ url('list') }}">默认</a></li>
 
                     @foreach($sorts as $li)
-                        <li><a href="{{ url('list?mid='.$li->mid) }}">{{ $li->title }}</a></li>
+                        <li><a href="{{ url('list?tid='.$li->tid) }}">{{ $li->title }}</a></li>
                     @endforeach
                 </ul>
             </div>
@@ -23,7 +23,7 @@
 
                         @for($i=0;$i<4;$i++)
                             <div class="col-md-3">
-                                <a href="{{ url('/view/'.$hots[$i]['aid']) }}" class="thumbnail">
+                                <a href="{{ url('/view/'.$hots[$i]['aid']) }}" class="thumbnail" target="_blank">
                                     <img src="{{ $hots[$i]['pic'] }}"
                                          alt="{{ $hots[$i]['title'] }}">
                                 </a>
@@ -48,7 +48,7 @@
                         @foreach($list as $video)
                             @if(isset($video['aid']))
                                 <div class="grid-item">
-                                    <a href="{{ url('/view/'.$video['aid']) }}" class="thumbnail tex">
+                                    <a href="{{ url('/view/'.$video['aid']) }}" class="thumbnail tex" target="_blank">
                                         <img src="{{ $video['pic'] }}"
                                              alt="...">
 
@@ -65,7 +65,7 @@
                 </div>
 
                 <div class="row text-center">
-                    <?php echo $paginator->appends(['mid' => $mid])->render(); ?>
+                    <?php echo $paginator->appends(['tid' => $tid])->render(); ?>
                 </div>
 
             </div>

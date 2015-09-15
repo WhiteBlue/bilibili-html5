@@ -9,12 +9,12 @@ body {
     border-top: 1px solid #eee;
 }
 
-.jumbotron {
+.wb-jumbotron{
     text-align: center;
     background-color: transparent;
 }
 
-.jumbotron .btn {
+.wb-jumbotron .btn {
     padding: 14px 24px;
     font-size: 21px;
 }
@@ -104,13 +104,16 @@ body {
 }
 
 .bili-logo {
-    background-image: url('../img/bg.png');
+    background-image: url('../img/bg.jpg');
     background-repeat: no-repeat;
-    background-position: center;
+    background-position: top;
+    -moz-background-size:100%;
+    background-size:100%;
 }
 
 .lead {
-    text-shadow: 0 0 20px red;
+    text-shadow: 0 0 20px #d4ffd5;
+    color: #bcc6d1;
 }
 
 .bili-search {
@@ -119,27 +122,26 @@ body {
     margin-right: auto;
 }
 
-
 .bili-sp-content {
     height: 110px;
     overflow: hidden;
 }
 
-.bili-search-a{
+.bili-search-a {
     margin-top: 30px;
     height: 280px;
 }
 
-.panel-default{
+.panel-default {
     padding: 0px;
 }
 
-.bili-search-caption{
+.bili-search-caption {
     height: 100px;
     overflow: hidden;
 }
 
-.bili-search-content{
+.bili-search-content {
     height: 40px;
     font-size: 60%;
 }
@@ -149,6 +151,74 @@ body {
     width: 230px;
 }
 
-.head-hot{
+.head-hot {
     height: 100px;
+}
+
+.wb-show {
+    display: block;
+    width: 255px;
+    height: 230px;
+    padding: 5px;
+    margin: 5px 10px 5px 10px;
+    border: 2px solid #bdc3c7;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    overflow: hidden;
+    float: left;
+}
+
+.wb-show-shadow {
+    width: 241px;
+    height: 216px;
+    margin: 0;
+    padding: 10px;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    overflow: hidden;
+    position: absolute;
+    background: #000;
+    display: none;
+}
+
+.wb-show-intro {
+    display: block;
+    font-size: 65%;
+    height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white;
+}
+
+.wb-show-play {
+    font-size: 60%;
+    height: 15px;
+    text-overflow: ellipsis;
+    color: lightblue;
+}
+
+.wb-show > img {
+    width: 100%;
+    height: 70%;
+}
+
+.wb-show > .caption {
+    padding: 10px;
+    text-overflow: ellipsis;
+    color: #34495e;
+}
+
+.wb-show > .caption > p {
+    text-overflow: ellipsis;
+    font-size: 80%;
+}
+
+.wb-row {
+    padding: 10px;
+}
+
+.search_img{
+    height: 150px;
 }

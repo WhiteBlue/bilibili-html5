@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Category' => $baseDir . '/database/migrations/2015_07_22_071940_category.php',
     'CreateSave' => $baseDir . '/database/migrations/2015_07_09_021340_create-save.php',
     'CreateSort' => $baseDir . '/database/migrations/2015_07_09_020847_create-sort.php',
     'CreateUsers' => $baseDir . '/database/migrations/2015_07_08_125219_create-users.php',
@@ -186,6 +185,7 @@ return array(
     'PHP_CodeCoverage' => $vendorDir . '/phpunit/php-code-coverage/src/CodeCoverage.php',
     'PHP_CodeCoverage_Driver' => $vendorDir . '/phpunit/php-code-coverage/src/CodeCoverage/Driver.php',
     'PHP_CodeCoverage_Driver_HHVM' => $vendorDir . '/phpunit/php-code-coverage/src/CodeCoverage/Driver/HHVM.php',
+    'PHP_CodeCoverage_Driver_PHPDBG' => $vendorDir . '/phpunit/php-code-coverage/src/CodeCoverage/Driver/PHPDBG.php',
     'PHP_CodeCoverage_Driver_Xdebug' => $vendorDir . '/phpunit/php-code-coverage/src/CodeCoverage/Driver/Xdebug.php',
     'PHP_CodeCoverage_Exception' => $vendorDir . '/phpunit/php-code-coverage/src/CodeCoverage/Exception.php',
     'PHP_CodeCoverage_Exception_UnintentionallyCoveredCode' => $vendorDir . '/phpunit/php-code-coverage/src/CodeCoverage/Exception/UnintentionallyCoveredCode.php',
@@ -227,7 +227,9 @@ return array(
     'PHP_Token_ARRAY' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_ARRAY_CAST' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_AS' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
+    'PHP_Token_ASYNC' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_AT' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
+    'PHP_Token_AWAIT' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_BACKTICK' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_BAD_CHARACTER' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_BOOLEAN_AND' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
@@ -288,6 +290,7 @@ return array(
     'PHP_Token_END_HEREDOC' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_ENUM' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_EQUAL' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
+    'PHP_Token_EQUALS' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_EVAL' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_EXCLAMATION_MARK' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_EXIT' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
@@ -396,6 +399,7 @@ return array(
     'PHP_Token_USE' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_VAR' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_VARIABLE' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
+    'PHP_Token_WHERE' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_WHILE' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_WHITESPACE' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_XHP_ATTRIBUTE' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',

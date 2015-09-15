@@ -166,7 +166,7 @@ class Str
      */
     public static function lower($value)
     {
-        return mb_strtolower($value);
+        return mb_strtolower($value, 'UTF-8');
     }
 
     /**
@@ -181,7 +181,7 @@ class Str
     {
         preg_match('/^\s*+(?:\S++\s*+){1,'.$words.'}/u', $value, $matches);
 
-        if (!isset($matches[0]) || strlen($value) === strlen($matches[0])) {
+        if (! isset($matches[0]) || strlen($value) === strlen($matches[0])) {
             return $value;
         }
 
@@ -288,11 +288,11 @@ class Str
      */
     public static function equals($knownString, $userInput)
     {
-        if (!is_string($knownString)) {
+        if (! is_string($knownString)) {
             $knownString = (string) $knownString;
         }
 
-        if (!is_string($userInput)) {
+        if (! is_string($userInput)) {
             $userInput = (string) $userInput;
         }
 
@@ -323,7 +323,7 @@ class Str
      */
     public static function upper($value)
     {
-        return mb_strtoupper($value);
+        return mb_strtoupper($value, 'UTF-8');
     }
 
     /**
@@ -388,8 +388,10 @@ class Str
             return static::$snakeCache[$key];
         }
 
-        if (!ctype_lower($value)) {
+        if (! ctype_lower($value)) {
             $value = strtolower(preg_replace('/(.)(?=[A-Z])/', '$1'.$delimiter, $value));
+
+            $value = preg_replace('/\s+/', '', $value);
         }
 
         return static::$snakeCache[$key] = $value;
@@ -430,5 +432,29 @@ class Str
         $value = ucwords(str_replace(['-', '_'], ' ', $value));
 
         return static::$studlyCache[$key] = str_replace(' ', '', $value);
+    }
+
+    /**
+     * Returns the portion of string specified by the start and length parameters.
+     *
+     * @param  string  $string
+     * @param  int  $start
+     * @param  int|null  $length
+     * @return string
+     */
+    public static function substr($string, $start, $length = null)
+    {
+        return mb_substr($string, $start, $length, 'UTF-8');
+    }
+
+    /**
+     * Make a string's first character uppercase.
+     *
+     * @param  string  $string
+     * @return string
+     */
+    public static function ucfirst($string)
+    {
+        return static::upper(static::substr($string, 0, 1)).static::substr($string, 1);
     }
 }

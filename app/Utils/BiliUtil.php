@@ -10,7 +10,7 @@ class BiliUtil
 {
 
     //超时时间
-    const REQUEST_TIMEOUT = 4;
+    const REQUEST_TIMEOUT = 8;
     private $app_key = '';
 
     private $search_key = '';
@@ -25,7 +25,7 @@ class BiliUtil
         $this->search_secret = env('search_secret');
 
         if (trim($this->app_key) == '' || trim($this->search_key) == '' || trim($this->search_secret) == '') {
-            throw new Exception('检查配置文件...');
+            throw new Exception('Please check your config file...');
         }
     }
 
@@ -62,7 +62,7 @@ class BiliUtil
 
 
             if (isset($json_content['code']) && ($json_content['code'] != '0')) {
-                throw new Exception($json_content['code'], $json_content['message']);
+                throw new Exception($json_content['code']);
             }
 
             return $json_content;
@@ -100,7 +100,6 @@ class BiliUtil
             $json_content = json_decode($output, true);
 
             if (isset($json_content['errcode'])) {
-                //腾讯返回的错误处理
                 throw new Exception($json_content['error'], $json_content['errcode']);
             }
             return $json_content;
@@ -141,27 +140,17 @@ class BiliUtil
      * @param $aid
      * @return array
      */
-    public function getInfo($aid)
+    public function getInfo($aid, $page)
     {
-        try {
-            $request_params = [
-                'id' => $aid,
-                'appkey' => $this->app_key,
-            ];
+        $request_params = [
+            'id' => $aid,
+            'page' => $page,
+            'appkey' => $this->app_key,
+        ];
 
-            $back = $this->getUrl('http://api.bilibili.cn/view?' . http_build_query($request_params));
+        $back = $this->getUrl('http://api.bilibili.cn/view?' . http_build_query($request_params));
 
-            return [
-                'code' => 'success',
-                'content' => $back,
-            ];
-
-        } catch (Exception $e) {
-            return [
-                'code' => 'error',
-                'msg' => $e->getMessage(),
-            ];
-        }
+        return $back;
     }
 
     /**
@@ -171,38 +160,29 @@ class BiliUtil
      */
     public function getIndex()
     {
-        try {
-            $json = $this->getUrl('http://api.bilibili.cn/index');
+        $json = $this->getUrl('http://api.bilibili.cn/index');
 
-            $list = array();
+        $list = array();
 
-            foreach ($json as $type => $value) {
-                $sort = Sort::where('type', '=', $type)->first();
-                if ($sort != null) {
-                    $temp = array();
-                    $temp['sort'] = $sort;
-                    $temp['list'] = array();
+        foreach ($json as $type => $value) {
+            $sort = Sort::where('type', '=', $type)->first();
+            if ($sort != null) {
+                $temp = array();
+                $temp['sort'] = $sort;
+                $temp['list'] = array();
 
-                    foreach ($value as $id => $content) {
-                        if (!is_string($content)) {
-                            array_push($temp['list'], $content);
-                        }
+                foreach ($value as $id => $content) {
+                    if (!is_string($content)) {
+                        array_push($temp['list'], $content);
                     }
-                    array_push($list, $temp);
                 }
+                array_pop($temp['list']);
+
+                array_push($list, $temp);
             }
-
-            return [
-                'code' => 'success',
-                'content' => $list,
-            ];
-
-        } catch (Exception $e) {
-            return [
-                'code' => 'error',
-                'msg' => $e->getMessage(),
-            ];
         }
+
+        return $list;
     }
 
     /**
@@ -212,116 +192,108 @@ class BiliUtil
      */
     public function getHot()
     {
-        try {
-            $json = $this->getUrl('http://api.bilibili.cn/index');
+        $json = $this->getUrl('http://api.bilibili.cn/index');
 
-            $list = array();
-            for ($i = 0; $i < 8; $i++) {
-                array_push($list, $json['type1'][$i]);
-            }
-
-            return [
-                'code' => 'success',
-                'content' => $list,
-            ];
-
-        } catch (Exception $e) {
-            return [
-                'code' => 'error',
-                'msg' => $e->getMessage(),
-            ];
+        $list = array();
+        for ($i = 0; $i < 4; $i++) {
+            array_push($list, $json['type1'][$i]);
         }
+
+        return $list;
     }
 
 
+    /**
+     * 番剧更新
+     *
+     * @return array
+     */
     public function getDaily()
     {
-        try {
-            $request_params = [
-                'btype' => '2',
-                'appkey' => $this->app_key,
-            ];
+        $request_params = [
+            'btype' => '2',
+            'appkey' => $this->app_key,
+        ];
 
-            $json = $this->getUrl('http://api.bilibili.cn/bangumi?' . http_build_query($request_params));
+        $json = $this->getUrl('http://api.bilibili.cn/bangumi?' . http_build_query($request_params));
 
-            $back_list = array();
+        $back_list = array();
 
-            for ($i = 0; $i < 7; $i++) {
-                $back_list[$i] = array();
-            }
-
-            $list = $json['list'];
-
-            foreach ($list as $each) {
-                $weekday = $each['weekday'];
-                array_push($back_list[$weekday], $each);
-            }
-
-            return [
-                'code' => 'success',
-                'content' => $back_list,
-            ];
-
-        } catch (Exception $e) {
-            return [
-                'code' => 'error',
-                'msg' => $e->getMessage(),
-            ];
+        for ($i = 0; $i < 7; $i++) {
+            $back_list[$i] = array();
         }
+
+        $list = $json['list'];
+
+        foreach ($list as $each) {
+            $weekday = $each['weekday'];
+            array_push($back_list[$weekday], $each);
+        }
+
+        return $back_list;
     }
 
 
+    /**
+     * 视频搜素
+     *
+     * @param $keyword
+     * @param $page
+     * @return array
+     */
     public function getSearch($keyword, $page)
     {
-        try {
-            $sign = $this->get_sign(["keyword" => $keyword, "page" => $page, 'pagesize' => 6], $this->search_key,
-                $this->search_secret);
+        $sign = $this->get_sign(["keyword" => $keyword, "page" => $page, 'pagesize' => 6], $this->search_key,
+            $this->search_secret);
 
-            $json = $this->getUrl('http://api.bilibili.cn/search?' . $sign['params'] . '&sign=' . $sign['sign']);
+        $json_back = $this->getUrl('http://api.bilibili.cn/search?' . $sign['params'] . '&sign=' . $sign['sign']);
 
-            return [
-                'code' => 'success',
-                'content' => $json,
-            ];
-
-        } catch (Exception $e) {
-            return [
-                'code' => 'error',
-                'msg' => $e->getMessage(),
-            ];
-        }
+        return $json_back;
     }
 
 
+    /**
+     *
+     * 视频分类信息获取(分页)
+     *
+     * @param $tid
+     * @param $order
+     * @param $page
+     * @param $page_size
+     * @return mixed
+     * @throws Exception
+     */
     public function getPageList($tid, $order, $page, $page_size)
     {
-        try {
-            $request_params = [
-                'type' => 'json',
-                'page' => $page,
-                'pagesize' => $page_size,
-                'order' => $order,
-                'appkey' => $this->app_key,
-            ];
+        $request_params = [
+            'type' => 'json',
+            'page' => $page,
+            'pagesize' => $page_size,
+            'order' => $order,
+            'appkey' => $this->app_key,
+            'tid' => $tid,
+        ];
 
-            if ($tid == null) {
-                $json = $this->getUrl('http://api.bilibili.cn/list?' . http_build_query($request_params));
-            } else {
-                array_add($request_params, 'tid', $tid);
-                $json = $this->getUrl('http://api.bilibili.cn/list?' . http_build_query($request_params));
-            }
+        $json = $this->getUrl('http://api.bilibili.cn/list?' . http_build_query($request_params));
 
-            return [
-                'code' => 'success',
-                'content' => $json,
-            ];
+        return $json;
+    }
 
-        } catch (Exception $e) {
-            return [
-                'code' => 'error',
-                'msg' => $e->getMessage(),
-            ];
-        }
+
+    public function getVideo($cid, $quality)
+    {
+        $request_params = [
+            'platform' => 'android',
+            'cid' => $cid,
+            'quality' => $quality,
+            'otype' => 'json',
+            'appkey' => $this->app_key,
+            'type' => 'mp4',
+        ];
+
+        $json = $this->getUrl('http://interface.bilibili.com/playurl?' . http_build_query($request_params));
+
+        return $json;
     }
 
 
