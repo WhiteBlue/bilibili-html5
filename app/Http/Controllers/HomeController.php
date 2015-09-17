@@ -49,44 +49,6 @@ class HomeController extends Controller
 
 
     /**
-     * ajax获取视频实际地址
-     *
-     * @param $cid
-     * @param $quality
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function play($cid)
-    {
-        try {
-            $quality = Request::input('quality', 1);
-
-            $bili_util = new BiliUtil();
-
-            $result = $bili_util->getVideo($cid, $quality);
-
-            if ($result['result'] == 'suee') {
-                $content = $result['durl'][0];
-                $return_array = [
-                    'code' => 'success',
-                    'content' => $content,
-                ];
-                return response()->json($return_array);
-            } else {
-                $return_array = [
-                    'code' => 'error'
-                ];
-                return response()->json($return_array);
-            }
-        } catch (Exception $e) {
-            $return_array = [
-                'code' => 'error'
-            ];
-            return response()->json($return_array);
-        }
-    }
-
-
-    /**
      * 视频播放
      *
      * @param $aid
@@ -113,7 +75,7 @@ class HomeController extends Controller
                 $result = DataAccess::saveNew($result, $aid);
             }
 
-            return view('pusher.play')->with('info', $result)->with('aid', $aid);
+            return view('pusher.play')->with('info', $result)->with('aid', $aid)->with('page', $page);
 
         } catch (Exception $e) {
             return view('pusher.error')->with('error_content', '视频没有找到的说..');
@@ -262,7 +224,8 @@ class HomeController extends Controller
 
     public function test()
     {
-        $back = CacheSetter::setSortCache();
+        $bili_util = new BiliUtil();
+        $back = $bili_util->getHDVideo('4553207');
         dd($back);
     }
 

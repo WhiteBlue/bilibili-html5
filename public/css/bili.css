@@ -222,3 +222,36 @@ body {
 .search_img{
     height: 150px;
 }
+
+#loading {
+    position: absolute;
+    margin-left: 15%;
+    margin-right: auto;
+    padding-top: 20px;
+    width: 600px;
+    height: 400px;
+    opacity: 0.5;
+    z-index: 9999;
+    overflow: hidden;
+}
+
+#loading > p {
+    color: white;
+    text-shadow: 0 0 20px red;
+}
+
+#loading >.alert_content{
+    color: red;
+    text-shadow: 0 0 20px #d6e2ed;
+}
+
+#player_part_select {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#player_content {
+    height: 600px;
+    display: none;
+    padding-left: 30px;
+}

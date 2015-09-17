@@ -280,18 +280,35 @@ class BiliUtil
     }
 
 
-    public function getVideo($cid, $quality)
+    public function getHDVideo($cid)
     {
         $request_params = [
             'platform' => 'android',
             'cid' => $cid,
-            'quality' => $quality,
+            'quality' => 2,
             'otype' => 'json',
             'appkey' => $this->app_key,
             'type' => 'mp4',
         ];
 
-        $json = $this->getUrl('http://interface.bilibili.com/playurl?' . http_build_query($request_params));
+        $json_back = $this->getUrl('http://interface.bilibili.com/playurl?' . http_build_query($request_params));
+
+        if ($json_back['result'] != 'suee') {
+            throw new Exception('Video not found...');
+        }
+
+        return $json_back;
+    }
+
+
+    public function getNormalVideo($aid, $page)
+    {
+        $request_params = [
+            'aid' => $aid,
+            'page' => $page
+        ];
+
+        $json = $this->getUrl('http://www.bilibili.com/m/html5?' . http_build_query($request_params));
 
         return $json;
     }

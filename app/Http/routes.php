@@ -27,9 +27,6 @@ $app->get('/pump', ['middleware' => 'baseLogin', 'uses' => 'HomeController@pump'
 //获取信息
 $app->get('/view/{aid}', 'HomeController@info');
 
-//播放(ajax)
-$app->get('/play/{aid}', 'HomeController@play');
-
 //获得番剧Aid
 //$app->get('/view-new/{spId}', 'HomeController@infoNew');
 
@@ -40,8 +37,7 @@ $app->get('/search/{content}', 'HomeController@search');
 $app->get('/list', 'HomeController@getList');
 
 
-
-$app->get('/test', 'HomeController@test');
+//$app->get('/test', 'HomeController@test');
 
 
 /*
@@ -52,6 +48,12 @@ $app->get('/test', 'HomeController@test');
 
 //搜索页
 $app->get('/searchPage/{content}', 'HomeController@searchPage');
+
+//普通视频源
+$app->get('/playNormal/{aid}/{page}','PlayController@playNormal');
+
+//HD视频源(大部分)
+$app->get('/playHD/{cid}','PlayController@playHD');
 
 
 /*
