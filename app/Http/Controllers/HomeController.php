@@ -20,7 +20,7 @@ use Laravel\Lumen\Routing\Controller;
  * Date: 15/7/8
  * Time: 下午9:06
  */
-class HomeController extends Controller
+class HomeController extends BaseController
 {
 
     /**
@@ -30,9 +30,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $index_list = Cache::get(GlobalVar::$INDEX_LIST_CACHE);
-
-        $time = Cache::get(GlobalVar::$UPDATE_TIME);
+        dd(gettype(''));
+        try {
+        } catch (Exception $e) {
+            return $this->returnError('服务器连接异常');
+        }
 
         return view('pusher.index')->with('list', $index_list)->with('time', $time);
     }
@@ -225,7 +227,7 @@ class HomeController extends Controller
     public function test()
     {
         $bili_util = new BiliUtil();
-        $back = $bili_util->getHDVideo('4553207');
+        $back = $bili_util->getHDVideo('4532996');
         dd($back);
     }
 

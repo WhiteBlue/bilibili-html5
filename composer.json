@@ -11,8 +11,7 @@
   "require": {
     "laravel/lumen-framework": "5.1.*",
     "vlucas/phpdotenv": "~1.0",
-    "shark/simple_html_dom": "dev-master",
-    "guzzle/guzzle": "dev-master"
+    "predis/predis": "1.0.3"
   },
   "require-dev": {
     "phpunit/phpunit": "~4.0",

@@ -6,6 +6,7 @@ namespace App\Utils;
 use App\Models\Sort;
 use Exception;
 
+
 class BiliUtil
 {
 
@@ -25,7 +26,7 @@ class BiliUtil
         $this->search_secret = env('search_secret');
 
         if (trim($this->app_key) == '' || trim($this->search_key) == '' || trim($this->search_secret) == '') {
-            throw new Exception('Please check your config file...');
+            throw new Exception('Whoops : Please check your config file...');
         }
     }
 
@@ -283,21 +284,29 @@ class BiliUtil
     public function getHDVideo($cid)
     {
         $request_params = [
-            'platform' => 'android',
+            'platform' => 'ios',
             'cid' => $cid,
-            'quality' => 2,
+            'quality' => '3',
             'otype' => 'json',
-            'appkey' => $this->app_key,
             'type' => 'mp4',
         ];
+        dd('http://interface.bilibili.com/playurl?' . http_build_query($request_params));
 
         $json_back = $this->getUrl('http://interface.bilibili.com/playurl?' . http_build_query($request_params));
+
 
         if ($json_back['result'] != 'suee') {
             throw new Exception('Video not found...');
         }
 
         return $json_back;
+    }
+
+    public function test($cid)
+    {
+        $json_back = $this->getUrl('http://interface.bilibili.com/playurl?platform=ios&cid=' . $cid . '&otype=json&quality=1&appkey=' . $this->app_key . '&type=mp4');
+
+        dd($json_back);
     }
 
 

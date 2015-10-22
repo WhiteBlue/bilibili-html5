@@ -15,6 +15,12 @@ use Illuminate\Support\Facades\Cache;
  */
 class CacheSetter
 {
+    public function setCache()
+    {
+
+    }
+
+
     //设置首页缓存
     private static function setIndexCache()
     {

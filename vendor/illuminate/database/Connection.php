@@ -4,13 +4,12 @@ namespace Illuminate\Database;
 
 use PDO;
 use Closure;
-use DateTime;
 use Exception;
 use Throwable;
 use LogicException;
 use RuntimeException;
+use DateTimeInterface;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
 use Illuminate\Database\Query\Expression;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Query\Processors\Processor;
@@ -21,6 +20,8 @@ use Illuminate\Database\Query\Grammars\Grammar as QueryGrammar;
 
 class Connection implements ConnectionInterface
 {
+    use DetectsLostConnections;
+
     /**
      * The active PDO connection.
      *
@@ -245,11 +246,19 @@ class Connection implements ConnectionInterface
      */
     public function table($table)
     {
-        $processor = $this->getPostProcessor();
+        return $this->query()->from($table);
+    }
 
-        $query = new QueryBuilder($this, $this->getQueryGrammar(), $processor);
-
-        return $query->from($table);
+    /**
+     * Get a new query builder instance.
+     *
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function query()
+    {
+        return new QueryBuilder(
+            $this, $this->getQueryGrammar(), $this->getPostProcessor()
+        );
     }
 
     /**
@@ -435,10 +444,10 @@ class Connection implements ConnectionInterface
         $grammar = $this->getQueryGrammar();
 
         foreach ($bindings as $key => $value) {
-            // We need to transform all instances of the DateTime class into an actual
+            // We need to transform all instances of DateTimeInterface into the actual
             // date string. Each query grammar maintains its own date string format
             // so we'll just ask the grammar for the format to get from the date.
-            if ($value instanceof DateTime) {
+            if ($value instanceof DateTimeInterface) {
                 $bindings[$key] = $value->format($grammar->getDateFormat());
             } elseif ($value === false) {
                 $bindings[$key] = 0;
@@ -496,6 +505,10 @@ class Connection implements ConnectionInterface
 
         if ($this->transactions == 1) {
             $this->pdo->beginTransaction();
+        } elseif ($this->transactions > 1 && $this->queryGrammar->supportsSavepoints()) {
+            $this->pdo->exec(
+                $this->queryGrammar->compileSavepoint('trans'.$this->transactions)
+            );
         }
 
         $this->fireConnectionEvent('beganTransaction');
@@ -525,12 +538,14 @@ class Connection implements ConnectionInterface
     public function rollBack()
     {
         if ($this->transactions == 1) {
-            $this->transactions = 0;
-
             $this->pdo->rollBack();
-        } else {
-            --$this->transactions;
+        } elseif ($this->transactions > 1 && $this->queryGrammar->supportsSavepoints()) {
+            $this->pdo->exec(
+                $this->queryGrammar->compileSavepointRollBack('trans'.$this->transactions)
+            );
         }
+
+        $this->transactions = max(0, $this->transactions - 1);
 
         $this->fireConnectionEvent('rollingBack');
     }
@@ -654,31 +669,13 @@ class Connection implements ConnectionInterface
      */
     protected function tryAgainIfCausedByLostConnection(QueryException $e, $query, $bindings, Closure $callback)
     {
-        if ($this->causedByLostConnection($e)) {
+        if ($this->causedByLostConnection($e->getPrevious())) {
             $this->reconnect();
 
             return $this->runQueryCallback($query, $bindings, $callback);
         }
 
         throw $e;
-    }
-
-    /**
-     * Determine if the given exception was caused by a lost connection.
-     *
-     * @param  \Illuminate\Database\QueryException  $e
-     * @return bool
-     */
-    protected function causedByLostConnection(QueryException $e)
-    {
-        $message = $e->getPrevious()->getMessage();
-
-        return Str::contains($message, [
-            'server has gone away',
-            'no connection to the server',
-            'Lost connection',
-            'is dead or not enabled',
-        ]);
     }
 
     /**
