@@ -6,9 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'CreateSave' => $baseDir . '/database/migrations/2015_07_09_021340_create-save.php',
-    'CreateSort' => $baseDir . '/database/migrations/2015_07_09_020847_create-sort.php',
-    'CreateUsers' => $baseDir . '/database/migrations/2015_07_08_125219_create-users.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'ExampleTest' => $baseDir . '/tests/ExampleTest.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
@@ -19,6 +16,7 @@ return array(
     'Illuminate\\Foundation\\Support\\Providers\\EventServiceProvider' => $vendorDir . '/laravel/lumen-framework/src/Foundation/Support/Providers/EventServiceProvider.php',
     'Illuminate\\Foundation\\Testing\\DatabaseMigrations' => $vendorDir . '/laravel/lumen-framework/src/Foundation/Testing/DatabaseMigrations.php',
     'Illuminate\\Foundation\\Testing\\DatabaseTransactions' => $vendorDir . '/laravel/lumen-framework/src/Foundation/Testing/DatabaseTransactions.php',
+    'Illuminate\\Foundation\\Testing\\WithoutMiddleware' => $vendorDir . '/laravel/lumen-framework/src/Foundation/Testing/WithoutMiddleware.php',
     'PHPUnit_Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
     'PHPUnit_Extensions_GroupTestSuite' => $vendorDir . '/phpunit/phpunit/src/Extensions/GroupTestSuite.php',
     'PHPUnit_Extensions_PhptTestCase' => $vendorDir . '/phpunit/phpunit/src/Extensions/PhptTestCase.php',
@@ -441,6 +439,7 @@ return array(
     'SebastianBergmann\\Environment\\Runtime' => $vendorDir . '/sebastian/environment/src/Runtime.php',
     'SebastianBergmann\\Exporter\\Exporter' => $vendorDir . '/sebastian/exporter/src/Exporter.php',
     'SebastianBergmann\\GlobalState\\Blacklist' => $vendorDir . '/sebastian/global-state/src/Blacklist.php',
+    'SebastianBergmann\\GlobalState\\CodeExporter' => $vendorDir . '/sebastian/global-state/src/CodeExporter.php',
     'SebastianBergmann\\GlobalState\\Exception' => $vendorDir . '/sebastian/global-state/src/Exception.php',
     'SebastianBergmann\\GlobalState\\Restorer' => $vendorDir . '/sebastian/global-state/src/Restorer.php',
     'SebastianBergmann\\GlobalState\\RuntimeException' => $vendorDir . '/sebastian/global-state/src/RuntimeException.php',
@@ -452,6 +451,4 @@ return array(
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Resources/stubs/SessionHandlerInterface.php',
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
-    'simple_html_dom' => $vendorDir . '/shark/simple_html_dom/simple_html_dom.php',
-    'simple_html_dom_node' => $vendorDir . '/shark/simple_html_dom/simple_html_dom.php',
 );

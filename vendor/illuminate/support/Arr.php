@@ -342,7 +342,7 @@ class Arr
      */
     protected static function explodePluckParameters($value, $key)
     {
-        $value = is_array($value) ? $value : explode('.', $value);
+        $value = is_string($value) ? explode('.', $value) : $value;
 
         $key = is_null($key) || is_array($key) ? $key : explode('.', $key);
 
@@ -424,11 +424,11 @@ class Arr
     {
         foreach ($array as &$value) {
             if (is_array($value)) {
-                $value = self::sortRecursive($value);
+                $value = static::sortRecursive($value);
             }
         }
 
-        if (self::isAssoc($array)) {
+        if (static::isAssoc($array)) {
             ksort($array);
         } else {
             sort($array);

@@ -30,3 +30,5 @@ crashlytics-build.properties
 .env.*.php
 .env.php
 .env
+
+/vendor

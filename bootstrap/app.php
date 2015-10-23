@@ -61,13 +61,10 @@ $app->middleware([
     Illuminate\Session\Middleware\StartSession::class,
     Illuminate\View\Middleware\ShareErrorsFromSession::class,
     Laravel\Lumen\Http\Middleware\VerifyCsrfToken::class,
-    App\Http\Middleware\CacheMiddleware::class,
 ]);
 
 $app->routeMiddleware([
-    'login' => 'App\Http\Middleware\LoginMiddleware',
-    'hasLogin' => 'App\Http\Middleware\HasLoginMiddleware',
-    'baseLogin' => 'App\Http\Middleware\BaseLoginMiddleware',
+
 ]);
 
 /*
