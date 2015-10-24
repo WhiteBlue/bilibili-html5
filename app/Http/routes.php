@@ -13,5 +13,14 @@
 
 $app->get('/', 'HomeController@home');
 
-
 $app->get('/sort/{tid}', 'HomeController@sort');
+
+$app->get('/view/{aid}', 'HomeController@view');
+
+$app->get('/video/{quality}', 'HomeController@video');
+
+$app->get('/search', 'HomeController@search');
+
+$app->get('/searchPage/{content}', 'HomeController@searchPage');
+
+$app->get('/about', 'HomeController@about');

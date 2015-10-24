@@ -1,6 +1,8 @@
 @extends('common.layout')
 
 
+@section('title', '分类:'.$content['name'])
+
 @section('css')
     @parent
 
@@ -23,15 +25,15 @@
 
                 <nav>
                     <ul class="pager">
-                        <li class="previous"><a href="#">最热</a></li>
-                        <li class="next"><a href="#">最新</a></li>
+                        <li class="previous"><a href="{{ url('/sort/'.$tid.'?page='.$page.'&order=hot') }}">最热</a></li>
+                        <li class="next"><a href="{{ url('/sort/'.$tid.'?page='.$page.'&order=new') }}">最新</a></li>
                     </ul>
                 </nav>
 
                 <div class="row">
 
                     <h3 class="wb_title_split">{{ $content['name'] }}
-                        <small class="wb_small">更新于 2011.12.3</small>
+                        <small class="wb_small">更新于 {{ $date }}</small>
                     </h3>
 
                     <div class="grid">
@@ -39,7 +41,7 @@
                         @foreach($content['list'] as $gird)
 
                             <div class="grid-item">
-                                <a href="#" class="thumbnail tex">
+                                <a href="{{ url('/view/'.$gird['aid']) }}" target="_blank" class="thumbnail tex">
                                     <img src="{{ $gird['pic'] }}"
                                          alt="...">
 
@@ -58,8 +60,16 @@
                 <div class="row text-center">
                     <nav>
                         <ul class="pager">
-                            <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> 前一页 </a></li>
-                            <li class="next"><a href="#"> 后一页 <span aria-hidden="true">&rarr;</span></a></li>
+
+                            @if($page!=1)
+                                <li class="previous">
+                                    <a href="{{ url('/sort/'.$tid.'?page='.($page-1)) }}">
+                                        <span aria-hidden="true">&larr;</span> 前一页 </a>
+                                </li>
+                            @endif
+
+                            <li class="next"><a href="{{ url('/sort/'.$tid.'?page='.($page+1)) }}"> 后一页 <span
+                                            aria-hidden="true">&rarr;</span></a></li>
                         </ul>
                     </nav>
                 </div>
@@ -73,7 +83,7 @@
 
 @section('javascript')
     @parent
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/3.3.1/masonry.pkgd.min.js"></script>
+    <script src="{{ url('js/masonry.pkgd.min.js') }}"></script>
 
     <script>
         $(document).ready(function () {

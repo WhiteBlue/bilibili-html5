@@ -1,5 +1,6 @@
 @extends('common.layout')
 
+@section('title', '首页')
 
 @section('css')
     @parent
@@ -17,27 +18,29 @@
     @foreach($sorts as $sort)
 
         <h3 class="wb_title_split">{{ $sort }}
-            <small class="wb_small">更新于 2011.12.3</small>
+            <small class="wb_small">更新于 {{ $update_time }}</small>
         </h3>
 
         <div class="row wb_line_row">
             <div class="wb_container_left">
                 <div class="thumbnail wb_thumbnail">
-                    <img src="{{ $content[$sort][0]['pic'] }}" alt="{{ $content[$sort][0]['title'] }}">
+                    <img class="wb_index_img" src="{{ $content[$sort][0]['pic'] }}"
+                         alt="{{ $content[$sort][0]['title'] }}" style="height:120px">
 
                     <div class="caption">
-                        <p class=title>{{ $content[$sort][0]['title'] }}</p>
+                        <p class="title text-center">{{ $content[$sort][0]['title'] }}</p>
 
-                        <p class="text-center">
-                            <a href="#" class="btn btn-primary" role="button">观看</a>
-                        </p>
+                        <div class="text-center">
+                            <a href="{{ url('/view/'.$content[$sort][0]['aid']) }}" class="btn btn-primary"
+                               role="button" target="_blank">观看</a>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="wb_container_right">
                 @for($i=1;$i<sizeof($content[$sort]);$i++)
                     <div class="col-md-3">
-                        <a class="wb-show" href="#" target="_blank">
+                        <a class="wb-show" href="{{ url('/view/'.$content[$sort][$i]['aid']) }}" target="_blank">
                             <div class="wb-show-shadow">
                                 <p class="wb-show-intro">{{ $content[$sort][$i]['description'] }}</p>
 

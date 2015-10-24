@@ -40,12 +40,9 @@ a:visited {
     text-overflow: ellipsis;
 }
 
-/*.thumbnail > img {*/
-/*background: -webkit-linear-gradient(transparent, rgba(0, 0, 0, .3), rgba(0, 0, 0, .7));*/
-/*background: -o-linear-gradient(transparent, rgba(0, 0, 0, .3), rgba(0, 0, 0, .7));*/
-/*background: -moz-linear-gradient(transparent, rgba(0, 0, 0, .3), rgba(0, 0, 0, .7));*/
-/*background: linear-gradient(transparent, rgba(0, 0, 0, .3), rgba(0, 0, 0, .7))*/
-/*}*/
+.wb_footer {
+    border-top: #a9a9a9 solid 1px;
+}
 
 /*文字阴影*/
 .wb_text_shadow {
@@ -94,7 +91,7 @@ a:visited {
 
 .wb-show-intro {
     display: block;
-    font-size: 5px;
+    font-size: 12px;
     height: 100px;
     overflow: hidden;
     white-space: pre-wrap;
@@ -149,7 +146,8 @@ a:visited {
 }
 
 .wb_container_left > .wb_thumbnail > .caption > .title {
-    height: 40px;
+    display: block;
+    height: 90px;
     font-size: 15px;
 }
 
@@ -183,10 +181,23 @@ a:visited {
 }
 
 .wb_thumbnail > .caption > p {
-    font-size: 16px;
+    font-size: 15px;
     height: 60px;
     overflow: hidden;
-    white-space: nowrap;
+    white-space: pre-wrap;
+    text-overflow: ellipsis;
+}
+
+.wb_seach_img {
+    height: 160px
+}
+
+.wb_seach_brief {
+    padding: 4px;
+    font-size: 14px;
+    height: 110px;
+    overflow: hidden;
+    white-space: pre-wrap;
     text-overflow: ellipsis;
 }
 
@@ -241,20 +252,22 @@ a:visited {
 /*logo结束*/
 
 /*播放器相关*/
+
 #loading {
     position: absolute;
-    margin-left: 15%;
-    margin-right: auto;
-    padding-top: 20px;
-    width: 600px;
+    margin-top: 45px;
+    padding: 10px 20px 0 120px;
+    width: 900px;
     height: 400px;
-    opacity: 0.5;
+    left: 90px;
+    opacity: 0.9;
     z-index: 9999;
     overflow: hidden;
 }
 
 #loading > p {
     color: white;
+    font-size: 16px;
     text-shadow: 0 0 20px red;
 }
 
@@ -272,6 +285,30 @@ a:visited {
     height: 600px;
     display: none;
     padding-left: 30px;
+}
+
+.wb_video_content {
+    min-height: 400px;
+}
+
+
+
+.wb_video_select {
+    margin-top: 40px;
+}
+
+#player_content {
+    margin: 30px auto 40px auto;
+}
+
+.wb_video_brief {
+    height: 300px;
+    padding: 40px 0;
+}
+
+.wb_video_brief_p {
+    display: block;
+    height: 160px;
 }
 
 /*播放器结束*/

@@ -4,6 +4,9 @@ namespace App\Utils;
 
 class BiliBiliHelper
 {
+    public static $SERVICE_URL = 'http://bili-api.cn-hangzhou.aliapp.com';
+
+
     public static function getSorts()
     {
         return [
