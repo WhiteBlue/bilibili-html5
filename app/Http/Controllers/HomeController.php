@@ -15,10 +15,7 @@ class HomeController extends Controller
     {
         $redis = new Client();
 
-        $update_time = $redis->hget('update', 'index');
-
-        $update_time = substr($update_time, 0, strlen($update_time) - 3);
-        $date = date('H:i:s', $update_time);
+        $date = $redis->hget('update', 'index');
 
         $index = $redis->hgetall('index');
 
@@ -52,9 +49,7 @@ class HomeController extends Controller
         //默认取出redis
         if ($order == 'hot' && $page == 1) {
             $redis = new Client();
-            $update_time = $redis->hget('update', 'sort');
-            $update_time = substr($update_time, 0, strlen($update_time) - 3);
-            $date = date('H:i:s', $update_time);
+            $date = $redis->hget('update', 'sort');
 
             $sort = $redis->hget('sort', $sorts[$tid]);
             $sort = json_decode($sort, true);
