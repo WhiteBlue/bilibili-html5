@@ -1,6 +1,6 @@
-# BiliBili-Html5
+# bilibili-html5
 
-哔哩哔哩 (bilibili.com) 大型黑科技，定时同步主站信息，使用基于video.js的Html5弹幕播放器，使用手机版视频源
+哔哩哔哩 (bilibili.com) 站外黑科技，定时同步主站信息，使用基于video.js的Html5弹幕播放器，使用手机版视频源
 
 ## 地址
 
@@ -12,3 +12,6 @@
 
 ## 许可
 [MIT许可协议](http://www.opensource.org/licenses/mit-license.php).
+
+
+![screen](/screen.png)
