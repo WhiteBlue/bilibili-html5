@@ -8,7 +8,6 @@ $(document).ready(function () {
             $(this).find(".wb-show-shadow").stop().fadeTo(300, 0.8);
         },
         function () {
-            $(this).find(".wb-show-shadow").stop().fadeTo(240, 0);
-        }
-    );
+            $(this).find(".wb-show-shadow").stop().fadeTo(300, 0);
+        });
 });

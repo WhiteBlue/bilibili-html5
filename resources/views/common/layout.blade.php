@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>BiliBiliHtml5-@yield('title')</title>
+    <title>BH5-@yield('title')</title>
 
     <meta name="keywords" content="BiliBili,BiliBili助手">
     <meta name="description" content="BiliBili-html5，替换视频源，纯Html5播放器">
@@ -48,7 +48,7 @@
                             @endforeach
                         </ul>
                     </li>
-                    <li><a href="javascript:void(0)"> 新番 </a></li>
+                    <li><a href="{{ url('/bangumi') }}"> 新番 </a></li>
                     <li><a href="{{ url('/about') }}"> 关于 </a></li>
 
                 </ul>
@@ -74,17 +74,19 @@
 
     @yield('content')
 
-    <footer class="wb_footer">
-        <div class="container text-center">
-            <p class="text-center">&copy; "BiliPusher" Work by <a href="http://blog.whiteblue.xyz">WhiteBlue</a></p>
 
-            <p class="text-center">Mail : whiteblue616@icloud.com</p>
+    <div class="clear"></div>
+    <footer class="footer">
+        <p>Designed and built by <a href="http://twitter.com/mdo" target="_blank">WhiteBlue</a>.
+        </p>
 
-            <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-                document.write(unescape("%3Cspan id='cnzz_stat_icon_1256627943'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1256627943%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
-        </div>
+        <p>Code licensed under <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT License</a>
+        </p>
+        <a href="http://www.shiroblue.cn">Blog</a>·
+        <a href="https://github.com/WhiteBlue/bilibili-html5">Project</a>·
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+            document.write(unescape("%3Cspan id='cnzz_stat_icon_1256627943'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1256627943' type='text/javascript'%3E%3C/script%3E"));</script>
     </footer>
-
 
 </div>
 

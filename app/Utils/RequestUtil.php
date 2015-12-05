@@ -36,6 +36,7 @@ class RequestUtil
 
             $json_content = json_decode($output, true);
 
+
             if ($json_content['code'] != 'success') {
                 throw new Exception($json_content['message']);
             }

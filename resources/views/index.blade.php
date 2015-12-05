@@ -9,49 +9,40 @@
 
 
 @section('content')
-    <div class="jumbotron wb-jumbotron bili_logo">
-        <h1 style="color: #88989f">BiliBili Html5</h1>
-
-        <p class="bili_logo_lead">视频源替换，纯Html5播放器，根治macbook发热</p>
+    <div class="jumbotron wb-jumbotron bili-logo">
+        <h1 style="color:whitesmoke">BiliBili Html5</h1>
+        <p class="lead">视频源替换，纯Html5播放器，根治macbook发热</p>
     </div>
-
-    @foreach($sorts as $sort)
-
-        <h3 class="wb_title_split">{{ $sort }}
+    @foreach($sorts as $tid=>$name)
+        <h3 class="wb_title_split">{{ $name }}
             <small class="wb_small">更新于 {{ $update_time }}</small>
         </h3>
-
         <div class="row wb_line_row">
             <div class="wb_container_left">
-                <div class="thumbnail wb_thumbnail">
-                    <img class="wb_index_img" src="{{ $content[$sort][0]['pic'] }}"
-                         alt="{{ $content[$sort][0]['title'] }}" style="height:120px">
-
+                <a href="{{ url('/view/'.$list[$name][0]['aid']) }}" target="_blank"
+                   class="thumbnail wb_thumbnail_big">
+                    <img src="{{ $list[$name][0]['pic'] }}" alt="{{ $list[$name][0]['title'] }}"
+                         style="height:170px">
                     <div class="caption">
-                        <p class="title text-center">{{ $content[$sort][0]['title'] }}</p>
-
-                        <div class="text-center">
-                            <a href="{{ url('/view/'.$content[$sort][0]['aid']) }}" class="btn btn-primary"
-                               role="button" target="_blank">观看</a>
-                        </div>
+                        <p class="title text-center">{{ $list[$name][0]['title'] }}</p>
+                        <p class="intro">{{ $list[$name][0]['description'] }}</p>
                     </div>
-                </div>
+                </a>
             </div>
             <div class="wb_container_right">
-                @for($i=1;$i<sizeof($content[$sort]);$i++)
+                @for($i=1;$i<sizeof($list[$name]);$i++)
                     <div class="col-md-3">
-                        <a class="wb-show" href="{{ url('/view/'.$content[$sort][$i]['aid']) }}" target="_blank">
+                        <a class="wb-show" href="{{ url('/view/'.$list[$name][$i]['aid']) }}" target="_blank">
                             <div class="wb-show-shadow">
-                                <p class="wb-show-intro">{{ $content[$sort][$i]['description'] }}</p>
+                                <p class="wb-show-intro">{{ $list[$name][$i]['description'] }}</p>
 
-                                <p class="wb-show-play">播放: {{ $content[$sort][$i]['play'] }}
-                                    弹幕: {{ $content[$sort][$i]['comment'] }}</p>
+                                <p class="wb-show-play">播放: {{ $list[$name][$i]['play'] }}
+                                    &nbsp;&nbsp;&nbsp;&nbsp;弹幕: {{ $list[$name][$i]['comment'] }}</p>
                             </div>
-                            <img src="{{ $content[$sort][$i]['pic'] }}"
-                                 alt="...">
-
+                            <img src="{{ $list[$name][$i]['pic'] }}"
+                                 alt="{{ $list[$name][$i]['title'] }}">
                             <div class="caption">
-                                <p>{{ $content[$sort][$i]['title'] }}</p>
+                                <p>{{ $list[$name][$i]['title'] }}</p>
                             </div>
                         </a>
                     </div>
@@ -60,7 +51,6 @@
 
         </div>
     @endforeach
-
 
 @endsection
 

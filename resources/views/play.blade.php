@@ -4,10 +4,10 @@
 @section('title', $content['title'])
 
 @section('css')
-@parent
+    @parent
 
-<link rel="stylesheet" href="{{ url('video-js/video-js.css') }}">
-<link rel="stylesheet" href="{{ url('player/video_js_danmaku.css') }}">
+    <link rel="stylesheet" href="{{ url('video-js/video-js.css') }}">
+    <link rel="stylesheet" href="{{ url('player/video_js_danmaku.css') }}">
 
 @endsection
 
@@ -24,6 +24,21 @@
 
 
     <div class="well wb_video_content">
+        @if($content['pages']>1)
+            <nav>
+                <ul class="pager">
+                    @if($page!=1)
+                        <li><a href="{{ url('/view/'.$aid.'?page='.($page-1)) }}">上一P</a></li>
+                    @endif
+                    <li><a href="javascript:viod(0)">{{ $content['partname'] }}</a></li>
+                    @if($page<$content['pages'])
+                        <li><a href="{{ url('/view/'.$aid.'?page='.($page+1)) }}">下一P</a></li>
+                    @endif
+                </ul>
+            </nav>
+        @endif
+
+
         <div class="row text-center wb_video_select" id="video_container">
             <div class="btn-group" role="group" aria-label="画质选择">
                 <button type="button" id="btn_launch_low" class="btn btn-default">低画质</button>
@@ -90,14 +105,14 @@
 @endsection
 
 @section('javascript')
-@parent
+    @parent
 
 
-<script src="{{ url('video-js/video.js') }}"></script>
-<script src="{{ url('player/CommentCoreLibrary.min.js') }}"></script>
-<script src="{{ url('player/ABPLibxml.js') }}"></script>
-<script src="{{ url('player/video_js_danmaku.js') }}"></script>
-<script src="{{ url('player/player.js') }}"></script>
+    <script src="{{ url('video-js/video.js') }}"></script>
+    <script src="{{ url('player/CommentCoreLibrary.min.js') }}"></script>
+    <script src="{{ url('player/ABPLibxml.js') }}"></script>
+    <script src="{{ url('player/video_js_danmaku.js') }}"></script>
+    <script src="{{ url('player/player.js') }}"></script>
 
 
 @endsection

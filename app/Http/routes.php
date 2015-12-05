@@ -21,6 +21,10 @@ $app->get('/video/{quality}', 'HomeController@video');
 
 $app->get('/search', 'HomeController@search');
 
-$app->get('/searchPage/{content}', 'HomeController@searchPage');
-
 $app->get('/about', 'HomeController@about');
+
+$app->get('/sp/{name}', 'HomeController@sp');
+
+$app->get('/spvideo/{spid}', 'HomeController@get_sp_video');
+
+$app->get('/bangumi', 'HomeController@bangumi');

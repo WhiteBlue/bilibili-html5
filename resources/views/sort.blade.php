@@ -22,20 +22,16 @@
             </div>
 
             <div class="col-xs-10">
-
                 <nav>
                     <ul class="pager">
                         <li class="previous"><a href="{{ url('/sort/'.$tid.'?page='.$page.'&order=hot') }}">最热</a></li>
                         <li class="next"><a href="{{ url('/sort/'.$tid.'?page='.$page.'&order=new') }}">最新</a></li>
                     </ul>
                 </nav>
-
                 <div class="row">
-
                     <h3 class="wb_title_split">{{ $content['name'] }}
                         <small class="wb_small">更新于 {{ $date }}</small>
                     </h3>
-
                     <div class="grid">
 
                         @foreach($content['list'] as $gird)
@@ -73,10 +69,8 @@
                         </ul>
                     </nav>
                 </div>
-
             </div>
         </div>
-
     </div>
 
 @endsection
@@ -84,14 +78,16 @@
 @section('javascript')
     @parent
     <script src="{{ url('js/masonry.pkgd.min.js') }}"></script>
-
+    <script src="{{ url('js/imagesloaded.pkgd.min.js') }}"></script>
     <script>
         $(document).ready(function () {
-            $('.grid').masonry({
-                itemSelector: '.grid-item',
-                columnLength: 200
+            var $container = $('.grid');
+            $container.imagesLoaded(function () {
+                $container.masonry({
+                    itemSelector: '.grid-item',
+                    columnLength: 200
+                });
             });
         });
     </script>
-
 @endsection
