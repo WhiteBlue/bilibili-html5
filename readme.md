@@ -14,4 +14,4 @@
 [MIT许可协议](http://www.opensource.org/licenses/mit-license.php).
 
 
-![screen](/screen.png)
+![screen](screen.png)
