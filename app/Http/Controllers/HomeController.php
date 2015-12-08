@@ -199,9 +199,7 @@ class HomeController extends Controller
 
         $today = date('w');
 
-        $today_bangumi = $bangumi_list[$today];
-
-        return view('bangumi')->with('content', $bangumi_list)->with('today', $today)->with('daily', $today_bangumi);
+        return view('bangumi')->with('content', $bangumi_list)->with('today', $today);
     }
 
     public function test()
@@ -231,7 +229,9 @@ class HomeController extends Controller
             }
 
             foreach ($bangumi['content']['list'] as $animation) {
-                array_push($bangumi_result[$animation['weekday']], $animation);
+                if (isset($animation['cover'])) {
+                    array_push($bangumi_result[$animation['weekday']], $animation);
+                }
             }
 
             Cache::forever('index_cache', $index['content']);

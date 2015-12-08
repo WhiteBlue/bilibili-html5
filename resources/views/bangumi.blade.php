@@ -19,11 +19,11 @@
             <ul style="padding-left: 0">
 
                 <li class="bangumi_view_li">
-                    <p class="bangumi_view_time">{{ date('D') }}</p>
+                    <p class="bangumi_view_time">今日 : {{ \App\Utils\DateUtil::getDate($today) }}</p>
 
                     <div class="bangumi_view_element_container">
 
-                        @foreach($daily as $animation)
+                        @foreach($content[$today] as $animation)
                             <a href="{{ url('/sp/'.$animation['title']) }}">
                                 <div class="bangumi_view_element wb_action_element">
                                     <img src="{{ $animation['cover'] }}" alt="bangumi_logo">
@@ -45,15 +45,15 @@
                 </li>
 
                 @foreach($content as $day=>$animations)
+                    @if($day!=$today)
 
-                    <li class="bangumi_view_li">
-                        <p class="bangumi_view_time">{{ date('D',strtotime($day.' weekday')) }}</p>
+                        <li class="bangumi_view_li">
+                            <p class="bangumi_view_time">{{ \App\Utils\DateUtil::getDate($day) }}</p>
 
-                        <div class="bangumi_view_element_container">
+                            <div class="bangumi_view_element_container">
 
-                            @foreach($animations as $index=>$other)
-                                @if(isset($other['cover']))
-                                    @if($index>1) 
+                                @foreach($animations as $index=>$other)
+                                    @if($index>3) 
                                     <a href="{{ url('/sp/'.$other['title']) }}"> 
                                         <div class="bangumi_view_element wb_action_element wb_hidden_{{ $day }}"  
                                              style="display: none">  <img src="{{ $other['cover'] }}"
@@ -78,17 +78,16 @@
                                             </div>
                                         </a>
                                     @endif
-                                @endif
-                            @endforeach
+                                @endforeach
 
-                            <div class="row clear_elements">
-                                <a class="wb_action_text wb_action_toggle" action="wb_hidden_{{ $day }}"
-                                   href="javascript:void(0);">加载更多↓↓</a>
+                                <div class="row clear_elements">
+                                    <a class="wb_action_text wb_action_toggle" action="wb_hidden_{{ $day }}"
+                                       href="javascript:void(0);">加载更多↓↓</a>
+                                </div>
                             </div>
-                        </div>
-                        <div class="clear"></div>
-                    </li>
-
+                            <div class="clear"></div>
+                        </li>
+                    @endif
                 @endforeach
 
             </ul>

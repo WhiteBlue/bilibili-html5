@@ -6,8 +6,8 @@
 @section('css')
     @parent
 
-    <link rel="stylesheet" href="{{ url('video-js/video-js.css') }}">
-    <link rel="stylesheet" href="{{ url('player/video_js_danmaku.css') }}">
+    <link rel="stylesheet" href="{{ url('danmakuPlayer/dist/video-js.min.css') }}">
+    <link rel="stylesheet" href="{{ url('danmakuPlayer/danmaku_player.css') }}">
 
 @endsection
 
@@ -48,19 +48,16 @@
 
             <div id="video_info" aid="{{ $aid }}" cid="{{ $content['cid'] }}"></div>
 
-            <div class="text-center" id="loading"></div>
 
-            <div class="col-md-10 col-md-offset-1 text-center">
-                <div class="abp" id="player_content">
-                    <div class="dialog">
-                        <video id="player" class="video-js vjs-default-skin"
-                               controls preload="auto" width="900" height="600"
-                               poster="{{ $content['pic'] }}" data-setup="{}">
-                            <p class="vjs-no-js">你的浏览器不支持Html5</p>
-                        </video>
-                    </div>
-                </div>
+            <div class="video_block" style="display: none">
+                <div class="loading_frame" id="loading_dialog"></div>
+                <video id="danmaku_player" class="video-js vjs-default-skin" controls
+                       poster="{{ $content['pic'] }}"
+                       preload="auto" width="900" height="600">
+                    <p class="vjs-no-js">你的浏览器不支持Html5</p>
+                </video>
             </div>
+
         </div>
 
 
@@ -107,12 +104,65 @@
 @section('javascript')
     @parent
 
+    <script src="{{ url('danmakuPlayer/dist/video.min.js') }}"></script>
+    <script src="{{ url('danmakuPlayer/CommentCoreLibrary.min.js') }}"></script>
+    <script src="{{ url('danmakuPlayer/BilibiliFormat.js') }}"></script>
+    <script src="{{ url('danmakuPlayer/videojs_ABdm.js') }}"></script>
+    <script src="{{ url('danmakuPlayer/danmaku_player.js') }}"></script>
 
-    <script src="{{ url('video-js/video.js') }}"></script>
-    <script src="{{ url('player/CommentCoreLibrary.min.js') }}"></script>
-    <script src="{{ url('player/ABPLibxml.js') }}"></script>
-    <script src="{{ url('player/video_js_danmaku.js') }}"></script>
-    <script src="{{ url('player/player.js') }}"></script>
+    <script>
+        $(document).ready(function () {
+            var id_container = $('#video_info');
+            var aid = id_container.attr('aid');
+            var cid = id_container.attr('cid');
+
+            window.videoPlayer = loadPlayer('danmaku_player', '#loading_dialog');
+
+            function loadVideo(video, danmaku) {
+                $('.video_block').fadeIn();
+                videoPlayer.loadVideo(video);
+                videoPlayer.loadDanmaku(danmaku);
+                videoPlayer.loadStart();
+            }
+
+            $('#btn_launch_low').click(function () {
+                $.get("/video/0?aid=" + aid + "&cid=" + cid,
+                        function (data, status) {
+                            if (data.code == 'success') {
+                                loadVideo(data.content, 'http://comment.bilibili.cn/' + cid + '.xml');
+                            } else {
+                                videoPlayer.addLoadingText('出现未知异常,同步率下降,请尝试刷新页面');
+                            }
+                        }
+                );
+            });
+
+            $('#btn_launch_mid').click(function () {
+                $.get("/video/1?aid=" + aid + "&cid=" + cid,
+                        function (data, status) {
+                            if (data.code == 'success') {
+                                loadVideo(data.content, 'http://comment.bilibili.cn/' + cid + '.xml');
+                            } else {
+                                videoPlayer.addLoadingText('出现未知异常,同步率下降,请尝试刷新页面');
+                            }
+                        }
+                );
+            });
+
+            $('#btn_launch_high').click(function () {
+                $.get("/video/3?aid=" + aid + "&cid=" + cid,
+                        function (data, status) {
+                            if (data.code == 'success') {
+                                loadVideo(data.content, 'http://comment.bilibili.cn/' + cid + '.xml');
+                            } else {
+                                videoPlayer.addLoadingText('出现未知异常,同步率下降,请尝试刷新页面');
+                            }
+                        }
+                );
+            });
+        });
+
+    </script>
 
 
 @endsection
