@@ -1,11 +1,11 @@
 <?php
 
-
 use App\Utils\BiliBiliHelper;
 use App\Utils\RequestUtil;
 use Illuminate\Support\Facades\Cache;
 
 $app = require __DIR__ . '/bootstrap/app.php';
+date_default_timezone_set('PRC');
 
 try {
     $sort_list = [];
@@ -46,3 +46,4 @@ try {
 } catch (\Exception $e) {
     dd($e);
 }
+

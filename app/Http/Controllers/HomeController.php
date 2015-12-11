@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Utils\BiliBiliHelper;
 use App\Utils\RequestUtil;
+use DOMDocument;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Predis\Client;
 
 class HomeController extends Controller
 {
@@ -202,47 +203,77 @@ class HomeController extends Controller
         return view('bangumi')->with('content', $bangumi_list)->with('today', $today);
     }
 
+    //nico视频观看
+    public function viewNico($id)
+    {
+        $request_aray = [
+            '__format' => 'json',
+            'v' => $id,
+        ];
+        try {
+            $back = RequestUtil::normalGetUrl('http://api.ce.nicovideo.jp/nicoapi/v1/video.info?' . http_build_query($request_aray));
+            $back = json_decode($back, true);
+            $content = $back['nicovideo_video_response'];
+            if ($content['@status'] != 'ok') {
+                throw new Exception('Back error...');
+            }
+            return view('play_nico')->with('content', $content['video']);
+        } catch (\Exception $e) {
+            return $this->returnError($e->getMessage());
+        }
+    }
+
+    public function nicoSort($sort, Request $request)
+    {
+        $sorts = BiliBiliHelper::getNicoSorts();
+        //分类非法检测
+        if (!array_has($sorts, $sort)) {
+            return $this->returnError('分类不存在');
+        }
+
+        $page = $request->get('page', 1);
+
+        //页码非法检测
+        $page = ($page < 1) ? 1 : $page;
+        $page = ($page > 2) ? 2 : $page;
+
+        $content = Cache::get('nico_cache');
+        $date = Cache::get('refresh_time');
+
+        $lists = array_chunk($content[$sort], 50);
+
+        return view('sort_nico')->with('list', $lists[$page - 1])->with('page', $page)->with('sort',
+            $sort)->with('date', $date)->with('tag_name', $sorts[$sort]);
+    }
+
     public function test()
     {
-        try {
-            $sort_list = [];
-            foreach (BiliBiliHelper::getSorts() as $key => $value) {
-                $request_array = [
-                    'tid' => $key,
-                    'order' => 'hot',
-                    'page' => '1',
-                    'pagesize' => '20'
-                ];
-                $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . '/sort?' . http_build_query($request_array));
-                $sort_list[$key] = $back['content'];
+        $sort_list = [];
+
+        foreach (BiliBiliHelper::getNicoSorts() as $key => $value) {
+            $back = RequestUtil::normalGetUrl('http://www.nicovideo.jp/ranking/fav/hourly/' . $key . '?rss=2.0&lang=ja-jp');
+
+            $xmlDoc = new DOMDocument();
+            $xmlDoc->loadXML($back);
+
+            $element = $xmlDoc->documentElement;
+            $chanel = $element->getElementsByTagName('channel')->item(0);
+
+            $video_array = [];
+
+            foreach ($chanel->getElementsByTagName('item') as $item) {
+                $inner = [];
+                $inner['title'] = explode('：', $item->getElementsByTagName('title')[0]->nodeValue)[1];
+                $inner['id'] = explode('watch/', $item->getElementsByTagName('link')[0]->nodeValue)[1];
+                array_push($video_array, $inner);
             }
-
-            $index = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . '/index');
-            $refresh_time = date('H:i:s');
-
-            $bangumi = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . '/bangumi?type=2');
-            $bangumi_result = [];
-
-            for ($i = 0; $i < 7; $i++) {
-                $day_bangumi = [];
-                $bangumi_result[$i] = $day_bangumi;
-            }
-
-            foreach ($bangumi['content']['list'] as $animation) {
-                if (isset($animation['cover'])) {
-                    array_push($bangumi_result[$animation['weekday']], $animation);
-                }
-            }
-
-            Cache::forever('index_cache', $index['content']);
-            Cache::forever('sort_cache', $sort_list);
-            Cache::forever('refresh_time', $refresh_time);
-            Cache::forever('bangumi_cache', $bangumi_result);
-
-            dd('ok');
-        } catch (\Exception $e) {
-            dd($e);
+            $sort_list[$key] = $video_array;
         }
+
+        Cache::forever('nico_cache', $sort_list);
+
+        dd('ok');
+
     }
 
 }

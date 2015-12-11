@@ -15,7 +15,11 @@ $app->get('/', 'HomeController@home');
 
 $app->get('/sort/{tid}', 'HomeController@sort');
 
+$app->get('/sortnico/{sort}', 'HomeController@nicoSort');
+
 $app->get('/view/{aid}', 'HomeController@view');
+
+$app->get('/viewnico/{id}', 'HomeController@viewNico');
 
 $app->get('/video/{quality}', 'HomeController@video');
 
@@ -28,3 +32,5 @@ $app->get('/sp/{name}', 'HomeController@sp');
 $app->get('/spvideo/{spid}', 'HomeController@get_sp_video');
 
 $app->get('/bangumi', 'HomeController@bangumi');
+
+
