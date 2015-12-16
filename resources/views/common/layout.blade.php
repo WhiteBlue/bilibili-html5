@@ -59,6 +59,7 @@
                     </li>
                     <li><a href="{{ url('/bangumi') }}"> 新番 </a></li>
                     <li><a href="{{ url('/about') }}"> 关于 </a></li>
+                    <li><a href="http://blog.shiroblue.cn"> Blog </a></li>
 
                 </ul>
                 <ul class="nav navbar-nav navbar-right">

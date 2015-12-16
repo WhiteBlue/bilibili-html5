@@ -39,8 +39,8 @@ try {
 
     Cache::forever('index_cache', $index['content']);
     Cache::forever('sort_cache', $sort_list);
-    Cache::forever('refresh_time', $refresh_time);
     Cache::forever('bangumi_cache', $bangumi_result);
+    Cache::forever('refresh_time', $refresh_time);
 
     dd('ok');
 } catch (\Exception $e) {
