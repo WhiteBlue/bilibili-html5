@@ -53,33 +53,40 @@
                 <footer>全功能版完成~</footer>
             </blockquote>
 
-            <h4>更新预定</h4>
+            <h4>2015.12</h4>
             <blockquote>
-                <p>弹幕播放器继续调教,bug修正</p>
+                <p>搜索服务完善,弹幕播放器调教</p>
+            </blockquote>
+
+            <h4>2015.1</h4>
+            <blockquote>
+                <p>完成Rect版本,移动端专属优化,service用Golang重构,迁移至DaoCloud</p>
+            </blockquote>
+
+            <h4>2015.1</h4>
+            <blockquote>
+                <p>搜索接口修正,web端更新,分P-bug修复,添加flv格式支持,项目引入bower管理</p>
             </blockquote>
 
         </div>
     </div>
 
 
-    <div class="ds-thread" data-thread-key="about" data-title="about" data-url="{{ url('/about') }}"></div>
-
+    <div id="disqus_thread"></div>
+    <script>
+        (function () {
+            var d = document, s = d.createElement('script');
+            s.src = '//shiroblue.disqus.com/embed.js';
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments
+            powered by Disqus.</a></noscript>
 @endsection
 
 @section('javascript')
     @parent
 
-    <script type="text/javascript">
-        var duoshuoQuery = {short_name: "bili"};
-        (function () {
-            var ds = document.createElement('script');
-            ds.type = 'text/javascript';
-            ds.async = true;
-            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-            ds.charset = 'UTF-8';
-            (document.getElementsByTagName('head')[0]
-            || document.getElementsByTagName('body')[0]).appendChild(ds);
-        })();
-    </script>
 
 @endsection

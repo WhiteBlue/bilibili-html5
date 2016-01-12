@@ -11,11 +11,11 @@
     @section('css')
         <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-        <link rel="stylesheet" href="{{ url('css/site.css') }}">
+        <link rel="stylesheet" href="{{ url('css/site.min.css') }}">
 
         <!--[if lt IE 9]>
-        <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+        <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
     @show
 
@@ -43,7 +43,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                            aria-expanded="false"> 分类 <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            @foreach(\App\Utils\BiliBiliHelper::getSorts() as $sort_key=>$sort_value)
+                            @foreach(\App\Utils\BiliBiliHelper::$sorts as $sort_key=>$sort_value)
                                 <li><a href="{{ url('/sort/'.$sort_key) }}">{{ $sort_value }}</a></li>
                             @endforeach
                         </ul>
@@ -59,6 +59,7 @@
                     </li>
                     <li><a href="{{ url('/bangumi') }}"> 新番 </a></li>
                     <li><a href="{{ url('/about') }}"> 关于 </a></li>
+                    <li><a href="http://mobile.shiroblue.cn"> 移动端 </a></li>
                     <li><a href="http://blog.shiroblue.cn"> Blog </a></li>
 
                 </ul>
@@ -84,7 +85,6 @@
 
     @yield('content')
 
-
     <div class="clear"></div>
     <footer class="footer">
         <p>Designed and built by <a href="http://twitter.com/mdo" target="_blank">WhiteBlue</a>.
@@ -102,9 +102,10 @@
 
 
 @section('javascript')
-    <script src="http://libs.useso.com/js/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
     <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="{{ url('js/site.js') }}"></script>
+
+    <script src="{{ url('js/main.min.js') }}"></script>
 @show
 
 </body>

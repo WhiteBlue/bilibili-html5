@@ -25,8 +25,11 @@ class DateUtil
             case('5'):
                 return '星期五';
                 break;
-            default:
+            case('6'):
                 return '星期六';
+                break;
+            default:
+                return '其他';
         }
     }
 

@@ -32,3 +32,8 @@ crashlytics-build.properties
 .env
 
 /vendor
+
+
+node_modules
+
+public/components

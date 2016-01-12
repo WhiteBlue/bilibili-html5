@@ -21,13 +21,11 @@ $app->get('/view/{aid}', 'HomeController@view');
 
 $app->get('/viewnico/{id}', 'HomeController@viewNico');
 
-$app->get('/video/{quality}', 'HomeController@video');
-
 $app->get('/search', 'HomeController@search');
 
 $app->get('/about', 'HomeController@about');
 
-$app->get('/sp/{name}', 'HomeController@sp');
+$app->get('/sp/{spid}', 'HomeController@sp');
 
 $app->get('/spvideo/{spid}', 'HomeController@get_sp_video');
 

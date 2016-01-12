@@ -24,7 +24,7 @@
                     <div class="bangumi_view_element_container">
 
                         @foreach($content[$today] as $animation)
-                            <a href="{{ url('/sp/'.$animation['title']) }}">
+                            <a href="{{ url('/sp/'.$animation['spid']) }}">
                                 <div class="bangumi_view_element wb_action_element">
                                     <img src="{{ $animation['cover'] }}" alt="bangumi_logo">
 
@@ -54,7 +54,7 @@
 
                                 @foreach($animations as $index=>$other)
                                     @if($index>3) 
-                                    <a href="{{ url('/sp/'.$other['title']) }}"> 
+                                    <a href="{{ url('/sp/'.$other['spid']) }}"> 
                                         <div class="bangumi_view_element wb_action_element wb_hidden_{{ $day }}"  
                                              style="display: none">  <img src="{{ $other['cover'] }}"
                                                                           alt="bangumi_logo">  
@@ -66,7 +66,7 @@
                                         </div>
                                          </a>
                                      @else
-                                        <a href="{{ url('/sp/'.$other['title']) }}">
+                                        <a href="{{ url('/sp/'.$other['spid']) }}">
                                             <div class="bangumi_view_element wb_action_element">
                                                 <img src="{{ $other['cover'] }}" alt="bangumi_logo">
 
@@ -80,10 +80,14 @@
                                     @endif
                                 @endforeach
 
-                                <div class="row clear_elements">
-                                    <a class="wb_action_text wb_action_toggle" action="wb_hidden_{{ $day }}"
-                                       href="javascript:void(0);">加载更多↓↓</a>
-                                </div>
+                                @if(sizeof($animations)>4)
+                                    <div class="row clear_elements">
+                                        <a class="wb_action_text wb_action_toggle" action="wb_hidden_{{ $day }}"
+                                           href="javascript:void(0);">加载更多↓↓</a>
+                                    </div>
+                                @else
+                                    <div class="row clear_elements"></div>
+                                @endif
                             </div>
                             <div class="clear"></div>
                         </li>

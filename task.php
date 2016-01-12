@@ -9,40 +9,35 @@ date_default_timezone_set('PRC');
 
 try {
     $sort_list = [];
-    foreach (BiliBiliHelper::getSorts() as $key => $value) {
+    foreach (BiliBiliHelper::$sorts as $key => $value) {
         $request_array = [
-            'tid' => $key,
             'order' => 'hot',
             'page' => '1',
-            'pagesize' => '20'
+            'count' => '16'
         ];
-        $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . '/sort?' . http_build_query($request_array));
+        $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . "/sort/$key?" . http_build_query($request_array));
+        if ($back['code'] != 200) {
+            throw new Exception;
+        }
         $sort_list[$key] = $back['content'];
     }
 
-    $index = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . '/index');
+    $index = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . '/topinfo');
     $refresh_time = date('H:i:s');
 
-    $bangumi = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . '/bangumi?type=2');
-    $bangumi_result = [];
+    $bangumi = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . '/bangumi');
 
-    for ($i = 0; $i < 7; $i++) {
-        $day_bangumi = [];
-        $bangumi_result[$i] = $day_bangumi;
+    if ($bangumi['code'] != 200) {
+        throw new Exception;
     }
-
-    foreach ($bangumi['content']['list'] as $animation) {
-        if (isset($animation['cover'])) {
-            array_push($bangumi_result[$animation['weekday']], $animation);
-        }
-    }
+    $bangumi = $bangumi['content'];
 
     Cache::forever('index_cache', $index['content']);
     Cache::forever('sort_cache', $sort_list);
-    Cache::forever('bangumi_cache', $bangumi_result);
+    Cache::forever('bangumi_cache', $bangumi);
     Cache::forever('refresh_time', $refresh_time);
 
-    dd('ok');
+    echo 'ok';
 } catch (\Exception $e) {
     dd($e);
 }

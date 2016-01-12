@@ -46,9 +46,13 @@
 
             function add_videos(type) {
                 container.empty();
-                $.get("/spvideo/{{$content['spid']}}?type=" + type, function (data, status) {
+                $.get("/spvideo/{{$content['spid']}}?type=" + type, function (data) {
                     if (data.code == 'success') {
                         var list = data.content.list;
+                        if (list.length == 0) {
+                            container.append('<div class="text-center"><h4>毛都没有</h4></div>');
+                        }
+
                         for (var i in list) {
                             var video = '<div class="col-md-3"><a class="wb-show wb-show_middle wb_hidden" style="display: none" href="/view/' + list[i].aid + '" target="_blank">' +
                                     '<img src="' + list[i].cover + '" style="max-height: 120px"><div class="caption">' +
@@ -59,15 +63,14 @@
                     }
                 });
             }
-            add_videos(1);
 
             $('#change_other').click(function () {
                 add_videos(0);
             });
-
             $('#change_bangumi').click(function () {
                 add_videos(1);
             });
+            add_videos(1);
         });
     </script>
 

@@ -13,15 +13,15 @@
 
     <div class="row">
         <div class="container">
-            <div class="col-xs-2 well">
+            <div class="col-md-2 well">
                 <ul class="nav nav-pills nav-stacked">
-                    @foreach(\App\Utils\BiliBiliHelper::getSorts() as $sort_key=>$sort_value)
+                    @foreach(\App\Utils\BiliBiliHelper::$sorts as $sort_key=>$sort_value)
                         <li><a href="{{ url('/sort/'.$sort_key) }}">{{ $sort_value }}</a></li>
                     @endforeach
                 </ul>
             </div>
 
-            <div class="col-xs-10">
+            <div class="col-md-10">
                 <nav>
                     <ul class="pager">
                         <li class="previous"><a href="{{ url('/sort/'.$tid.'?page='.$page.'&order=hot') }}">最热</a></li>
@@ -33,20 +33,23 @@
                         <small class="wb_small">更新于 {{ $date }}</small>
                     </h3>
                     <div class="grid">
+                        @foreach($content['list'] as $video)
+                            <div class="col-md-3">
+                                <a class="wb-show wb-show_middle" href="{{ url('/view/'.$video['aid']) }}"
+                                   target="_blank">
+                                    <div class="wb-show-shadow wb-show-shadow_middle">
+                                        <p class="wb-show-intro">{{ $video['description'] }}</p>
 
-                        @foreach($content['list'] as $gird)
-
-                            <div class="grid-item">
-                                <a href="{{ url('/view/'.$gird['aid']) }}" target="_blank" class="thumbnail tex">
-                                    <img src="{{ $gird['pic'] }}"
-                                         alt="...">
+                                        <p class="wb-show-play">播放: {{ $video['play'] }}
+                                            弹幕: {{$video['video_review'] }}</p>
+                                    </div>
+                                    <img src="{{ $video['pic'] }}" alt="{{ $video['title'] }}">
 
                                     <div class="caption">
-                                        <p>{{ $gird['title'] }}</p>
+                                        <p>{{ $video['title'] }}</p>
                                     </div>
                                 </a>
                             </div>
-
                         @endforeach
 
                     </div>
@@ -59,12 +62,12 @@
 
                             @if($page!=1)
                                 <li class="previous">
-                                    <a href="{{ url('/sort/'.$tid.'?page='.($page-1)) }}">
+                                    <a href="{{ url('/sort/'.$tid.'?page='.($page-1).'&order='.$order) }}">
                                         <span aria-hidden="true">&larr;</span> 前一页 </a>
                                 </li>
                             @endif
 
-                            <li class="next"><a href="{{ url('/sort/'.$tid.'?page='.($page+1)) }}"> 后一页 <span
+                            <li class="next"><a href="{{ url('/sort/'.$tid.'?page='.($page+1).'&order='.$order) }}"> 后一页 <span
                                             aria-hidden="true">&rarr;</span></a></li>
                         </ul>
                     </nav>
@@ -77,17 +80,5 @@
 
 @section('javascript')
     @parent
-    <script src="{{ url('js/masonry.pkgd.min.js') }}"></script>
-    <script src="{{ url('js/imagesloaded.pkgd.min.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            var $container = $('.grid');
-            $container.imagesLoaded(function () {
-                $container.masonry({
-                    itemSelector: '.grid-item',
-                    columnLength: 200
-                });
-            });
-        });
-    </script>
+
 @endsection

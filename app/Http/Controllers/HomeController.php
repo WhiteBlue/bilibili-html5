@@ -17,23 +17,20 @@ class HomeController extends Controller
     {
         $index_list = Cache::get('index_cache');
         $update_time = Cache::get('refresh_time');
-        $sorts = BiliBiliHelper::getSorts();
+        $sorts = BiliBiliHelper::$sorts;
         return view('index')->with('list', $index_list)->with('update_time', $update_time)->with('sorts', $sorts);
     }
 
     //分类
     public function sort($tid, Request $request)
     {
-        $sorts = BiliBiliHelper::getSorts();
-
+        $sorts = BiliBiliHelper::$sorts;
         //分类非法检测
         if (!array_has($sorts, $tid)) {
             return $this->returnError('分类不存在');
         }
-
         $order = $request->get('order', 'hot');
         $page = $request->get('page', 1);
-
         //页码非法检测
         $page = ($page < 1) ? 1 : $page;
 
@@ -44,22 +41,32 @@ class HomeController extends Controller
         } else {
             try {
                 $request_array = [
-                    'tid' => $tid,
                     'order' => $order,
                     'page' => $page,
-                    'pagesize' => 20
+                    'count' => 16
                 ];
 
                 $date = date('H:i:s');
-                $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . '/sort?' . http_build_query($request_array));
+                $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . "/sort/$tid?" . http_build_query($request_array));
 
-                $sort = $back['content'];
+                if ($back['code'] = 200) {
+                    $sort = $back['content'];
+                } else {
+                    throw new Exception();
+                }
             } catch (\Exception $e) {
                 return $this->returnError('服务器君忙，待会再试吧...');
             }
         }
 
-        return view('sort')->with('content', $sort)->with('tid', $tid)->with('page', $page)->with('date', $date);
+        $list = $sort['list'];
+        if (array_has($list, 'num')) {
+            unset($list['num']);
+        }
+        $sort['list'] = $list;
+
+        return view('sort')->with('content', $sort)->with('tid', $tid)->with('page', $page)->with('order',
+            $order)->with('date', $date);
     }
 
 
@@ -67,62 +74,22 @@ class HomeController extends Controller
     public function view($aid, Request $request)
     {
         try {
-            $page = $request->get('page', 1);
+            $page = $request->get('page', 0);
+            $quality = $request->get('quality', 1);
 
             //页码非法检测
             $page = ($page < 1) ? 1 : $page;
 
-            $request_array = [
-                'aid' => $aid,
-                'page' => $page,
-            ];
+            $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . "/view/$aid");
 
-            $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . '/view?' . http_build_query($request_array));
-
-            return view('play')->with('content', $back['content'])->with('aid', $aid)->with('page', $page);
-        } catch (\Exception $e) {
-            return $this->returnError($e->getMessage());
-        }
-    }
-
-    //获取地址
-    public function video($quality, Request $request)
-    {
-        try {
-            $aid = $request->get('aid');
-            $cid = $request->get('cid');
-
-            $request_array = [
-                'aid' => $aid,
-                'cid' => $cid,
-                'quality' => $quality
-            ];
-
-            if ($quality == '0' || $quality == '3') {
-                $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . '/videoMobile?' . http_build_query($request_array));
-                $result = $back['content'];
-
-                $return_array = [
-                    'code' => 'success',
-                    'content' => $result['durl'][0]['url'],
-                ];
-            } else {
-                $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . '/videoHtml?' . http_build_query($request_array));
-                $result = $back['content'];
-
-                $return_array = [
-                    'code' => 'success',
-                    'content' => $result['src']
-                ];
+            if ($back['code'] != 200) {
+                throw new Exception('视频未找到...');
             }
 
-            return response()->json($return_array);
+            return view('play')->with('content', $back['content'])->with('aid', $aid)->with('page',
+                $page)->with('quality', $quality);
         } catch (\Exception $e) {
-            $return_array = [
-                'code' => 'error',
-                'content' => $e->getMessage()
-            ];
-            return response()->json($return_array);
+            return $this->returnError($e->getMessage());
         }
     }
 
@@ -133,22 +100,40 @@ class HomeController extends Controller
         try {
             $page = $request->get('page', 1);
             $keyword = $request->get('keyword');
+            $order = $request->get('order', 'totalrank');
+            $type = $request->get('type', 'video');
 
+            if (!in_array($type, BiliBiliHelper::$search_types)) {
+                return $this->returnError('分类不正确');
+            }
             if (!$keyword) {
-                $this->returnError('内容为空');
+                return $this->returnError('内容为空');
             }
 
-            $page = ($page < 1) ? 1 : $page;
-
             $request_array = [
-                'keyword' => $keyword,
+                'content' => $keyword,
                 'page' => $page,
-                'pagesize' => 16,
+                'count' => 20,
+                'type' => $type,
+                'order' => $order
             ];
 
-            $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . '/search?' . http_build_query($request_array));
+            $back = RequestUtil::postUrl(BiliBiliHelper::$SERVICE_URL . '/search', $request_array);
 
-            return view('search')->with('back', $back['content'])->with('page', $page)->with('search', $keyword);
+            if ($back['code'] == 200) {
+                $back = $back['content'];
+            } else {
+                throw new Exception('API返回异常');
+            }
+
+            $render_data = [
+                'keyword' => $keyword,
+                'content' => $back,
+                'page' => $page,
+                'type' => $type
+            ];
+
+            return view('search', $render_data);
         } catch (\Exception $e) {
             return $this->returnError($e->getMessage());
         }
@@ -162,10 +147,14 @@ class HomeController extends Controller
     }
 
 
-    public function sp($name)
+    public function sp($spid)
     {
         try {
-            $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . '/sp?name=' . $name);
+            $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . "/spinfo/$spid");
+
+            if ($back['code'] != 200) {
+                return $this->returnError("404...专题不存在");
+            }
 
             return view('sp')->with('content', $back['content']);
         } catch (\Exception $e) {
@@ -180,16 +169,21 @@ class HomeController extends Controller
         try {
             $type = $request->get('type', 0);
 
-            $request_array = [
-                'spid' => $spid,
-                'type' => $type
-            ];
+            $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . "/spvideos/$spid?bangumi=$type");
 
-            $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . '/spvideo?' . http_build_query($request_array));
+            if ($back['code'] != 200) {
+                throw new Exception;
+            }
 
-            return response()->json($back);
+            return response()->json([
+                'code' => 'success',
+                'content' => $back['content']
+            ]);
         } catch (\Exception $e) {
-            return $this->returnError($e->getMessage());
+            return response()->json([
+                'code' => 'error',
+                'message' => $e->getMessage()
+            ]);
         }
     }
 
@@ -245,35 +239,4 @@ class HomeController extends Controller
         return view('sort_nico')->with('list', $lists[$page - 1])->with('page', $page)->with('sort',
             $sort)->with('date', $date)->with('tag_name', $sorts[$sort]);
     }
-
-    public function test()
-    {
-        $sort_list = [];
-
-        foreach (BiliBiliHelper::getNicoSorts() as $key => $value) {
-            $back = RequestUtil::normalGetUrl('http://www.nicovideo.jp/ranking/fav/hourly/' . $key . '?rss=2.0&lang=ja-jp');
-
-            $xmlDoc = new DOMDocument();
-            $xmlDoc->loadXML($back);
-
-            $element = $xmlDoc->documentElement;
-            $chanel = $element->getElementsByTagName('channel')->item(0);
-
-            $video_array = [];
-
-            foreach ($chanel->getElementsByTagName('item') as $item) {
-                $inner = [];
-                $inner['title'] = explode('：', $item->getElementsByTagName('title')[0]->nodeValue)[1];
-                $inner['id'] = explode('watch/', $item->getElementsByTagName('link')[0]->nodeValue)[1];
-                array_push($video_array, $inner);
-            }
-            $sort_list[$key] = $video_array;
-        }
-
-        Cache::forever('nico_cache', $sort_list);
-
-        dd('ok');
-
-    }
-
 }
