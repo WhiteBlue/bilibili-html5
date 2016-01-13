@@ -2,6 +2,11 @@
 
 哔哩哔哩 (bilibili.com) 站外黑科技，定时同步主站信息，使用基于video.js的Html5弹幕播放器，使用手机版视频源
 
+
+## 子项目
+* [bilibili-service](https://github.com/WhiteBlue/bilibili-service) : 基于B站IOS版APP接口的开放REST API
+* [bilibili-react](https://github.com/WhiteBlue/bilibili-react): 基于React.js构建的手机端单页面应用
+
 ## 地址
 
 [http://shiroblue.cn](http://shiroblue.cn)
