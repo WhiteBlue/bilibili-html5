@@ -48,15 +48,6 @@
                             @endforeach
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false"> NicoNico <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            @foreach(\App\Utils\BiliBiliHelper::getNicoSorts() as $sort_key=>$sort_value)
-                                <li><a href="{{ url('/sortnico/'.$sort_key) }}">{{ $sort_value }}</a></li>
-                            @endforeach
-                        </ul>
-                    </li>
                     <li><a href="{{ url('/bangumi') }}"> 新番 </a></li>
                     <li><a href="{{ url('/about') }}"> 关于 </a></li>
                     <li><a href="http://mobile.shiroblue.cn"> 移动端 </a></li>

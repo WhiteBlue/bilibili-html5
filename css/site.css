@@ -549,9 +549,6 @@ a:visited {
     text-overflow: ellipsis;
 }
 
-
-
-
 /*弹幕*/
 .video-js .vjs-danmu {
     overflow: hidden;
@@ -597,13 +594,6 @@ a:visited {
     text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white !important;
 }
 
-.vjs-default-skin .vjs-danmu-control {
-    width: 3.5em;
-    cursor: pointer;
-    float: right;
-    font-size: 10px;
-    text-align: right;
-}
 
 .vjs-danmu {
     overflow: hidden;
@@ -652,8 +642,8 @@ a:visited {
     width: 3.8em;
     cursor: pointer;
     float: right;
-    font-size: 16px;
+    font-size: 12px;
     text-align: right;
-    padding: 8px 10px;
+    padding: 7px 10px;
 }
 

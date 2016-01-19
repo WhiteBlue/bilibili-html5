@@ -1,12 +1,11 @@
 @extends('common.layout')
 
 
-@section('title', $content['title'])
+@section('title', $video['title'])
 
 @section('css')
-    @parent
-
     <link rel="stylesheet" href="{{ url('components/video.js/dist/video-js.min.css') }}">
+    @parent
 @endsection
 
 
@@ -16,30 +15,30 @@
         <div class="col-md-9">
             <div class="panel panel-default">
                 <div class="panel-body text-center">
-                    <h3>{{ $content['title'] }}</h3>
+                    <h3>{{ $video['title'] }}</h3>
 
-                    <p><b>播放</b>: {{ $content['play'] }}
-                        <b>分类</b>: {{ $content['typename'] }}
-                        <b>时间</b>: {{ $content['created_at'] }}
-                        <b>弹幕</b>: {{ $content['video_review'] }}</p>
+                    <p><b>播放</b>: {{ $video['play'] }}
+                        <b>分类</b>: {{ $video['typename'] }}
+                        <b>时间</b>: {{ $video['created_at'] }}
+                        <b>弹幕</b>: {{ $video['video_review'] }}</p>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
             <div class="video_user text-center">
-                <img class="img-circle" src="{{ $content['face'] }}">
+                <img class="img-circle" src="{{ $video['face'] }}">
 
                 <div class="caption">
-                    <p>{{ $content['author'] }}</p>
+                    <p>{{ $video['author'] }}</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row text-center" @if(sizeof($content['list'])==1) style="display: none"@endif>
+    <div class="row text-center" @if(sizeof($video['list'])==1) style="display: none"@endif>
         <nav>
             <ul class="pager">
-                @foreach($content['list'] as $index=>$part)
+                @foreach($video['list'] as $index=>$part)
                     <li><a class="video_part_select" cid="{{$part['cid']}}"
                            href="javascript:void(0)">{{ $part['part'] }}</a></li>
                 @endforeach
@@ -60,19 +59,16 @@
             </div>
         </div>
 
-
         <div class="row text-center wb_video_select" id="video_container">
             <div class="video_block">
                 <div class="loading_frame" id="loading_dialog" style="display: none"></div>
-                <video id="danmu_player" class="video-js vjs-default-skin" controls
-                       poster="{{ $content['pic'] }}"
+                <video id="danmu_player" class="video-js vjs-default-skin" controls poster="{{ $video['pic'] }}"
                        preload="auto" width="900" height="600">
                     <p class="vjs-no-js">你的浏览器不支持Html5</p>
                 </video>
             </div>
 
         </div>
-
 
     </div>
 
@@ -83,10 +79,11 @@
                     <div class="media">
                         <div class="media-body">
                             <h4 class="media-heading">简介</h4>
+
                             <p class="wb_video_brief_p">
-                                {{ $content['description'] }}
+                                {{ $video['description'] }}
                             </p>
-                            <span class="label label-info">{{ $content['tag'] }}</span>
+                            <span class="label label-info">{{ $video['tag'] }}</span>
                         </div>
                     </div>
                 </div>
@@ -111,7 +108,7 @@
             window.quality = '1';
             window.cid = cid;
 
-            loadVideoJsPlugin();
+            loadVideoJsAndPlugin();
 
             getMp4(window.cid, window.quality);
 

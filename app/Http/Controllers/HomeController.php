@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Video;
 use App\Utils\BiliBiliHelper;
 use App\Utils\RequestUtil;
 use DOMDocument;
@@ -74,20 +75,36 @@ class HomeController extends Controller
     public function view($aid, Request $request)
     {
         try {
-            $page = $request->get('page', 0);
-            $quality = $request->get('quality', 1);
-
-            //页码非法检测
-            $page = ($page < 1) ? 1 : $page;
-
             $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . "/view/$aid");
 
             if ($back['code'] != 200) {
                 throw new Exception('视频未找到...');
             }
 
-            return view('play')->with('content', $back['content'])->with('aid', $aid)->with('page',
-                $page)->with('quality', $quality);
+            $content = $back['content'];
+
+            $count = Video::where('aid', '=', $aid)->count();
+            if ($count == 0) {
+                $video = [
+                    'aid' => intval($aid),
+                    'title' => $content['title'],
+                    'author' => $content['author'],
+                    'description' => $content['description'],
+                    'created' => $content['created'],
+                    'created_at' => $content['created_at'],
+                    'face' => $content['face'],
+                    'typename' => $content['typename'],
+                    'pages' => $content['pages'],
+                    'list' => serialize($content['list'])
+                ];
+                try {
+                    Video::create($video);
+                } catch (Exception $ignore) {
+                }
+            }
+            $content['aid'] = $aid;
+
+            return view('play')->with('video', $content);
         } catch (\Exception $e) {
             return $this->returnError($e->getMessage());
         }

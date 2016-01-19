@@ -3,7 +3,7 @@
  */
 
 
-function loadVideoJsPlugin() {
+function loadVideoJsAndPlugin() {
     videojs.plugin('ABP', function () {
         function Danmu(ele) {
             var _this = this;
@@ -125,6 +125,7 @@ function loadVideoJsPlugin() {
 
         this.danmu = new Danmu(this);
     });
+    window.vjs = videojs('danmu_player');
 }
 
 //加载mp4视频源
@@ -179,9 +180,6 @@ function showError(msg) {
 
 //加载视频弹幕
 function loadVideo(videoUrl, danmuUrl) {
-    if (!window.vjs) {
-        window.vjs = videojs('danmu_player');
-    }
     var vjs = window.vjs;
     vjs.src(videoUrl);
     if (!vjs.danmu) {
