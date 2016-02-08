@@ -2,6 +2,8 @@
 
 namespace Illuminate\Database\Connectors;
 
+use Jenssegers\Mongodb\Connection;
+use Jenssegers\Mongodb\MongodbServiceProvider;
 use PDO;
 use Illuminate\Support\Arr;
 use InvalidArgumentException;
@@ -99,8 +101,9 @@ class ConnectionFactory
         $readConfig = $this->getReadWriteConfig($config, 'read');
 
         if (isset($readConfig['host']) && is_array($readConfig['host'])) {
-            $readConfig['host'] = count($readConfig['host']) > 1 ?
-                $readConfig['host'][array_rand($readConfig['host'])] : $readConfig['host'][0];
+            $readConfig['host'] = count($readConfig['host']) > 1
+                ? $readConfig['host'][array_rand($readConfig['host'])]
+                : $readConfig['host'][0];
         }
 
         return $this->mergeReadWriteConfig($config, $readConfig);
@@ -144,7 +147,7 @@ class ConnectionFactory
      */
     protected function mergeReadWriteConfig(array $config, array $merge)
     {
-        return array_except(array_merge($config, $merge), ['read', 'write']);
+        return Arr::except(array_merge($config, $merge), ['read', 'write']);
     }
 
     /**
@@ -189,6 +192,9 @@ class ConnectionFactory
 
             case 'sqlsrv':
                 return new SqlServerConnector;
+
+            //case 'mongodb':
+            //    return new  Connection($config);
         }
 
         throw new InvalidArgumentException("Unsupported driver [{$config['driver']}]");

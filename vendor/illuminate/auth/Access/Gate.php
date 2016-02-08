@@ -275,7 +275,7 @@ class Gate implements GateContract
      * @param  \Illuminate\Contracts\Auth\Authenticatable  $user
      * @param  string  $ability
      * @param  array  $arguments
-     * @return bool|void
+     * @return bool|null
      */
     protected function callBeforeCallbacks($user, $ability, array $arguments)
     {
@@ -321,7 +321,9 @@ class Gate implements GateContract
         } elseif (isset($this->abilities[$ability])) {
             return $this->abilities[$ability];
         } else {
-            return function () { return false; };
+            return function () {
+                return false;
+            };
         }
     }
 
@@ -429,8 +431,12 @@ class Gate implements GateContract
      */
     public function forUser($user)
     {
+        $callback = function () use ($user) {
+            return $user;
+        };
+
         return new static(
-            $this->container, function () use ($user) { return $user; }, $this->abilities,
+            $this->container, $callback, $this->abilities,
             $this->policies, $this->beforeCallbacks, $this->afterCallbacks
         );
     }

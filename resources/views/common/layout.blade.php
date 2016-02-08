@@ -78,24 +78,15 @@
 
     <div class="clear"></div>
     <footer class="footer">
-        <p>Designed and built by <a href="http://twitter.com/mdo" target="_blank">WhiteBlue</a>.
-        </p>
-
         <p>Code licensed under <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT License</a>
         </p>
-        <a href="http://www.shiroblue.cn">Blog</a>·
-        <a href="https://github.com/WhiteBlue/bilibili-html5">Project</a>·
-        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-            document.write(unescape("%3Cspan id='cnzz_stat_icon_1256627943'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1256627943' type='text/javascript'%3E%3C/script%3E"));</script>
-    </footer>
-
+       </footer>
 </div>
 
 
 @section('javascript')
     <script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
     <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
     <script src="{{ url('js/main.min.js') }}"></script>
 @show
 

@@ -15,11 +15,11 @@ $app->get('/', 'HomeController@home');
 
 $app->get('/sort/{tid}', 'HomeController@sort');
 
-//$app->get('/sortnico/{sort}', 'HomeController@nicoSort');
+$app->get('/sortnico/{sort}', 'HomeController@nicoSort');
 
 $app->get('/view/{aid}', 'HomeController@view');
 
-//$app->get('/viewnico/{id}', 'HomeController@viewNico');
+$app->get('/viewnico/{id}', 'HomeController@viewNico');
 
 $app->get('/search', 'HomeController@search');
 

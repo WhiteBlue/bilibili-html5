@@ -77,10 +77,13 @@ $app->routeMiddleware([
 | totally optional, so you are not required to uncomment this line.
 |
 */
-
 $app->register(App\Providers\AppServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 
+/*
+ * this my add
+ */
+$app->register('Jenssegers\Mongodb\MongodbServiceProvider');
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes

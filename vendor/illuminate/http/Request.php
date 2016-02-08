@@ -124,8 +124,8 @@ class Request extends SymfonyRequest implements ArrayAccess
      * Get a segment from the URI (1 based index).
      *
      * @param  int  $index
-     * @param  mixed  $default
-     * @return string
+     * @param  string|null  $default
+     * @return string|null
      */
     public function segment($index, $default = null)
     {
@@ -141,7 +141,9 @@ class Request extends SymfonyRequest implements ArrayAccess
     {
         $segments = explode('/', $this->path());
 
-        return array_values(array_filter($segments, function ($v) { return $v != ''; }));
+        return array_values(array_filter($segments, function ($v) {
+            return $v != '';
+        }));
     }
 
     /**
@@ -280,7 +282,7 @@ class Request extends SymfonyRequest implements ArrayAccess
      * Retrieve an input item from the request.
      *
      * @param  string  $key
-     * @param  mixed   $default
+     * @param  string|array|null  $default
      * @return string|array
      */
     public function input($key = null, $default = null)
@@ -332,7 +334,7 @@ class Request extends SymfonyRequest implements ArrayAccess
      * Retrieve a query string item from the request.
      *
      * @param  string  $key
-     * @param  mixed   $default
+     * @param  string|array|null  $default
      * @return string|array
      */
     public function query($key = null, $default = null)
@@ -355,7 +357,7 @@ class Request extends SymfonyRequest implements ArrayAccess
      * Retrieve a cookie from the request.
      *
      * @param  string  $key
-     * @param  mixed   $default
+     * @param  string|array|null  $default
      * @return string|array
      */
     public function cookie($key = null, $default = null)
@@ -367,8 +369,8 @@ class Request extends SymfonyRequest implements ArrayAccess
      * Retrieve a file from the request.
      *
      * @param  string  $key
-     * @param  mixed   $default
-     * @return \Symfony\Component\HttpFoundation\File\UploadedFile|array
+     * @param  mixed  $default
+     * @return \Symfony\Component\HttpFoundation\File\UploadedFile|array|null
      */
     public function file($key = null, $default = null)
     {
@@ -411,7 +413,7 @@ class Request extends SymfonyRequest implements ArrayAccess
      * Retrieve a header from the request.
      *
      * @param  string  $key
-     * @param  mixed   $default
+     * @param  string|array|null  $default
      * @return string|array
      */
     public function header($key = null, $default = null)
@@ -423,7 +425,7 @@ class Request extends SymfonyRequest implements ArrayAccess
      * Retrieve a server variable from the request.
      *
      * @param  string  $key
-     * @param  mixed   $default
+     * @param  string|array|null  $default
      * @return string|array
      */
     public function server($key = null, $default = null)
@@ -435,8 +437,8 @@ class Request extends SymfonyRequest implements ArrayAccess
      * Retrieve an old input item.
      *
      * @param  string  $key
-     * @param  mixed   $default
-     * @return mixed
+     * @param  string|array|null  $default
+     * @return string|array
      */
     public function old($key = null, $default = null)
     {
@@ -498,7 +500,7 @@ class Request extends SymfonyRequest implements ArrayAccess
      *
      * @param  string  $source
      * @param  string  $key
-     * @param  mixed   $default
+     * @param  string|array|null  $default
      * @return string|array
      */
     protected function retrieveItem($source, $key, $default)
@@ -595,7 +597,7 @@ class Request extends SymfonyRequest implements ArrayAccess
      */
     public function isJson()
     {
-        return Str::contains($this->header('CONTENT_TYPE'), '/json');
+        return Str::contains($this->header('CONTENT_TYPE'), ['/json', '+json']);
     }
 
     /**
@@ -607,7 +609,7 @@ class Request extends SymfonyRequest implements ArrayAccess
     {
         $acceptable = $this->getAcceptableContentTypes();
 
-        return isset($acceptable[0]) && $acceptable[0] === 'application/json';
+        return isset($acceptable[0]) && Str::contains($acceptable[0], ['/json', '+json']);
     }
 
     /**
@@ -776,7 +778,7 @@ class Request extends SymfonyRequest implements ArrayAccess
      *
      * @param string|null $param
      *
-     * @return object|string
+     * @return \Illuminate\Routing\Route|object|string
      */
     public function route($param = null)
     {
@@ -796,7 +798,9 @@ class Request extends SymfonyRequest implements ArrayAccess
      */
     public function getUserResolver()
     {
-        return $this->userResolver ?: function () {};
+        return $this->userResolver ?: function () {
+            //
+        };
     }
 
     /**
@@ -819,7 +823,9 @@ class Request extends SymfonyRequest implements ArrayAccess
      */
     public function getRouteResolver()
     {
-        return $this->routeResolver ?: function () {};
+        return $this->routeResolver ?: function () {
+            //
+        };
     }
 
     /**

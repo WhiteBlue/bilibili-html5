@@ -83,7 +83,7 @@ class HomeController extends Controller
 
             $content = $back['content'];
 
-            $count = Video::where('aid', '=', $aid)->count();
+            $count =0;// Video::where('aid', '=', $aid)->count();
             if ($count == 0) {
                 $video = [
                     'aid' => intval($aid),
@@ -98,7 +98,7 @@ class HomeController extends Controller
                     'list' => serialize($content['list'])
                 ];
                 try {
-                    Video::create($video);
+                   // Video::create($video);
                 } catch (Exception $ignore) {
                 }
             }

@@ -13,25 +13,13 @@ namespace Symfony\Component\Console\Tests\Helper;
 
 use Symfony\Component\Console\Helper\ProgressHelper;
 use Symfony\Component\Console\Output\StreamOutput;
-use Symfony\Component\Console\Tests;
-
-require_once __DIR__.'/../ClockMock.php';
 
 /**
  * @group legacy
+ * @group time-sensitive
  */
 class LegacyProgressHelperTest extends \PHPUnit_Framework_TestCase
 {
-    protected function setUp()
-    {
-        Tests\with_clock_mock(true);
-    }
-
-    protected function tearDown()
-    {
-        Tests\with_clock_mock(false);
-    }
-
     public function testAdvance()
     {
         $progress = new ProgressHelper();
@@ -167,12 +155,11 @@ class LegacyProgressHelperTest extends \PHPUnit_Framework_TestCase
         $progress->advance(1);
     }
 
+    /**
+     * @requires extension mbstring
+     */
     public function testMultiByteSupport()
     {
-        if (!function_exists('mb_strlen') || (false === $encoding = mb_detect_encoding('■'))) {
-            $this->markTestSkipped('The mbstring extension is needed for multi-byte support');
-        }
-
         $progress = new ProgressHelper();
         $progress->start($output = $this->getOutputStream());
         $progress->setBarCharacter('■');
