@@ -1,3 +1,6 @@
+# todo
+使用mongodb 保存detail 
+
 # bilibili-html5
 
 哔哩哔哩 (bilibili.com) 站外黑科技，定时同步主站信息，使用基于video.js的Html5弹幕播放器，使用手机版视频源
