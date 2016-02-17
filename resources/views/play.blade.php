@@ -63,7 +63,7 @@
             <div class="video_block">
                 <div class="loading_frame" id="loading_dialog" style="display: none"></div>
                 <video id="danmu_player" class="video-js vjs-default-skin" controls poster="{{ $video['pic'] }}"
-                       preload="auto" width="900" height="600">
+                       preload="auto" width="880" height="580">
                     <p class="vjs-no-js">你的浏览器不支持Html5</p>
                 </video>
             </div>
@@ -73,7 +73,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12 col-md-offset-0">
             <div class="panel panel-default wb_video_brief">
                 <div class="panel-body text-center">
                     <div class="media">
@@ -89,6 +89,10 @@
                 </div>
             </div>
         </div>
+        <!-- UY BEGIN -->
+        <div id="uyan_frame"></div>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1843026"></script>
+        <!-- UY END -->
     </div>
 
 
@@ -131,5 +135,7 @@
         });
 
     </script>
+
+
 
 @endsection

@@ -10,12 +10,12 @@
 
 @section('content')
     <div class="jumbotron wb-jumbotron bili-logo">
-        <h1 style="color:whitesmoke">BiliBili Html5</h1>
-        <p class="lead">视频源替换，纯Html5播放器，根治macbook发热</p>
+        <h1 style="color:whitesmoke">订小阅动漫</h1>
+        <p class="lead">全站使用Html5播放器</p>
     </div>
     @foreach($sorts as $tid=>$name)
         <h3 class="wb_title_split">{{ $name }}
-            <small class="wb_small">更新于 {{ $update_time }}</small>
+          <!--  <small class="wb_small">更新于 {{ $update_time }}</small>-->
         </h3>
         <div class="row wb_line_row">
             <div class="wb_container_left">

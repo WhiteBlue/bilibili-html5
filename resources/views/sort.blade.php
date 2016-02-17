@@ -1,7 +1,7 @@
 @extends('common.layout')
 
 
-@section('title', '分类:'.$content['name'])
+@section('title', $content['name'])
 
 @section('css')
     @parent
@@ -30,7 +30,7 @@
                 </nav>
                 <div class="row">
                     <h3 class="wb_title_split">{{ $content['name'] }}
-                        <small class="wb_small">更新于 {{ $date }}</small>
+                     <!--   <small class="wb_small">更新于 {{ $date }}</small>-->
                     </h3>
                     <div class="grid">
                         @foreach($content['list'] as $video)

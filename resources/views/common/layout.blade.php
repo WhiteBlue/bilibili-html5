@@ -2,10 +2,10 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>BH5-@yield('title')</title>
+    <title>@yield('title') - 订小阅动漫</title>
 
-    <meta name="keywords" content="BiliBili,BiliBili助手">
-    <meta name="description" content="BiliBili-html5，替换视频源，纯Html5播放器">
+    <meta name="keywords" content="订小阅动漫">
+    <meta name="description" content="订小阅动漫，纯Html5播放器">
 
 
     @section('css')
@@ -34,25 +34,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="{{ url('/') }}">BiliBili-Html5</a>
+                <a class="navbar-brand" href="{{ url('/') }}">订小阅动漫</a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/') }}"> 首页 <span class="sr-only">(current)</span></a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false"> 分类 <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            @foreach(\App\Utils\BiliBiliHelper::$sorts as $sort_key=>$sort_value)
-                                <li><a href="{{ url('/sort/'.$sort_key) }}">{{ $sort_value }}</a></li>
-                            @endforeach
-                        </ul>
-                    </li>
                     <li><a href="{{ url('/bangumi') }}"> 新番 </a></li>
-                    <li><a href="{{ url('/about') }}"> 关于 </a></li>
-                    <li><a href="http://mobile.shiroblue.cn"> 移动端 </a></li>
-                    <li><a href="http://blog.shiroblue.cn"> Blog </a></li>
-
+                    @foreach(\App\Utils\BiliBiliHelper::$sorts as $sort_key=>$sort_value)
+                    <li><a href="{{ url('/sort/'.$sort_key) }}">{{ $sort_value }}</a></li>
+                    @endforeach
+                    <li><a href="http://www.dingxiaoyue.com" target="_blank">主站</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <form action="{{ url('search') }}" method="get" class="navbar-form navbar-left" role="search">
@@ -78,8 +68,22 @@
 
     <div class="clear"></div>
     <footer class="footer">
-        <p>Code licensed under <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT License</a>
+        <p>  Code licensed under <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT License</a>
         </p>
+        <p > <a href="http://www.miibeian.gov.cn/" target="_blank">冀ICP备15022324号-1</a>|
+            有任何意见或建议请直接提给 wsc449@qq.com|
+            <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256772413'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/stat.php%3Fid%3D1256772413' type='text/javascript'%3E%3C/script%3E"));</script>
+            <script>
+                var _hmt = _hmt || [];
+                (function() {
+                    var hm = document.createElement("script");
+                    hm.src = "//hm.baidu.com/hm.js?0a52b0f4565b5ad096a1e36af386a0c4";
+                    var s = document.getElementsByTagName("script")[0];
+                    s.parentNode.insertBefore(hm, s);
+                })();
+            </script>
+       </p>
+
        </footer>
 </div>
 
