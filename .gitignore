@@ -37,3 +37,6 @@ crashlytics-build.properties
 node_modules
 
 public/components
+public/video.xml
+videoSave.php
+videoXml.php

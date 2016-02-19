@@ -9,6 +9,8 @@ use DOMDocument;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use MongoClient;
+use MongoCollection;
 
 class HomeController extends Controller
 {
@@ -70,46 +72,30 @@ class HomeController extends Controller
             $order)->with('date', $date);
     }
 
-
     //观看
     public function view($aid, Request $request)
     {
         try {
-            $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . "/view/$aid");
-
-            if ($back['code'] != 200) {
-                throw new Exception('视频未找到...');
-            }
-
-            $content = $back['content'];
-
-            $count =0;// Video::where('aid', '=', $aid)->count();
-            if ($count == 0) {
-                $video = [
-                    'aid' => intval($aid),
-                    'title' => $content['title'],
-                    'author' => $content['author'],
-                    'description' => $content['description'],
-                    'created' => $content['created'],
-                    'created_at' => $content['created_at'],
-                    'face' => $content['face'],
-                    'typename' => $content['typename'],
-                    'pages' => $content['pages'],
-                    'list' => serialize($content['list'])
-                ];
-                try {
-                   // Video::create($video);
-                } catch (Exception $ignore) {
+            $conn = new MongoClient();
+            $db = $conn->selectDB('bilibili');
+            $collection = new MongoCollection($db, 'videos');
+            $content = $collection->findOne(array('aid' => intval($aid)));
+            if (!$content) {
+                $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . "/view/$aid");
+                if ($back['code'] != 200) {
+                    throw new Exception('视频未找到...');
                 }
+                $content = $back['content'];
+                $content['aid'] = intval($aid);
+                $content['_id'] = intval($aid);
+                $collection->insert($content);
             }
-            $content['aid'] = $aid;
-
             return view('play')->with('video', $content);
+
         } catch (\Exception $e) {
             return $this->returnError($e->getMessage());
         }
     }
-
 
     //搜索
     public function search(Request $request)
