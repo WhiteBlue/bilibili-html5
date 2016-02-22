@@ -37,7 +37,29 @@ class RequestUtil
             ];
         }
     }
+    public static function getUrlHtml($url)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
 
+        $output = curl_exec($ch);
+
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curl_errno = curl_errno($ch);
+        $curl_error = curl_error($ch);
+
+        if ($curl_errno > 0) {
+            //curl错误处理
+            throw new Exception($curl_error, $curl_errno);
+        } else {
+            return [
+                'code' => $http_code,
+                'content' => $output,
+            ];
+        }
+    }
 
     public static function postUrl($url, $post_data)
     {

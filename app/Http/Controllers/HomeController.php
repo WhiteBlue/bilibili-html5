@@ -46,7 +46,7 @@ class HomeController extends Controller
                 $request_array = [
                     'order' => $order,
                     'page' => $page,
-                    'count' => 16
+                    'count' => 20
                 ];
 
                 $date = date('H:i:s');

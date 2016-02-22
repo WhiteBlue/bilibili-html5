@@ -24,34 +24,32 @@
 
 
 <div class="container">
+    <div class="header" style="background-image: url('http://i1.hdslb.com/headers/903fd37bf35e390eba4ec93ac5d9a1ad.jpg');">
+        <div class="h-center">
+            <a href="/" class="logo" style="background-image: url('http://v.dingxiaoyue.com/images/logo.png');"></a>
+            <ul class="nav navbar-nav navbar-right">
+                <form action="{{ url('search') }}" method="get" class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" name="keyword" class="form-control" placeholder="搜索相关视频">
+                    </div>
+                    <button type="submit" class="btn btn-default">搜索</button>
+                </form>
+            </ul>
+
+
+        </div>
+    </div>
     <nav class="navbar navbar-default">
         <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ url('/') }}">订小阅动漫</a>
-            </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
+                    <li><a href="/"> 首页 </a></li>
                     <li><a href="{{ url('/bangumi') }}"> 新番 </a></li>
                     @foreach(\App\Utils\BiliBiliHelper::$sorts as $sort_key=>$sort_value)
                     <li><a href="{{ url('/sort/'.$sort_key) }}">{{ $sort_value }}</a></li>
                     @endforeach
-                    <li><a href="http://www.dingxiaoyue.com" target="_blank">主站</a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <form action="{{ url('search') }}" method="get" class="navbar-form navbar-left" role="search">
-                        <div class="form-group">
-                            <input type="text" name="keyword" class="form-control" placeholder="搜索相关视频">
-                        </div>
-                        <button type="submit" class="btn btn-default">搜索</button>
-                    </form>
-                </ul>
+
             </div>
         </div>
     </nav>

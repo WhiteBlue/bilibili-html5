@@ -89,12 +89,16 @@
                 </div>
             </div>
         </div>
+        <!-- UJian Button BEGIN -->
+        <div class="ujian-hook"></div>
+        <script type="text/javascript">var ujian_config = {num:8,itemTitle:'看过该视频的还喜欢',picSize:110,textHeight:45};</script>
+        <script type="text/javascript" src="http://v1.ujian.cc/code/ujian.js?uid=1843026"></script>
+        <!-- UJian Button END -->
         <!-- UY BEGIN -->
         <div id="uyan_frame"></div>
         <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=1843026"></script>
         <!-- UY END -->
     </div>
-
 
 @endsection
 

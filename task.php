@@ -13,8 +13,9 @@ try {
         $request_array = [
             'order' => 'hot',
             'page' => '1',
-            'count' => '16'
+            'count' => '20'
         ];
+        echo $key;
         $back = RequestUtil::getUrl(BiliBiliHelper::$SERVICE_URL . "/sort/$key?" . http_build_query($request_array));
         if ($back['code'] != 200) {
             throw new Exception;
