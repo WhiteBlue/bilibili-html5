@@ -83,7 +83,10 @@
                             <p class="wb_video_brief_p">
                                 {{ $video['description'] }}
                             </p>
-                            <span class="label label-info">{{ $video['tag'] }}</span>
+                            <h4 class="media-heading">标签</h4>
+                            @foreach(explode(",", $video['tag']) as $part)
+                                <span class="label label-info">{{ $part }}</span>&nbsp;
+                            @endforeach
                         </div>
                     </div>
                 </div>

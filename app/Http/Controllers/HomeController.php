@@ -32,7 +32,7 @@ class HomeController extends Controller
         if (!array_has($sorts, $tid)) {
             return $this->returnError('分类不存在');
         }
-        $order = $request->get('order', 'hot');
+        $order = $request->get('order', 'new');
         $page = $request->get('page', 1);
         //页码非法检测
         $page = ($page < 1) ? 1 : $page;
