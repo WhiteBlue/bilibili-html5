@@ -19,9 +19,9 @@ $app = new Laravel\Lumen\Application(
     realpath(__DIR__ . '/../')
 );
 
-$app->withFacades();
+//$app->withFacades();
 
-$app->withEloquent();
+//$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -55,17 +55,17 @@ $app->singleton(
 |
 */
 
-$app->middleware([
-    Illuminate\Cookie\Middleware\EncryptCookies::class,
-    Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
-    Illuminate\Session\Middleware\StartSession::class,
-    Illuminate\View\Middleware\ShareErrorsFromSession::class,
-    Laravel\Lumen\Http\Middleware\VerifyCsrfToken::class,
-]);
-
-$app->routeMiddleware([
-
-]);
+//$app->middleware([
+//    Illuminate\Cookie\Middleware\EncryptCookies::class,
+//    Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
+//    Illuminate\Session\Middleware\StartSession::class,
+//    Illuminate\View\Middleware\ShareErrorsFromSession::class,
+//    Laravel\Lumen\Http\Middleware\VerifyCsrfToken::class,
+//]);
+//
+//$app->routeMiddleware([
+//
+//]);
 
 /*
 |--------------------------------------------------------------------------
@@ -78,8 +78,8 @@ $app->routeMiddleware([
 |
 */
 
-$app->register(App\Providers\AppServiceProvider::class);
-$app->register(App\Providers\EventServiceProvider::class);
+//$app->register(App\Providers\AppServiceProvider::class);
+//$app->register(App\Providers\EventServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

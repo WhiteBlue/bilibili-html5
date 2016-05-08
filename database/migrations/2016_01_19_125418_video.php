@@ -18,7 +18,6 @@ class Video extends Migration
             $table->string('title');
             $table->string('author');
             $table->string('description');
-            $table->timestamp('created');
             $table->dateTime('created_at');
             $table->string('face');
             $table->string('typename');

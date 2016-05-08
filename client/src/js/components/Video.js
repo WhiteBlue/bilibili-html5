@@ -1,0 +1,142 @@
+var React = require('react');
+var Config = require('../Config');
+var _ = require('lodash');
+
+var Player = require('./Player');
+
+const Tags = React.createClass({
+  getDefaltProps(){
+    return {
+      str: ""
+    };
+  },
+  render(){
+    var tags = _.split(this.props.str, ",");
+    var renderTags = [];
+    for (var i in tags) {
+      renderTags.push(<li key={i} className="floatleft">{tags[i]}</li>)
+    }
+    return <ul className="tags floatleft">
+      {renderTags}
+      <div className="clear"></div>
+    </ul>;
+  }
+});
+
+const VideoInfo = React.createClass({
+  getDefaltProps(){
+    return {
+      data: {
+        author: "",
+        coins: "",
+        created_at: "",
+        description: "",
+        face: "",
+        favorites: "",
+        list: {},
+        mid: "",
+        pages: 1,
+        pic: "",
+        play: "",
+        review: "",
+        tag: "TV动画,BILIBILI正版,我叫坂本我最DIO,在下坂本有何贵干",
+        tid: 0,
+        title: "",
+        typename: "",
+        video_review: ""
+      }
+    };
+  },
+  render(){
+    return <div>
+      <div className="area">
+        <div className="video-info">
+          <div className="area-inner">
+            <div className="left floatleft">
+              <div className="title">
+                <h1>{this.props.data.title}</h1>
+              </div>
+              <div className="info floatleft">
+                <div className="info-text floatleft">分类: {this.props.data.typename}</div>
+                <div className="info-text floatright">时间: {this.props.data.created_at}</div>
+              </div>
+              <div className="clear"></div>
+              <div className="play-info floatleft">
+                <div className="info-text floatleft">播放: {this.props.data.play}</div>
+                <div className="info-text floatleft">弹幕: {this.props.data.video_review}</div>
+                <div className="info-text floatleft">硬币: {this.props.data.coins}</div>
+              </div>
+              <div className="clear"></div>
+            </div>
+            <div className="right floatleft">
+              <div className="up-face floatleft">
+                <a href="#">
+                  <img src={this.props.data.face}/></a>
+              </div>
+              <div className="up-info floatleft">
+                <a href="#" className="title">{this.props.data.author}</a>
+                <div className="brief">收藏: {this.props.data.favorites}</div>
+              </div>
+            </div>
+            <div className="clear"></div>
+          </div>
+        </div>
+      </div>
+
+      {this.props.data.list ? <Player parts={this.props.data.list} pic={this.props.data.pic}/> : <div></div>}
+
+      <div className="area">
+        <div className="area-inner">
+          <div className="video-brief">
+
+            <Tags str={this.props.data.tag}/>
+
+            <div className="clear"></div>
+            <div className="desc">{this.props.data.description}</div>
+
+            <div className="comments">
+              <span className="label">评论</span>
+              <p>(施工中)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>;
+  }
+});
+
+module.exports = React.createClass({
+  getDefaltProps(){
+    return {
+      aid: null
+    }
+  },
+  _loadData(){
+    if (this.props.aid !== null) {
+      $.ajax({
+        type: 'GET',
+        url: Config.base_url + Config.routes.VIDEO_INFO + this.props.aid,
+        context: this,
+        success: function (data) {
+          this.setState({
+            videoInfo: data
+          });
+        },
+        error: function () {
+          console.log('error');
+        }
+      });
+    }
+  },
+  componentDidMount(){
+    this._loadData();
+  },
+  getInitialState(){
+    return {
+      videoInfo: {}
+    }
+  },
+  render(){
+    return <VideoInfo data={this.state.videoInfo}/>;
+  }
+});

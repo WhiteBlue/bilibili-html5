@@ -14,13 +14,12 @@ gulp.task('minifycss', function () {
     return gulp.src('css/*.css')
         .pipe(rename({suffix: '.min'}))
         .pipe(cssnano())
-        .pipe(gulp.dest('public/css'));
+        .pipe(gulp.dest('public/styles'));
 });
 
 
 gulp.task('minifyjs', function () {
     return gulp.src('js/*.js')
-        .pipe(concat('main.js'))
         .pipe(gulp.dest('js'))
         .pipe(rename({suffix: '.min'}))
         .pipe(uglify())

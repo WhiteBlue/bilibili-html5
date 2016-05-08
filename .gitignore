@@ -31,8 +31,7 @@ crashlytics-build.properties
 .env.php
 .env
 
-/vendor
-
+vendor
 
 node_modules
 

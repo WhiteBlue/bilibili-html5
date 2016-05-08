@@ -1,102 +1,164 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
-    <title>BH5-@yield('title')</title>
+    <title>BiliBili-Html5</title>
 
     <meta name="keywords" content="BiliBili,BiliBili助手">
-    <meta name="description" content="BiliBili-html5，替换视频源，纯Html5播放器">
-
+    <meta name="description" content="BiliBili-html5，视频源解析，纯Html5播放器">
 
     @section('css')
-        <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-        <link rel="stylesheet" href="{{ url('css/site.min.css') }}">
-
-        <!--[if lt IE 9]>
-        <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
+        <link rel="stylesheet" href="{{ url('/styles/main.css') }}">
     @show
-
 </head>
 <body>
 
+<div id="main-header">
+    <div class="main-header-nav">
+        <div class="main-header-image"
+             style="background-image: url('http://i0.hdslb.com/group1/M00/B7/30/oYYBAFcjKTGANfoVAAGAcG7aL64682.jpg');"></div>
+        <div class="header-container needstick">
+            <ul class="main-header-nav-body">
+                <li class="nav-li floatleft now">
+                    <a href="{{ url('/') }}">首页</a>
+                </li>
 
-<div class="container">
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                        data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="{{ url('/') }}">BiliBili-Html5</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="{{ url('/') }}"> 首页 <span class="sr-only">(current)</span></a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                           aria-expanded="false"> 分类 <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            @foreach(\App\Utils\BiliBiliHelper::$sorts as $sort_key=>$sort_value)
-                                <li><a href="{{ url('/sort/'.$sort_key) }}">{{ $sort_value }}</a></li>
-                            @endforeach
-                        </ul>
-                    </li>
-                    <li><a href="{{ url('/bangumi') }}"> 新番 </a></li>
-                    <li><a href="{{ url('/about') }}"> 关于 </a></li>
-                    <li><a href="http://mobile.shiroblue.cn"> 移动端 </a></li>
-                    <li><a href="http://blog.shiroblue.cn"> Blog </a></li>
+                <li class="nav-li floatleft">
+                    <a href="{{ url('/sort/1') }}">动画</a>
+                    <div class="nav-li-list">
+                        <a href="{{ url('/sort/24') }}">MAD·AMV</a>
+                        <a href="{{ url('/sort/25') }}">MMD·3D</a>
+                        <a href="{{ url('/sort/47') }}">短片·手书·配音</a>
+                        <a href="{{ url('/sort/27') }}">综合</a>
+                    </div>
+                </li>
 
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <form action="{{ url('search') }}" method="get" class="navbar-form navbar-left" role="search">
-                        <div class="form-group">
-                            <input type="text" name="keyword" class="form-control" placeholder="搜索相关视频">
-                        </div>
-                        <button type="submit" class="btn btn-default">搜索</button>
+                <li class="nav-li floatleft">
+                    <a href="{{ url('/sort/13') }}">番剧</a>
+                    <div class="nav-li-list">
+                        <a href="{{ url('/sort/33') }}">连载动画</a>
+                        <a href="{{ url('/sort/32') }}">完结动画</a>
+                        <a href="{{ url('/sort/152') }}">官方延伸</a>
+                        <a href="{{ url('/sort/153') }}">国产动画</a>
+                    </div>
+                </li>
+
+                <li class="nav-li floatleft">
+                    <a href="{{ url('/sort/3') }}">音乐</a>
+                    <div class="nav-li-list">
+                        <a href="{{ url('/sort/31') }}">翻唱</a>
+                        <a href="{{ url('/sort/30') }}">VOCALOID·UTAU</a>
+                        <a href="{{ url('/sort/29') }}">三次元音乐</a>
+                        <a href="{{ url('/sort/28') }}">同人音乐</a>
+                        <a href="{{ url('/sort/54') }}">OP/ED/OST</a>
+                        <a href="{{ url('/sort/130') }}">音乐选集</a>
+                    </div>
+                </li>
+
+                <li class="nav-li floatleft">
+                    <a href="{{ url('/sort/129') }}">舞蹈</a>
+                    <div class="nav-li-list">
+                        <a href="{{ url('/sort/20') }}">宅舞</a>
+                        <a href="{{ url('/sort/154') }}">三次元舞蹈</a>
+                        <a href="{{ url('/sort/156') }}">舞蹈教程</a>
+                    </div>
+                </li>
+
+                <li class="nav-li floatleft">
+                    <a href="{{ url('/sort/4') }}">游戏</a>
+                    <div class="nav-li-list">
+                        <a href="{{ url('/sort/17') }}">单机联机</a>
+                        <a href="{{ url('/sort/65') }}">网游·电竞</a>
+                        <a href="{{ url('/sort/136') }}">音游</a>
+                        <a href="{{ url('/sort/19') }}">Mugen</a>
+                        <a href="{{ url('/sort/121') }}">GMV</a>
+                    </div>
+                </li>
+
+                <li class="nav-li floatleft">
+                    <a href="{{ url('/sort/36') }}">科技</a>
+                    <div class="nav-li-list">
+                        <a href="{{ url('/sort/37') }}">纪录片</a>
+                        <a href="{{ url('/sort/124') }}">趣味科普人文</a>
+                        <a href="{{ url('/sort/122') }}">野生技术协会</a>
+                        <a href="{{ url('/sort/39') }}">演讲·公开课</a>
+                        <a href="{{ url('/sort/95') }}">数码</a>
+                        <a href="{{ url('/sort/98') }}">机械</a>
+                    </div>
+                </li>
+
+                <li class="nav-li floatleft">
+                    <a href="{{ url('/sort/5') }}">娱乐</a>
+                    <div class="nav-li-list">
+                        <a href="{{ url('/sort/153') }}">搞笑</a>
+                        <a href="{{ url('/sort/138') }}">生活</a>
+                        <a href="{{ url('/sort/75') }}">动物圈</a>
+                        <a href="{{ url('/sort/76') }}">美食圈</a>
+                        <a href="{{ url('/sort/71') }}">综艺</a>
+                        <a href="{{ url('/sort/137') }}">娱乐圈</a>
+                        <a href="{{ url('/sort/131') }}">Korea相关</a>
+                    </div>
+                </li>
+
+                <li class="nav-li floatleft">
+                    <a href="{{ url('/sort/119') }}">鬼畜</a>
+                    <div class="nav-li-list">
+                        <a href="{{ url('/sort/22') }}">鬼畜调教</a>
+                        <a href="{{ url('/sort/26') }}">音MAD</a>
+                        <a href="{{ url('/sort/126') }}">人力VOCALOID</a>
+                        <a href="{{ url('/sort/127') }}">教程演示</a>
+                    </div>
+                </li>
+
+                <div class="header-search floatright">
+                    <form action="{{ url('/search') }}" method="post">
+                        <input name="keyword" placeholder="这里搜索">
+                        <input type="submit" value="搜 索" title="搜索" class="btn-search">
                     </form>
-                </ul>
-            </div>
+                </div>
+            </ul>
         </div>
-    </nav>
-
-    @if(Session::has('message'))
-        <div class="alert alert-success alert-dismissible" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-            {{ Session::get('message') }}
-        </div>
-    @endif
-
-    @yield('content')
-
-    <div class="clear"></div>
-    <footer class="footer">
-        <p>Designed and built by <a href="http://twitter.com/mdo" target="_blank">WhiteBlue</a>.
-        </p>
-
-        <p>Code licensed under <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT License</a>
-        </p>
-        <a href="http://www.shiroblue.cn">Blog</a>·
-        <a href="https://github.com/WhiteBlue/bilibili-html5">Project</a>·
-        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-            document.write(unescape("%3Cspan id='cnzz_stat_icon_1256627943'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/z_stat.php%3Fid%3D1256627943' type='text/javascript'%3E%3C/script%3E"));</script>
-    </footer>
-
+    </div>
 </div>
 
 
-@section('javascript')
-    <script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
-    <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+@yield('content')
 
-    <script src="{{ url('js/main.min.js') }}"></script>
+
+<div id="footer">
+    <div class="area-inner">
+        <div class="about-block floatleft">
+            <div class="about-item left floatleft">
+                <div class="about-title">About</div>
+                <div class="about-links">
+                    <a href="http://www.bilibili.com">BiliBili弹幕视频网</a>
+                    <a href="https://github.com/WhiteBlue/bilibili-html5">更新日志</a>
+                    <a href="#">项目地址</a>
+                </div>
+            </div>
+            <div class="about-item floatleft">
+                <div class="about-title">WhiteBlue</div>
+                <div class="about-links">
+                    <a href="http://blog.shiroblue.cn">Blog</a>
+                    <a href="https://github.com/WhiteBlue">Github</a>
+                </div>
+            </div>
+            <div class="about-item right floatleft">
+                <div class="about-title">空位</div>
+                <div class="about-links">
+                    <a href="#">没想好放什么orz</a>
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
+@section('javascript')
+    <script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ url('/js/stickup.min.js') }}"></script>
+    <script type="text/javascript" src="{{ url('/js/app.js') }}"></script>
 @show
 
 </body>
