@@ -97,7 +97,7 @@ module.exports = React.createClass({
   render(){
     var partList = [];
     var display = "none";
-    if (this.props.parts.hasOwnProperty("2")) {
+    if (this.props.parts.hasOwnProperty("1")) {
       for (var i in this.props.parts) {
         if (this.props.parts.hasOwnProperty(i)) {
           var active = "";

@@ -39,7 +39,7 @@ const VideoInfo = React.createClass({
         pic: "",
         play: "",
         review: "",
-        tag: "TV动画,BILIBILI正版,我叫坂本我最DIO,在下坂本有何贵干",
+        tag: "",
         tid: 0,
         title: "",
         typename: "",

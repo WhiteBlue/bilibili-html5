@@ -31,15 +31,15 @@ module.exports = React.createClass({
       if (index === this.props.nowPage) {
         renderList.push(<span key={"pager-"+index} className="floatleft active">{index}</span>)
       } else {
-        renderList.push(<span key={"pager-"+index} page={index} onClick={this._pageChange.bind(null,index)}
+        renderList.push(<span key={"pager-"+index} onClick={this._pageChange.bind(null,index)}
                               className="floatleft">{index}</span>)
       }
     }
-    return <div className="area-pager">
+    return (this.props.allPage == 0 ? <div></div> : <div className="area-pager">
       <span onClick={this._pageChange.bind(null,1)} className="floatleft">首页</span>
       <span onClick={this._pageChange.bind(null,this.props.nowPage-1)} className="floatleft">上一页</span>
       {renderList}
       <span onClick={this._pageChange.bind(null,this.props.nowPage+1)} className="floatleft next">下一页</span>
-    </div>;
+    </div>);
   }
 });

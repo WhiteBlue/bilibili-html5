@@ -1,5 +1,9 @@
 node_modules
+
 .tmp
+
 .idea
+
 dist
+
 .publish
