@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?e4c88c22bb156d74d86d6226574daf22";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
 <head>
     <meta charset="UTF-8">
     <title>BiliBili-Html5</title>
@@ -17,7 +28,7 @@
 <div id="main-header">
     <div class="main-header-nav">
         <div class="main-header-image"
-             style="background-image: url('http://i0.hdslb.com/group1/M00/B7/30/oYYBAFcjKTGANfoVAAGAcG7aL64682.jpg');"></div>
+             style="background-image: url('/images/bg.png');"></div>
         <div class="header-container needstick">
             <ul class="main-header-nav-body">
                 <li class="nav-li floatleft now">

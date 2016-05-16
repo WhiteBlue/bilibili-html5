@@ -30,12 +30,8 @@
     @parent
     <script type="text/javascript" src="{{ url('/components/video.js/dist/video.min.js') }}"></script>
     <script type="text/javascript" src="{{ url('/js/comment-library.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url('/js/player.min.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-
-            loadVideoJsPlugin();
-
             renderVideo({{$aid}});
         });
     </script>

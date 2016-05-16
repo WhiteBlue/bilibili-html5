@@ -478,15 +478,16 @@ body {
 }
 
 .block-banner {
-  width: 450px;
-  height: 261px;
+  margin-top: 20px;
+  width: 430px;
+  height: 215px;
   float: left;
   overflow: hidden;
   border-radius: 12px;
 }
 
 .block-banner img {
-  height: 261px;
+  height: 100%;
 }
 
 .block-banner > ul {

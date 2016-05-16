@@ -1,6 +1,5 @@
 var React = require('react');
 var Config = require('../Config');
-var _ = require('lodash');
 
 const VideoItem = React.createClass({
   getDefaultProps(){
@@ -110,8 +109,10 @@ module.exports = React.createClass({
   },
   render(){
     var renderList = [];
-    for (var key in this.state.videoList) {
-      renderList.push(<VideoBlock key={"list-"+key} videoList={this.state.videoList[key]} labelName={key}/>)
+    for (var i = 0; i < Config.index_order.length; i++) {
+      var key = Config.index_order[i];
+      renderList.push(<VideoBlock key={"list-"+key} videoList={this.state.videoList[key]}
+                                  labelName={key}/>)
     }
     return <div>{renderList}</div>;
   }

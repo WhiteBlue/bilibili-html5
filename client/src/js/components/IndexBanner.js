@@ -12,12 +12,9 @@ const Banner = React.createClass({
     var renderBanner = [];
     for (var i in this.props.bannerList) {
       var data = this.props.bannerList[i];
-      var url = "#";
-      if (data.weburl != "") {
-        url = data.weburl;
-      }
+      var link = data.link;
       renderBanner.push(<li key={i}>
-        <a href={url} target="_blank"><img src={this.props.bannerList[i].imageurl}/></a>
+        <a href={link} target="_blank"><img src={this.props.bannerList[i].img}/></a>
       </li>);
     }
     return <div className="unslider-banner floatleft">
@@ -36,7 +33,8 @@ const BannerBlock = React.createClass({
     $('.block-banner').unslider({
       animation: 'horizontal',
       autoplay: true,
-      arrows: false
+      arrows: false,
+      keys: false
     });
   },
   getDefaultProps(){
