@@ -33,7 +33,7 @@ function loadVideoJsPlugin(loadVideoFunc) {
         //CCL init
         this.cmManager = new CommentManager(this.danmuDiv);
         //弹幕播放时间
-        this.cmManager.options.global.scale = 2;
+        this.cmManager.options.global.scale = 1.7;
         this.cmManager.init();
         this.cmManager.clear();
 
@@ -89,7 +89,6 @@ function loadVideoJsPlugin(loadVideoFunc) {
             _this.cmManager.clear();
             _this.danmuShowControlContent.innerHTML = "无";
           } else {
-            _this.cmManager.clear();
             _this.cmManager.display = true;
             _this.danmuShowControlContent.innerHTML = "弹幕";
 

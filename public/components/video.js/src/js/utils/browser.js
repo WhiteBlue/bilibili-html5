@@ -15,12 +15,8 @@ const appleWebkitVersion = webkitVersionMap ? parseFloat(webkitVersionMap.pop())
  * @constant
  * @private
  */
+export const IS_IPHONE = (/iPhone/i).test(USER_AGENT);
 export const IS_IPAD = (/iPad/i).test(USER_AGENT);
-
-// The Facebook app's UIWebView identifies as both an iPhone and iPad, so
-// to identify iPhones, we need to exclude iPads.
-// http://artsy.github.io/blog/2012/10/18/the-perils-of-ios-user-agent-sniffing/
-export const IS_IPHONE = (/iPhone/i).test(USER_AGENT) && !IS_IPAD;
 export const IS_IPOD = (/iPod/i).test(USER_AGENT);
 export const IS_IOS = IS_IPHONE || IS_IPAD || IS_IPOD;
 
@@ -57,8 +53,7 @@ export const IS_OLD_ANDROID = IS_ANDROID && (/webkit/i).test(USER_AGENT) && ANDR
 export const IS_NATIVE_ANDROID = IS_ANDROID && ANDROID_VERSION < 5 && appleWebkitVersion < 537;
 
 export const IS_FIREFOX = (/Firefox/i).test(USER_AGENT);
-export const IS_EDGE = (/Edge/i).test(USER_AGENT);
-export const IS_CHROME = !IS_EDGE && (/Chrome/i).test(USER_AGENT);
+export const IS_CHROME = (/Chrome/i).test(USER_AGENT);
 export const IS_IE8 = (/MSIE\s8\.0/).test(USER_AGENT);
 
 export const TOUCH_ENABLED = !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof window.DocumentTouch);

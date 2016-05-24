@@ -336,11 +336,10 @@ class Component {
    *
    * @param {String|Component} child The class name or instance of a child to add
    * @param {Object=} options Options, including options to be passed to children of the child.
-   * @param {Number} index into our children array to attempt to add the child
    * @return {Component} The child component (created by this process if a string was used)
    * @method addChild
    */
-  addChild(child, options={}, index=this.children_.length) {
+  addChild(child, options={}) {
     let component;
     let componentName;
 
@@ -389,7 +388,7 @@ class Component {
       component = child;
     }
 
-    this.children_.splice(index, 0, component);
+    this.children_.push(component);
 
     if (typeof component.id === 'function') {
       this.childIndex_[component.id()] = component;
@@ -406,9 +405,7 @@ class Component {
     // Add the UI object's element to the container div (box)
     // Having an element is not required
     if (typeof component.el === 'function' && component.el()) {
-      let childNodes = this.contentEl().children;
-      let refNode = childNodes[index] || null;
-      this.contentEl().insertBefore(component.el(), refNode);
+      this.contentEl().appendChild(component.el());
     }
 
     // Return so it can stored on parent object if desired.
@@ -1089,64 +1086,6 @@ class Component {
     // If component has display:none, offset will return 0
     // TODO: handle display:none and no dimension style using px
     return parseInt(this.el_['offset' + toTitleCase(widthOrHeight)], 10);
-  }
-
-  /**
-   * Get width or height of computed style
-   * @param  {String} widthOrHeight  'width' or 'height'
-   * @return {Number|Boolean} The bolean false if nothing was set
-   * @method currentDimension
-   */
-  currentDimension(widthOrHeight) {
-    let computedWidthOrHeight = 0;
-
-    if (widthOrHeight !== 'width' && widthOrHeight !== 'height') {
-      throw new Error('currentDimension only accepts width or height value');
-    }
-
-    if (typeof window.getComputedStyle === 'function') {
-      const computedStyle = window.getComputedStyle(this.el_);
-      computedWidthOrHeight = computedStyle.getPropertyValue(widthOrHeight) || computedStyle[widthOrHeight];
-    } else if (this.el_.currentStyle) {
-      // ie 8 doesn't support computed style, shim it
-      // return clientWidth or clientHeight instead for better accuracy
-      const rule = `offset${toTitleCase(widthOrHeight)}`;
-      computedWidthOrHeight = this.el_[rule];
-    }
-
-    // remove 'px' from variable and parse as integer
-    computedWidthOrHeight = parseFloat(computedWidthOrHeight);
-    return computedWidthOrHeight;
-  }
-
-  /**
-   * Get an object which contains width and height values of computed style
-   * @return {Object} The dimensions of element
-   * @method currentDimensions
-   */
-  currentDimensions() {
-    return {
-      width: this.currentDimension('width'),
-      height: this.currentDimension('height')
-    };
-  }
-
-  /**
-   * Get width of computed style
-   * @return {Integer}
-   * @method currentWidth
-   */
-  currentWidth() {
-    return this.currentDimension('width');
-  }
-
-  /**
-   * Get height of computed style
-   * @return {Integer}
-   * @method currentHeight
-   */
-  currentHeight() {
-    return this.currentDimension('height');
   }
 
   /**

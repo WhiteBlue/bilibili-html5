@@ -11,7 +11,7 @@ videojs.addLanguage("vi",{
  "Fullscreen": "Toàn màn hình",
  "Non-Fullscreen": "Thoát toàn màn hình",
  "Mute": "Tắt tiếng",
- "Unmute": "Bật âm thanh",
+ "Unmuted": "Bật âm thanh",
  "Playback Rate": "Tốc độ phát",
  "Subtitles": "Phụ đề",
  "subtitles off": "Tắt phụ đề",

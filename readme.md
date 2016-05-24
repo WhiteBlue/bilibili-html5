@@ -11,9 +11,7 @@
 
 [http://shiroblue.cn](http://shiroblue.cn)
 
-## 更新日志
 
-* 2016.5 : 项目重构, 拥抱react, 弹幕组件进化为纯CSS模式....
 
 
 ## 许可

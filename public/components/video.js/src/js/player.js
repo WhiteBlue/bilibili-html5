@@ -22,8 +22,6 @@ import safeParseTuple from 'safe-json-parse/tuple';
 import assign from 'object.assign';
 import mergeOptions from './utils/merge-options.js';
 import textTrackConverter from './tracks/text-track-list-converter.js';
-import AudioTrackList from './tracks/audio-track-list.js';
-import VideoTrackList from './tracks/video-track-list.js';
 
 // Include required child components (importing also registers them)
 import MediaLoader from './tech/loader.js';
@@ -184,14 +182,6 @@ class Player extends Component {
       this.addClass('vjs-controls-disabled');
     }
 
-    // Set ARIA label and region role depending on player type
-    this.el_.setAttribute('role', 'region');
-    if (this.isAudio()) {
-      this.el_.setAttribute('aria-label', 'audio player');
-    } else {
-      this.el_.setAttribute('aria-label', 'video player');
-    }
-
     if (this.isAudio()) {
       this.addClass('vjs-audio');
     }
@@ -205,11 +195,6 @@ class Player extends Component {
     // if (browser.TOUCH_ENABLED) {
     //   this.addClass('vjs-touch-enabled');
     // }
-
-    // iOS Safari has broken hover handling
-    if (!browser.IS_IOS) {
-      this.addClass('vjs-workinghover');
-    }
 
     // Make player easily findable by ID
     Player.players[this.id_] = this;
@@ -296,26 +281,16 @@ class Player extends Component {
     // Add a style element in the player that we'll use to set the width/height
     // of the player in a way that's still overrideable by CSS, just like the
     // video element
-    if (window.VIDEOJS_NO_DYNAMIC_STYLE !== true) {
-      this.styleEl_ = stylesheet.createStyleElement('vjs-styles-dimensions');
-      let defaultsStyleEl = Dom.$('.vjs-styles-defaults');
-      let head = Dom.$('head');
-      head.insertBefore(this.styleEl_, defaultsStyleEl ? defaultsStyleEl.nextSibling : head.firstChild);
-    }
+    this.styleEl_ = stylesheet.createStyleElement('vjs-styles-dimensions');
+    let defaultsStyleEl = Dom.$('.vjs-styles-defaults');
+    let head = Dom.$('head');
+    head.insertBefore(this.styleEl_, defaultsStyleEl ? defaultsStyleEl.nextSibling : head.firstChild);
 
     // Pass in the width/height/aspectRatio options which will update the style el
     this.width(this.options_.width);
     this.height(this.options_.height);
     this.fluid(this.options_.fluid);
     this.aspectRatio(this.options_.aspectRatio);
-
-    // Hide any links within the video/audio tag, because IE doesn't hide them completely.
-    let links = tag.getElementsByTagName('a');
-    for (let i = 0; i < links.length; i++) {
-      let linkEl = links.item(i);
-      Dom.addElClass(linkEl, 'vjs-hidden');
-      linkEl.setAttribute('hidden', 'hidden');
-    }
 
     // insertElFirst seems to cause the networkState to flicker from 3 to 2, so
     // keep track of the original for later so we can know if the source originally failed
@@ -325,12 +300,7 @@ class Player extends Component {
     if (tag.parentNode) {
       tag.parentNode.insertBefore(el, tag);
     }
-
-    // insert the tag as the first child of the player element
-    // then manually add it to the children array so that this.addChild
-    // will work properly for other components
     Dom.insertElFirst(tag, el); // Breaks iPhone, fixed in HTML5 setup.
-    this.children_.unshift(tag);
 
     this.el_ = el;
 
@@ -443,23 +413,6 @@ class Player extends Component {
    * @method updateStyleEl_
    */
   updateStyleEl_() {
-    if (window.VIDEOJS_NO_DYNAMIC_STYLE === true) {
-      const width = typeof this.width_ === 'number' ? this.width_ : this.options_.width;
-      const height = typeof this.height_ === 'number' ? this.height_ : this.options_.height;
-      let techEl = this.tech_ && this.tech_.el();
-
-      if (techEl) {
-        if (width >= 0) {
-          techEl.width = width;
-        }
-        if (height >= 0) {
-          techEl.height = height;
-        }
-      }
-
-      return;
-    }
-
     let width;
     let height;
     let aspectRatio;
@@ -557,9 +510,7 @@ class Player extends Component {
       'source': source,
       'playerId': this.id(),
       'techId': `${this.id()}_${techName}_api`,
-      'videoTracks': this.videoTracks_,
       'textTracks': this.textTracks_,
-      'audioTracks': this.audioTracks_,
       'autoplay': this.options_.autoplay,
       'preload': this.options_.preload,
       'loop': this.options_.loop,
@@ -652,9 +603,7 @@ class Player extends Component {
    */
   unloadTech_() {
     // Save the current text tracks so that we can reuse the same text tracks with the next tech
-    this.videoTracks_ = this.videoTracks();
     this.textTracks_ = this.textTracks();
-    this.audioTracks_ = this.audioTracks();
     this.textTracksJson_ = textTrackConverter.textTracksToJson(this.tech_);
 
     this.isReady_ = false;
@@ -858,7 +807,6 @@ class Player extends Component {
   handleTechWaiting_() {
     this.addClass('vjs-waiting');
     this.trigger('waiting');
-    this.one('timeupdate', () => this.removeClass('vjs-waiting'));
   }
 
   /**
@@ -2514,42 +2462,6 @@ class Player extends Component {
     return this.techGet_('readyState');
   }
 
-  /**
-   * Get a video track list
-   * @link https://html.spec.whatwg.org/multipage/embedded-content.html#videotracklist
-   *
-   * @return {VideoTrackList} thes current video track list
-   * @method videoTracks
-   */
-  videoTracks() {
-    // if we have not yet loadTech_, we create videoTracks_
-    // these will be passed to the tech during loading
-    if (!this.tech_) {
-      this.videoTracks_ = this.videoTracks_ || new VideoTrackList();
-      return this.videoTracks_;
-    }
-
-    return this.tech_.videoTracks();
-  }
-
-  /**
-   * Get an audio track list
-   * @link https://html.spec.whatwg.org/multipage/embedded-content.html#audiotracklist
-   *
-   * @return {AudioTrackList} thes current audio track list
-   * @method audioTracks
-   */
-  audioTracks() {
-    // if we have not yet loadTech_, we create videoTracks_
-    // these will be passed to the tech during loading
-    if (!this.tech_) {
-      this.audioTracks_ = this.audioTracks_ || new AudioTrackList();
-      return this.audioTracks_;
-    }
-
-    return this.tech_.audioTracks();
-  }
-
   /*
     * Text tracks are tracks of timed text events.
     * Captions - text displayed over the video for the hearing impaired
@@ -2621,9 +2533,7 @@ class Player extends Component {
    * @param {Object} track    Remote text track to remove
    * @method removeRemoteTextTrack
    */
-  // destructure the input into an object with a track argument, defaulting to arguments[0]
-  // default the whole argument to an empty object if nothing was passed in
-  removeRemoteTextTrack({track = arguments[0]} = {}) { // jshint ignore:line
+  removeRemoteTextTrack(track) {
     this.tech_ && this.tech_['removeRemoteTextTrack'](track);
   }
 
@@ -2651,6 +2561,8 @@ class Player extends Component {
   // initialTime: function(){ return this.techCall_('initialTime'); },
   // startOffsetTime: function(){ return this.techCall_('startOffsetTime'); },
   // played: function(){ return this.techCall_('played'); },
+  // videoTracks: function(){ return this.techCall_('videoTracks'); },
+  // audioTracks: function(){ return this.techCall_('audioTracks'); },
   // defaultPlaybackRate: function(){ return this.techCall_('defaultPlaybackRate'); },
   // defaultMuted: function(){ return this.techCall_('defaultMuted'); }
 
@@ -2846,7 +2758,7 @@ Player.prototype.options_ = {
   languages: {},
 
   // Default message to show when a video cannot be played.
-  notSupportedMessage: 'No compatible source was found for this media.'
+  notSupportedMessage: 'No compatible source was found for this video.'
 };
 
 /**

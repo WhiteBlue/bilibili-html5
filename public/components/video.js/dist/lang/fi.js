@@ -11,7 +11,7 @@ videojs.addLanguage("fi",{
  "Fullscreen": "Koko näyttö",
  "Non-Fullscreen": "Koko näyttö pois",
  "Mute": "Ääni pois",
- "Unmute": "Ääni päällä",
+ "Unmuted": "Ääni päällä",
  "Playback Rate": "Toistonopeus",
  "Subtitles": "Tekstitys",
  "subtitles off": "Tekstitys pois",

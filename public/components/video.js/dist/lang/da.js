@@ -11,7 +11,7 @@ videojs.addLanguage("da",{
  "Fullscreen": "Fuldskærm",
  "Non-Fullscreen": "Luk fuldskærm",
  "Mute": "Uden lyd",
- "Unmute": "Med lyd",
+ "Unmuted": "Med lyd",
  "Playback Rate": "Afspilningsrate",
  "Subtitles": "Undertekster",
  "subtitles off": "Uden undertekster",

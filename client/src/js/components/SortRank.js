@@ -107,6 +107,7 @@ module.exports = React.createClass({
       },
       context: this,
       success: function (data) {
+        this.props.cb(data.name);
         this.setState({
           videoList: data.list,
           allPage: data.pages,
@@ -120,7 +121,9 @@ module.exports = React.createClass({
   },
   getDefaultProps(){
     return {
-      tid: 0
+      tid: 0,
+      cb: function (content) {
+      }
     }
   },
   getInitialState(){

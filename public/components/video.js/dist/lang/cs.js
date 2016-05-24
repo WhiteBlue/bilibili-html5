@@ -11,7 +11,7 @@ videojs.addLanguage("cs",{
  "Fullscreen": "Celá obrazovka",
  "Non-Fullscreen": "Zmenšená obrazovka",
  "Mute": "Ztlumit zvuk",
- "Unmute": "Přehrát zvuk",
+ "Unmuted": "Přehrát zvuk",
  "Playback Rate": "Rychlost přehrávání",
  "Subtitles": "Titulky",
  "subtitles off": "Titulky vypnuty",

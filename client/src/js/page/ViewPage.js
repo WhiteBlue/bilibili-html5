@@ -2,6 +2,12 @@ var React = require('react');
 
 var Video = require('../components/Video');
 
+
+function titleCallback(content) {
+  document.title = "BH5 | " + content;
+}
+
+
 module.exports = React.createClass({
   getDefaultProps(){
     return {
@@ -9,6 +15,6 @@ module.exports = React.createClass({
     }
   },
   render(){
-    return <Video aid={this.props.aid}/>;
+    return <Video cb={titleCallback} aid={this.props.aid}/>;
   }
 });

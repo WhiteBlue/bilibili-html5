@@ -11,7 +11,7 @@ videojs.addLanguage("sv",{
  "Fullscreen": "Fullskärm",
  "Non-Fullscreen": "Ej fullskärm",
  "Mute": "Ljud av",
- "Unmute": "Ljud på",
+ "Unmuted": "Ljud på",
  "Playback Rate": "Uppspelningshastighet",
  "Subtitles": "Text på",
  "subtitles off": "Text av",

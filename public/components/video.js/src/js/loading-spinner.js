@@ -20,8 +20,7 @@ class LoadingSpinner extends Component {
    */
   createEl() {
     return super.createEl('div', {
-      className: 'vjs-loading-spinner',
-      dir: 'ltr'
+      className: 'vjs-loading-spinner'
     });
   }
 }

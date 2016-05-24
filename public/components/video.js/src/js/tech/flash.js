@@ -312,7 +312,7 @@ class Flash extends Tech {
 // Create setters and getters for attributes
 const _api = Flash.prototype;
 const _readWrite = 'rtmpConnection,rtmpStream,preload,defaultPlaybackRate,playbackRate,autoplay,loop,mediaGroup,controller,controls,volume,muted,defaultMuted'.split(',');
-const _readOnly = 'networkState,readyState,initialTime,duration,startOffsetTime,paused,ended,videoWidth,videoHeight'.split(',');
+const _readOnly = 'networkState,readyState,initialTime,duration,startOffsetTime,paused,ended,videoTracks,audioTracks,videoWidth,videoHeight'.split(',');
 
 function _createSetter(attr){
   var attrUpper = attr.charAt(0).toUpperCase() + attr.slice(1);
@@ -397,11 +397,10 @@ Flash.nativeSourceHandler.canHandleSource = function(source){
  * Adaptive source handlers will have more complicated workflows before passing
  * video data to the video element
  *
- * @param  {Object} source   The source object
- * @param  {Flash}  tech     The instance of the Flash tech
- * @param  {Object} options  The options to pass to the source
+ * @param  {Object} source    The source object
+ * @param  {Flash} tech   The instance of the Flash tech
  */
-Flash.nativeSourceHandler.handleSource = function(source, tech, options){
+Flash.nativeSourceHandler.handleSource = function(source, tech){
   tech.setSrc(source.src);
 };
 

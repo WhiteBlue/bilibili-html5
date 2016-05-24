@@ -11,7 +11,7 @@ videojs.addLanguage("it",{
  "Fullscreen": "Schermo intero",
  "Non-Fullscreen": "Chiudi schermo intero",
  "Mute": "Muto",
- "Unmute": "Audio",
+ "Unmuted": "Audio",
  "Playback Rate": "Tasso di riproduzione",
  "Subtitles": "Sottotitoli",
  "subtitles off": "Senza sottotitoli",

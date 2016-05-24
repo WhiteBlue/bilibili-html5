@@ -106,11 +106,6 @@ const VideoInfo = React.createClass({
 });
 
 module.exports = React.createClass({
-  getDefaltProps(){
-    return {
-      aid: null
-    }
-  },
   _loadData(){
     if (this.props.aid !== null) {
       $.ajax({
@@ -118,6 +113,7 @@ module.exports = React.createClass({
         url: Config.base_url + Config.routes.VIDEO_INFO + this.props.aid,
         context: this,
         success: function (data) {
+          this.props.cb(data.title);
           this.setState({
             videoInfo: data
           });
@@ -130,6 +126,13 @@ module.exports = React.createClass({
   },
   componentDidMount(){
     this._loadData();
+  },
+  getDefaltProps(){
+    return {
+      aid: null,
+      cb: function (content) {
+      }
+    }
   },
   getInitialState(){
     return {

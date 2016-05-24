@@ -168,6 +168,7 @@ module.exports = React.createClass({
       },
       context: this,
       success: function (data) {
+        this.props.cb(this._keyword);
         this.setState({
           bangumiList: data.result.bangumi,
           videoList: data.result.video,
@@ -202,7 +203,9 @@ module.exports = React.createClass({
   getDefaultProps(){
     return {
       keyword: "",
-      allPage: 20
+      allPage: 20,
+      cb: function (content) {
+      }
     }
   },
   componentDidMount(){

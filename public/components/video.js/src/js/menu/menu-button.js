@@ -1,7 +1,7 @@
 /**
  * @file menu-button.js
  */
-import ClickableComponent from '../clickable-component.js';
+import Button from '../button.js';
 import Component from '../component.js';
 import Menu from './menu.js';
 import * as Dom from '../utils/dom.js';
@@ -16,18 +16,16 @@ import toTitleCase from '../utils/to-title-case.js';
  * @extends Button
  * @class MenuButton
  */
-class MenuButton extends ClickableComponent {
+class MenuButton extends Button {
 
   constructor(player, options={}){
     super(player, options);
 
     this.update();
 
-    this.enabled_ = true;
-
-    this.el_.setAttribute('aria-haspopup', 'true');
-    this.el_.setAttribute('role', 'menuitem');
-    this.on('keydown', this.handleSubmenuKeyPress);
+    this.on('keydown', this.handleKeyPress);
+    this.el_.setAttribute('aria-haspopup', true);
+    this.el_.setAttribute('role', 'button');
   }
 
   /**
@@ -52,7 +50,6 @@ class MenuButton extends ClickableComponent {
      * @private
      */
     this.buttonPressed_ = false;
-    this.el_.setAttribute('aria-expanded', 'false');
 
     if (this.items && this.items.length === 0) {
       this.hide();
@@ -72,13 +69,11 @@ class MenuButton extends ClickableComponent {
 
     // Add a title list item to the top
     if (this.options_.title) {
-      let title = Dom.createEl('li', {
+      menu.contentEl().appendChild(Dom.createEl('li', {
         className: 'vjs-menu-title',
         innerHTML: toTitleCase(this.options_.title),
         tabIndex: -1
-      });
-      menu.children_.unshift(title);
-      Dom.insertElFirst(title, menu.contentEl());
+      }));
     }
 
     this.items = this['createItems']();
@@ -132,6 +127,27 @@ class MenuButton extends ClickableComponent {
   }
 
   /**
+   * Focus - Add keyboard functionality to element
+   * This function is not needed anymore. Instead, the
+   * keyboard functionality is handled by
+   * treating the button as triggering a submenu.
+   * When the button is pressed, the submenu
+   * appears. Pressing the button again makes
+   * the submenu disappear.
+   *
+   * @method handleFocus
+   */
+  handleFocus() {}
+
+  /**
+   * Can't turn off list display that we turned
+   * on with focus, because list would go away.
+   *
+   * @method handleBlur
+   */
+  handleBlur() {}
+
+  /**
    * When you click the button it adds focus, which
    * will show the menu indefinitely.
    * So we'll remove focus when the mouse leaves the button.
@@ -155,48 +171,25 @@ class MenuButton extends ClickableComponent {
   /**
    * Handle key press on menu
    *
-   * @param {Object} event Key press event
+   * @param {Object} Key press event
    * @method handleKeyPress
    */
   handleKeyPress(event) {
 
-    // Escape (27) key or Tab (9) key unpress the 'button'
-    if (event.which === 27 || event.which === 9) {
-      if (this.buttonPressed_) {
+    // Check for space bar (32) or enter (13) keys
+    if (event.which === 32 || event.which === 13) {
+      if (this.buttonPressed_){
         this.unpressButton();
-      }
-      // Don't preventDefault for Tab key - we still want to lose focus
-      if (event.which !== 9) {
-        event.preventDefault();
-      }
-    // Up (38) key or Down (40) key press the 'button'
-    } else if (event.which === 38 || event.which === 40) {
-      if (!this.buttonPressed_) {
+      } else {
         this.pressButton();
-        event.preventDefault();
       }
-    } else {
-      super.handleKeyPress(event);
-    }
-  }
-
-  /**
-   * Handle key press on submenu
-   *
-   * @param {Object} event Key press event
-   * @method handleSubmenuKeyPress
-   */
-  handleSubmenuKeyPress(event) {
-
-    // Escape (27) key or Tab (9) key unpress the 'button'
-    if (event.which === 27 || event.which === 9){
+      event.preventDefault();
+    // Check for escape (27) key
+    } else if (event.which === 27){
       if (this.buttonPressed_){
         this.unpressButton();
       }
-      // Don't preventDefault for Tab key - we still want to lose focus
-      if (event.which !== 9) {
-        event.preventDefault();
-      }
+      event.preventDefault();
     }
   }
 
@@ -206,11 +199,11 @@ class MenuButton extends ClickableComponent {
    * @method pressButton
    */
   pressButton() {
-    if (this.enabled_) {
-      this.buttonPressed_ = true;
-      this.menu.lockShowing();
-      this.el_.setAttribute('aria-expanded', 'true');
-      this.menu.focus(); // set the focus into the submenu
+    this.buttonPressed_ = true;
+    this.menu.lockShowing();
+    this.el_.setAttribute('aria-pressed', true);
+    if (this.items && this.items.length > 0) {
+      this.items[0].el().focus(); // set the focus to the title of the submenu
     }
   }
 
@@ -220,41 +213,9 @@ class MenuButton extends ClickableComponent {
    * @method unpressButton
    */
   unpressButton() {
-    if (this.enabled_) {
-      this.buttonPressed_ = false;
-      this.menu.unlockShowing();
-      this.el_.setAttribute('aria-expanded', 'false');
-      this.el_.focus(); // Set focus back to this menu button
-    }
-  }
-
-  /**
-   * Disable the menu button
-   *
-   * @return {Component}
-   * @method disable
-   */
-  disable() {
-    // Unpress, but don't force focus on this button
     this.buttonPressed_ = false;
     this.menu.unlockShowing();
-    this.el_.setAttribute('aria-expanded', 'false');
-
-    this.enabled_ = false;
-
-    return super.disable();
-  }
-
-  /**
-   * Enable the menu button
-   *
-   * @return {Component}
-   * @method disable
-   */
-  enable() {
-    this.enabled_ = true;
-
-    return super.enable();
+    this.el_.setAttribute('aria-pressed', false);
   }
 }
 

@@ -11,7 +11,7 @@ videojs.addLanguage("ba",{
  "Fullscreen": "Puni ekran",
  "Non-Fullscreen": "Mali ekran",
  "Mute": "Prigušen",
- "Unmute": "Ne-prigušen",
+ "Unmuted": "Ne-prigušen",
  "Playback Rate": "Stopa reprodukcije",
  "Subtitles": "Podnaslov",
  "subtitles off": "Podnaslov deaktiviran",

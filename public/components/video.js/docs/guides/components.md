@@ -41,46 +41,19 @@ Player
     BigPlayButton
     ControlBar
         PlayToggle
-        VolumeMenuButton
-        CurrentTimeDisplay (Hidden by default)
-        TimeDivider (Hidden by default)
-        DurationDisplay (Hidden by default)
+        FullscreenToggle
+        CurrentTimeDisplay
+        TimeDivider
+        DurationDisplay
+        RemainingTimeDisplay
         ProgressControl
             SeekBar
               LoadProgressBar
-              MouseTimeDisplay
               PlayProgressBar
-        LiveDisplay (Hidden by default)
-        RemainingTimeDisplay
-        CustomControlsSpacer (No UI)
-        ChaptersButton (Hidden by default)
-        SubtitlesButton (Hidden by default)
-        CaptionsButton (Hidden by default)
-        FullscreenToggle
-    ErrorDisplay
-    TextTrackSettings
-```
-
-## Progress Control
-The progress control is made up of the SeekBar. The seekbar contains the load progress bar
-and the play progress bar. In addition, it contains the Mouse Time Display which
-is used to display the time tooltip that follows the mouse cursor.
-The play progress bar also has a time tooltip that show the current time.
-
-By default, the progress control is sandwiched between the volume menu button and
-the remaining time display inside the control bar, but in some cases, a skin would
-want to move the progress control above the control bar and have it span the full
-width of the player, in those cases, it is less than ideal to have the tooltips
-get cut off or leave the bounds of the player. This can be prevented by setting the
-`keepTooltipsInside` option on the progress control. This also makes the tooltips use 
-a real element instead of pseudo elements so targetting them with css will be different.
-
-```js
-let player = videojs('myplayer', {
-  controlBar: {
-    progressControl: {
-      keepTooltipsInside: true
-    }
-  }
-});
+              SeekHandle
+        VolumeControl
+            VolumeBar
+                VolumeLevel
+                VolumeHandle
+        MuteToggle
 ```
