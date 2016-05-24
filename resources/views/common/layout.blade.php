@@ -144,7 +144,7 @@
                 <div class="about-title">About</div>
                 <div class="about-links">
                     <a href="http://www.bilibili.com">BiliBili弹幕视频网</a>
-                    <a href="https://github.com/WhiteBlue/bilibili-html5/upload.md">更新日志</a>
+                    <a href="https://github.com/WhiteBlue/bilibili-html5/blob/master/update.md">更新日志</a>
                     <a href="https://github.com/WhiteBlue/bilibili-html5">项目地址</a>
                 </div>
             </div>
