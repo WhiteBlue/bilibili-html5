@@ -78,7 +78,7 @@
     <p >Powered by <a href="http://www.dingxiaoyue.com" target="_blank">订小阅号</a>|有任何意见或建议请直接提给 wsc449@qq.com</p>
     <p>  Code licensed under <a href="http://opensource.org/licenses/mit-license.php" target="_blank">MIT License</a>
         | <a href="http://www.miibeian.gov.cn/" target="_blank">冀ICP备15022324号-1</a>|
-        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1256772413'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s95.cnzz.com/stat.php%3Fid%3D1256772413' type='text/javascript'%3E%3C/script%3E"));</script>
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1257980607'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s4.cnzz.com/stat.php%3Fid%3D1257980607' type='text/javascript'%3E%3C/script%3E"));</script>
     </p>
 </footer>
 

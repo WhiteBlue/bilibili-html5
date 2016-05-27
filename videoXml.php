@@ -7,7 +7,8 @@ try {
         $conn = new MongoClient();
         $db = $conn->selectDB('bilibili');
         $collection = new MongoCollection($db, 'videos');
-        $cursor = $collection->find()->sort(array('aid' => -1))->limit(500);;
+        $cursor = $collection->find()->sort(array('aid' => -1))->limit(500);
+        $arr=$cursor;
         $xml = new SimpleXMLElement('<?xml version="1.0" encoding="utf-8"?><document />');
         $xml->addchild("webSite", "v.dingxiaoyue.com");
         $xml->addchild("webMaster", "wsc449@qq.com");
@@ -25,7 +26,7 @@ try {
         $xml->asXml("public/video.xml");
 
         $content='<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">';
-        foreach ($cursor as $doc) {
+        foreach ($arr as $doc) {
             $content.="<url>\n";
             $content.="<loc>".'http://v.dingxiaoyue.com/view/' . $doc["aid"]."</loc>\n";
             $content.="<video:video>";

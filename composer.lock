@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "aeeb80466f033b88f8b6f42c86c98b2c",
-    "content-hash": "f328f596e9ab8931f602be80c9de1dc8",
+    "hash": "03c43f3350742b68ea3aa2393084d177",
+    "content-hash": "9bc5d903fb3ae5399c4b036920b836b2",
     "packages": [
         {
             "name": "danielstjules/stringy",
@@ -1279,65 +1279,6 @@
             "description": "The Illuminate View package.",
             "homepage": "http://laravel.com",
             "time": "2015-11-29 16:58:05"
-        },
-        {
-            "name": "jenssegers/mongodb",
-            "version": "v2.2.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jenssegers/laravel-mongodb.git",
-                "reference": "c9e0739d1b874eb05c85daa0637d30fd974c4233"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://packagist.phpcomposer.com/files/jenssegers/laravel-mongodb/c9e0739d1b874eb05c85daa0637d30fd974c4233.zip",
-                "reference": "c9e0739d1b874eb05c85daa0637d30fd974c4233",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/container": "^5.1",
-                "illuminate/database": "^5.1",
-                "illuminate/events": "^5.1",
-                "illuminate/support": "^5.1"
-            },
-            "require-dev": {
-                "mockery/mockery": "^0.9",
-                "orchestra/testbench": "^3.1",
-                "phpunit/phpunit": "^4.0|^5.0",
-                "satooshi/php-coveralls": "^0.6"
-            },
-            "suggest": {
-                "jenssegers/mongodb-sentry": "Add Sentry support to Laravel-MongoDB",
-                "jenssegers/mongodb-session": "Add MongoDB session support to Laravel-MongoDB"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-0": {
-                    "Jenssegers\\Mongodb": "src/",
-                    "Jenssegers\\Eloquent": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jens Segers",
-                    "homepage": "https://jenssegers.com"
-                }
-            ],
-            "description": "A MongoDB based Eloquent model and Query builder for Laravel 4",
-            "homepage": "https://github.com/jenssegers/laravel-mongodb",
-            "keywords": [
-                "database",
-                "eloquent",
-                "laravel",
-                "model",
-                "mongo",
-                "mongodb"
-            ],
-            "time": "2015-12-20 11:15:10"
         },
         {
             "name": "laravel/lumen-framework",

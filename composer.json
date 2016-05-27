@@ -13,8 +13,7 @@
         "laravel/lumen-framework": "5.1.*",
         "vlucas/phpdotenv": "~1.0",
         "predis/predis": "1.0.3",
-        "illuminate/redis" : "5.1.*",
-        "jenssegers/mongodb": "^2.2"
+        "illuminate/redis" : "5.1.*"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
