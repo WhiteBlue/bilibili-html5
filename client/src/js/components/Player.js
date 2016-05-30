@@ -37,6 +37,8 @@ function loadVideoJsPlugin(loadVideoFunc) {
         this.cmManager.init();
         this.cmManager.clear();
 
+        this.cmManager.display = true;
+
         //弹幕控制绑定
         var video = ele.el().children[0];
         var lastPosition = 0;
@@ -84,14 +86,13 @@ function loadVideoJsPlugin(loadVideoFunc) {
           });
         }
         this.danmuShowControl.addEventListener("click", function () {
-          if (_this.cmManager.display == true) {
-            _this.cmManager.display = false;
-            _this.cmManager.clear();
-            _this.danmuShowControlContent.innerHTML = "无";
+          if (_this.cmManager.display === true) {
+              _this.cmManager.clear();
+              _this.cmManager.display = false;
+              _this.danmuShowControlContent.innerHTML = "无";
           } else {
             _this.cmManager.display = true;
             _this.danmuShowControlContent.innerHTML = "弹幕";
-
           }
         });
 

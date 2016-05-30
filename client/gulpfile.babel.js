@@ -17,7 +17,6 @@ import cssnano from 'cssnano';
 import imagemin from 'gulp-imagemin';
 import pngquant from 'imagemin-pngquant';
 import runSequence from 'run-sequence';
-import es3ify from 'es3ify';
 
 const paths = {
   bundle: 'app.js',
@@ -62,7 +61,6 @@ gulp.task('watchify', () => {
 gulp.task('browserify', () => {
   browserify(paths.entry, {debug: true})
     .transform(babelify)
-    .transform(es3ify)
     .bundle()
     .pipe(source(paths.bundle))
     .pipe(buffer())
