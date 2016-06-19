@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <title>Title</title>
 
-  <link rel="stylesheet" href="../dist/styles/main.css">
-  <link rel="stylesheet" href="unslider/css/unslider.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/unslider/css/unslider.css">
 
 </head>
 
@@ -25,6 +25,7 @@
           <a href="#">分类</a>
           <div class="nav-li-list">
             <a href="#">音乐</a>
+            <a href="#">动画</a>
             <a href="#">动画</a>
           </div>
         </li>
@@ -294,20 +295,11 @@
   </div>
 </div>
 
-<script type="text/javascript" src="jquery.js"></script>
-<script type="text/javascript" src="stickup.js"></script>
-<script type="text/javascript" src="unslider/js/unslider-min.js"></script>
+<script type="text/javascript" src="../assets/js/jquery.js"></script>
+<script type="text/javascript" src="../assets/js/stickup.js"></script>
+<script type="text/javascript" src="../assets/unslider/js/unslider-min.js"></script>
 <script type="text/javascript">
   $(document).ready(function () {
-    $('.video-block').hover(function () {
-        $(this).children('.video-block-time').toggleClass('video-block-time-active');
-        $(this).children('.video-block-info').toggleClass('video-block-info-active');
-      }
-    );
-
-    $('.can-active .nav-li-list').hover(function () {
-      $(this).toggleClass('active');
-    });
 
     $('.block-banner').unslider({
       animation: 'horizontal',

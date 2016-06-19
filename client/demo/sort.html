@@ -4,11 +4,8 @@
   <meta charset="UTF-8">
   <title>Title</title>
 
-  <link rel="stylesheet" href="../dist/styles/main.css">
-  <link rel="stylesheet" href="unslider/css/unslider.css">
-
-  <script src="../dist/js/jquery.js"></script>
-  <script src="unslider/js/unslider-min.js"></script>
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="../assets/unslider/css/unslider.css">
 
 </head>
 
@@ -136,19 +133,13 @@
   </div>
 </div>
 
+<script src="../assets/js/jquery.js"></script>
+<script type="text/javascript" src="../assets/js/stickup.js"></script>
+
 <script>
   $(document).ready(function () {
-    $('.video-block').hover(function () {
-        $(this).children('.video-block-time').toggleClass('video-block-time-active');
-        $(this).children('.video-block-info').toggleClass('video-block-info-active');
-      }
-    );
 
-    $('.block-banner').unslider({
-      animation: 'horizontal',
-      autoplay: true,
-      arrows: false
-    });
+    $('.needstick').stickUp({});
   });
 </script>
 

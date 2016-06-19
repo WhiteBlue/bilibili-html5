@@ -1,17 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
-<script>
-    var _hmt = _hmt || [];
-    (function() {
-        var hm = document.createElement("script");
-        hm.src = "//hm.baidu.com/hm.js?e4c88c22bb156d74d86d6226574daf22";
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(hm, s);
-    })();
-</script>
-
-
 <head>
     <meta charset="UTF-8">
     <title>BiliBili-Html5</title>
@@ -170,6 +158,16 @@
     <script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
     <script type="text/javascript" src="{{ url('/js/stickup.min.js') }}"></script>
     <script type="text/javascript" src="{{ url('/js/app.js') }}"></script>
+
+    <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?e4c88c22bb156d74d86d6226574daf22";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 @show
 
 </body>

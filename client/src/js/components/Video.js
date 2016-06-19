@@ -3,6 +3,7 @@ var Config = require('../Config');
 var _ = require('lodash');
 
 var Player = require('./Player');
+var reqwest = require('reqwest');
 
 const Tags = React.createClass({
   getDefaltProps(){
@@ -108,18 +109,20 @@ const VideoInfo = React.createClass({
 module.exports = React.createClass({
   _loadData(){
     if (this.props.aid !== null) {
-      $.ajax({
-        type: 'GET',
-        url: Config.base_url + Config.routes.VIDEO_INFO + this.props.aid,
-        context: this,
-        success: function (data) {
-          this.props.cb(data.title);
-          this.setState({
+      var _this = this;
+      reqwest({
+        url: Config.base_url + Config.routes.VIDEO_INFO + this.props.aid
+        , type: 'json'
+        , method: 'get'
+        , crossOrigin: true
+        , error: function (err) {
+          console.log('error');
+        }
+        , success: function (data) {
+          _this.props.cb(data.title);
+          _this.setState({
             videoInfo: data
           });
-        },
-        error: function () {
-          console.log('error');
         }
       });
     }

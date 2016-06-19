@@ -166,6 +166,7 @@ module.exports = React.createClass({
         page: this._page,
         order: this._order
       },
+      cache: true,
       context: this,
       success: function (data) {
         this.props.cb(this._keyword);

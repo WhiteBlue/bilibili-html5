@@ -1,6 +1,6 @@
 var React = require('react');
 var Config = require('../Config');
-var _ = require('lodash');
+var reqwest = require('reqwest');
 
 const Banner = React.createClass({
   getDefaultProps(){
@@ -52,17 +52,19 @@ const BannerBlock = React.createClass({
 
 module.exports = React.createClass({
   _loadData(){
-    $.ajax({
-      type: 'GET',
-      url: Config.base_url + Config.routes.BANNER,
-      context: this,
-      success: function (data) {
-        this.setState({
+    var _this = this;
+    reqwest({
+      url: Config.base_url + Config.routes.BANNER
+      , type: 'json'
+      , method: 'get'
+      , crossOrigin: true
+      , error: function (err) {
+        console.log('error');
+      }
+      , success: function (data) {
+        _this.setState({
           banner: data.list
         });
-      },
-      error: function () {
-        console.log('error');
       }
     });
   },

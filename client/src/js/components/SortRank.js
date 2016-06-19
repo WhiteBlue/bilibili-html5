@@ -1,7 +1,7 @@
 var React = require('react');
 var Config = require('../Config');
-
 var Pager = require('./Pager');
+var reqwest = require('reqwest');
 
 const VideoItem = React.createClass({
   getDefaultProps(){
@@ -97,25 +97,22 @@ module.exports = React.createClass({
     $('body,html').animate({scrollTop: 0}, 700);
   },
   _loadData(){
-    $.ajax({
-      type: 'GET',
-      url: Config.base_url + Config.routes.SORT_VIDEOS + this.props.tid,
-      data: {
-        count: 20,
-        page: this._page,
-        order: this._order
-      },
-      context: this,
-      success: function (data) {
-        this.props.cb(data.name);
-        this.setState({
+    var _this = this;
+    reqwest({
+      url: Config.base_url + Config.routes.SORT_VIDEOS + this.props.tid
+      , type: 'json'
+      , method: 'get'
+      , crossOrigin: true
+      , error: function (err) {
+        console.log('error');
+      }
+      , success: function (data) {
+        _this.props.cb(data.name);
+        _this.setState({
           videoList: data.list,
           allPage: data.pages,
           title: data.name
         });
-      },
-      error: function () {
-        console.log('error');
       }
     });
   },
