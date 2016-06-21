@@ -24,9 +24,9 @@ const paths = {
   srcCss: 'src/styles/*.scss',
   srcImg: 'src/images/**',
   srcLint: ['src/**/*.js', 'test/**/*.js'],
-  distCss: '../static/css',
-  distJs: '../static/js',
-  distImg: '../static/img'
+  distCss: '../public/styles',
+  distJs: '../public/js',
+  distImg: '../public/img'
 };
 
 const customOpts = {
