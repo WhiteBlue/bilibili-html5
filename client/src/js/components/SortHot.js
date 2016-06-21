@@ -34,7 +34,7 @@ const VideoItem = React.createClass({
     var linkUrl = this.state.hrefStr + this.props.data.aid;
     return <div className="side-video-item">
       <div className="left floatleft">
-        <img src={this.props.data.pic}/>
+        <img className="lazy" src={this.props.data.pic}/>
       </div>
       <div className="right floatleft">
         <a href={linkUrl} target="_blank" className="title">{this.props.data.title}</a>

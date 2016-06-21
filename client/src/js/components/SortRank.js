@@ -38,7 +38,7 @@ const VideoItem = React.createClass({
         <div className="left floatleft">
           <a href={linkUrl} target="_blank">
             <div className="thumb">
-              <img src={this.props.data.pic}/>
+              <img className="lazy" src={this.props.data.pic}/>
             </div>
           </a>
           <div className="info floatleft">

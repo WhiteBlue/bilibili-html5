@@ -156,6 +156,7 @@
 
 @section('javascript')
     <script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+    <script type="text/javascript" src="{{ url('/components/jquery-lazyload/jquery.lazyload.js') }}"></script>
     <script type="text/javascript" src="{{ url('/js/stickup.min.js') }}"></script>
     <script type="text/javascript" src="{{ url('/js/app.js?v=20160621-2') }}"></script>
 

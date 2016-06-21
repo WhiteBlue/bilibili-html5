@@ -1,0 +1,25 @@
+{
+  "name": "jquery-lazyload",
+  "version": "1.0.1",
+  "homepage": "https://github.com/jmmerino/jquery-lazyload",
+  "authors": [
+    "Jesús Merino Parra <jmmerino@gmail.com>"
+  ],
+  "description": "Lazy load of images",
+  "main": "jquery.lazyload.js",
+  "keywords": [
+    "lazyload",
+    "jquery"
+  ],
+  "license": "MIT",
+  "_release": "1.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "1.0.1",
+    "commit": "7eb45723bf784641b668e631d1d50a2cb43df7c4"
+  },
+  "_source": "https://github.com/jmmerino/jquery-lazyload.git",
+  "_target": "^1.0.1",
+  "_originalSource": "jquery-lazyload",
+  "_direct": true
+}

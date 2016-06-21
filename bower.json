@@ -23,6 +23,7 @@
     "jquery": "~2.2.0",
     "bootstrap": "~3.3.6",
     "comment-core-library": "~0.9.2",
-    "video.js": "~5.5.1"
+    "video.js": "~5.5.1",
+    "jquery-lazyload": "^1.0.1"
   }
 }
