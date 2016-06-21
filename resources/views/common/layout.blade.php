@@ -8,7 +8,7 @@
     <meta name="description" content="BiliBili-html5，视频源解析，纯Html5播放器">
 
     @section('css')
-        <link rel="stylesheet" href="{{ url('/styles/main.css') }}">
+        <link rel="stylesheet" href="{{ url('/styles/main.css?v=20160621') }}">
     @show
 </head>
 <body>
@@ -157,7 +157,7 @@
 @section('javascript')
     <script type="text/javascript" src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
     <script type="text/javascript" src="{{ url('/js/stickup.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url('/js/app.js') }}"></script>
+    <script type="text/javascript" src="{{ url('/js/app.js?v=20160621') }}"></script>
 
     <script type="text/javascript">
         var _hmt = _hmt || [];
