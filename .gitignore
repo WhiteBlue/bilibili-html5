@@ -14,3 +14,12 @@ atlassian-ide-plugin.xml
 vendor
 
 node_modules
+
+# npm build file
+public/js/app.js
+public/js/app.js.map
+
+public/styles/main.css
+public/styles/main.css.map
+public/styles/player.css
+public/styles/player.css.map

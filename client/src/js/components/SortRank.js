@@ -99,7 +99,7 @@ module.exports = React.createClass({
   _loadData(){
     var _this = this;
     reqwest({
-      url: Config.base_url + Config.routes.SORT_VIDEOS + this.props.tid
+      url: Config.base_url + Config.routes.SORT_VIDEOS + _this.props.tid + "?page=" + _this._page
       , type: 'json'
       , method: 'get'
       , crossOrigin: true
