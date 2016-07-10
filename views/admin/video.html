@@ -50,7 +50,7 @@
                         <td>{{ $elem.Bangumi.NameCn }}</td>
                         <td>{{ $elem.VideoKey }}</td>
                         <td>
-
+                            <a href="/video/{{ $elem.Id }}" class="badge bg-success">预览</a>
                             <a href="/admin/video/delete/{{ $elem.Id }}" class="badge bg-red">删除</a>
                         </td>
                     </tr>

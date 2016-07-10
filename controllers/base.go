@@ -23,26 +23,17 @@ func (this *BaseController) Body2Json(content interface{}) error {
 }
 
 func (this *BaseController) CheckUser() bool {
-	user := &models.WeiboUser{
-		Token: "23333",
-		Name:  "蓝白",
-		Icon:  "233",
+	sess, _ := beego.GlobalSessions.SessionStart(this.Ctx.ResponseWriter, this.Ctx.Request)
+	defer sess.SessionRelease(this.Ctx.ResponseWriter)
+
+	user := sess.Get("user")
+	if user == nil {
+		this.Redirect("/auth/login", 303)
+		this.StopRun()
+		return false
 	}
-
-	this.Data["User"] = user
-
+	this.Data["User"] = user.(*models.WeiboUser)
 	return true
-
-	//sess, _ := beego.GlobalSessions.SessionStart(this.Ctx.ResponseWriter, this.Ctx.Request)
-	//defer sess.SessionRelease(this.Ctx.ResponseWriter)
-	//
-	//user := sess.Get("User")
-	//if user == nil {
-	//    this.Redirect("/auth/login", 303)
-	//    this.StopRun()
-	//} else {
-	//    this.Data["User"] = user.(*models.WeiboUser)
-	//}
 }
 
 func (this *BaseController) GetUser() *models.WeiboUser {
