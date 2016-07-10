@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	CONFIG_JSON = "conf/config.json"
+	CONFIG_JSON = "/etc/bh5/config.json"
 )
 
 var (
