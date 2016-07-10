@@ -1,12 +1,9 @@
-*.iml
+node_modules
 
-.idea/
+.tmp
 
-.idea_modules/
+.idea
 
-atlassian-ide-plugin.xml
+dist
 
-
-bilibili-html5
-
-conf/config.json
+.publish

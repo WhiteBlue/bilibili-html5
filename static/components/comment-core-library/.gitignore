@@ -1,6 +1,0 @@
-# IDEA
-/.idea
-*.iml
-
-# Ignore Node Modules
-/node_modules/*

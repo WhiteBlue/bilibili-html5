@@ -1,23 +1,29 @@
 {
   "name": "bilibili-html5",
+  "description": "React JS application skeleton using Browserify and other awesome tools",
+  "main": "app.js",
   "authors": [
-    "WhiteBlue <whiteblue0616@gmail.com>"
+    "Maurizio Mangione"
   ],
-  "description": "",
-  "main": "",
   "license": "MIT",
-  "homepage": "",
+  "keywords": [
+    "gulp",
+    "react",
+    "browserify",
+    "seed",
+    "boilerplate",
+    "kickstarter",
+    "ES6",
+    "ES2015",
+    "babel",
+    "ava"
+  ],
+  "homepage": "https://github.com/WhiteBlue/bilibili-html5",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
     "test",
     "tests"
-  ],
-  "dependencies": {
-    "jquery": "~2.2.0",
-    "video.js": "~5.5.1",
-    "comment-core-library": "CommentCoreLibrary#^0.9.2",
-    "bootstrap": "^3.3.6"
-  }
+  ]
 }

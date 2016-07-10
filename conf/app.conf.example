@@ -1,8 +1,0 @@
-appname = bilibili-html5
-httpport = 8080
-runmode = dev
-
-#sinaAPI相关
-sina_app_key=
-sina_app_secret=
-sina_redirect_uri=http://127.0.0.1:8080/auth/callback
