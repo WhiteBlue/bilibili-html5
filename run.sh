@@ -1,5 +1,5 @@
 #!/bin/sh
 
-godep go build main.go
+godep go build
 
 ./bilibili-html5
