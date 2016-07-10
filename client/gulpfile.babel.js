@@ -21,12 +21,12 @@ import runSequence from 'run-sequence';
 const paths = {
   bundle: 'app.js',
   entry: 'src/js/Index.js',
-  srcCss: 'src/**/*.scss',
+  srcCss: 'src/styles/*.scss',
   srcImg: 'src/images/**',
   srcLint: ['src/**/*.js', 'test/**/*.js'],
-  dist: '../public',
-  distJs: '../public/js',
-  distImg: '../public/images'
+  distCss: '../static/css',
+  distJs: '../static/js',
+  distImg: '../static/img'
 };
 
 const customOpts = {
@@ -76,7 +76,7 @@ gulp.task('styles', () => {
     .pipe(sourcemaps.init())
     .pipe(postcss([vars, extend, nested, autoprefixer, cssnano]))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest(paths.dist))
+    .pipe(gulp.dest(paths.distCss))
 });
 
 gulp.task('images', () => {

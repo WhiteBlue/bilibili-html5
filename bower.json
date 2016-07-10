@@ -1,17 +1,12 @@
 {
-  "name": "BiliBili-Html5",
-  "homepage": "https://github.com/WhiteBlue/BiliPusher",
+  "name": "bilibili-html5",
   "authors": [
-    "WhiteBlue <whiteblue616@icloud.com>"
+    "WhiteBlue <whiteblue0616@gmail.com>"
   ],
   "description": "",
   "main": "",
-  "moduleType": [],
-  "keywords": [
-    "bilibili"
-  ],
   "license": "MIT",
-  "private": true,
+  "homepage": "",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -21,8 +16,8 @@
   ],
   "dependencies": {
     "jquery": "~2.2.0",
-    "bootstrap": "~3.3.6",
-    "comment-core-library": "~0.9.2",
-    "video.js": "~5.5.1"
+    "video.js": "~5.5.1",
+    "comment-core-library": "CommentCoreLibrary#^0.9.2",
+    "bootstrap": "^3.3.6"
   }
 }

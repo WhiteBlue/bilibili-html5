@@ -1,0 +1,260 @@
+{
+	"ImportPath": "github.com/whiteblue/bilibili-html5",
+	"GoVersion": "go1.6",
+	"GodepVersion": "v74",
+	"Deps": [
+		{
+			"ImportPath": "github.com/RoaringBitmap/roaring",
+			"Comment": "v0.2.5-3-ge9cfdab",
+			"Rev": "e9cfdabbfbe11865b64a7658d83c1b6fc3bf92ec"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/missinggo",
+			"Rev": "b58ed0d2d777019fbe0b01fb30eb3137826ec4b8"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/missinggo/bitmap",
+			"Rev": "b58ed0d2d777019fbe0b01fb30eb3137826ec4b8"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/missinggo/httptoo",
+			"Rev": "b58ed0d2d777019fbe0b01fb30eb3137826ec4b8"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/missinggo/inproc",
+			"Rev": "b58ed0d2d777019fbe0b01fb30eb3137826ec4b8"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/missinggo/itertools",
+			"Rev": "b58ed0d2d777019fbe0b01fb30eb3137826ec4b8"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/missinggo/orderedmap",
+			"Rev": "b58ed0d2d777019fbe0b01fb30eb3137826ec4b8"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/missinggo/perf",
+			"Rev": "b58ed0d2d777019fbe0b01fb30eb3137826ec4b8"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/missinggo/pproffd",
+			"Rev": "b58ed0d2d777019fbe0b01fb30eb3137826ec4b8"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/missinggo/prioritybitmap",
+			"Rev": "b58ed0d2d777019fbe0b01fb30eb3137826ec4b8"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/missinggo/pubsub",
+			"Rev": "b58ed0d2d777019fbe0b01fb30eb3137826ec4b8"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/missinggo/resource",
+			"Rev": "b58ed0d2d777019fbe0b01fb30eb3137826ec4b8"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/sync",
+			"Rev": "812602587b72df6a2a4f6e30536adc75394a374b"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/torrent",
+			"Rev": "9b48d0c7a5bcdc3607d7c797aeb66f7a5f29908c"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/torrent/bencode",
+			"Rev": "9b48d0c7a5bcdc3607d7c797aeb66f7a5f29908c"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/torrent/dht",
+			"Rev": "9b48d0c7a5bcdc3607d7c797aeb66f7a5f29908c"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/torrent/dht/krpc",
+			"Rev": "9b48d0c7a5bcdc3607d7c797aeb66f7a5f29908c"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/torrent/iplist",
+			"Rev": "9b48d0c7a5bcdc3607d7c797aeb66f7a5f29908c"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/torrent/logonce",
+			"Rev": "9b48d0c7a5bcdc3607d7c797aeb66f7a5f29908c"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/torrent/metainfo",
+			"Rev": "9b48d0c7a5bcdc3607d7c797aeb66f7a5f29908c"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/torrent/mmap_span",
+			"Rev": "9b48d0c7a5bcdc3607d7c797aeb66f7a5f29908c"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/torrent/mse",
+			"Rev": "9b48d0c7a5bcdc3607d7c797aeb66f7a5f29908c"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/torrent/peer_protocol",
+			"Rev": "9b48d0c7a5bcdc3607d7c797aeb66f7a5f29908c"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/torrent/storage",
+			"Rev": "9b48d0c7a5bcdc3607d7c797aeb66f7a5f29908c"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/torrent/tracker",
+			"Rev": "9b48d0c7a5bcdc3607d7c797aeb66f7a5f29908c"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/torrent/util",
+			"Rev": "9b48d0c7a5bcdc3607d7c797aeb66f7a5f29908c"
+		},
+		{
+			"ImportPath": "github.com/anacrolix/utp",
+			"Rev": "d7ad5aff2b8a5fa415d1c1ed00b71cfd8b4c69e0"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego",
+			"Comment": "v1.6.1-5-g88c5dfa",
+			"Rev": "88c5dfa6ead42e624c2e7d9e04eab6cb2d07412a"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/config",
+			"Comment": "v1.6.1-5-g88c5dfa",
+			"Rev": "88c5dfa6ead42e624c2e7d9e04eab6cb2d07412a"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/context",
+			"Comment": "v1.6.1-5-g88c5dfa",
+			"Rev": "88c5dfa6ead42e624c2e7d9e04eab6cb2d07412a"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/grace",
+			"Comment": "v1.6.1-5-g88c5dfa",
+			"Rev": "88c5dfa6ead42e624c2e7d9e04eab6cb2d07412a"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/logs",
+			"Comment": "v1.6.1-5-g88c5dfa",
+			"Rev": "88c5dfa6ead42e624c2e7d9e04eab6cb2d07412a"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/orm",
+			"Comment": "v1.6.1-5-g88c5dfa",
+			"Rev": "88c5dfa6ead42e624c2e7d9e04eab6cb2d07412a"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/session",
+			"Comment": "v1.6.1-5-g88c5dfa",
+			"Rev": "88c5dfa6ead42e624c2e7d9e04eab6cb2d07412a"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/toolbox",
+			"Comment": "v1.6.1-5-g88c5dfa",
+			"Rev": "88c5dfa6ead42e624c2e7d9e04eab6cb2d07412a"
+		},
+		{
+			"ImportPath": "github.com/astaxie/beego/utils",
+			"Comment": "v1.6.1-5-g88c5dfa",
+			"Rev": "88c5dfa6ead42e624c2e7d9e04eab6cb2d07412a"
+		},
+		{
+			"ImportPath": "github.com/bradfitz/iter",
+			"Rev": "454541ec3da2a73fc34fd049b19ee5777bf19345"
+		},
+		{
+			"ImportPath": "github.com/dustin/go-humanize",
+			"Rev": "499693e27ee0d14ffab67c31ad065fdb3d34ea75"
+		},
+		{
+			"ImportPath": "github.com/edsrzf/mmap-go",
+			"Rev": "935e0e8a636ca4ba70b713f3e38a19e1b77739e8"
+		},
+		{
+			"ImportPath": "github.com/go-sql-driver/mysql",
+			"Comment": "v1.2-196-g3654d25",
+			"Rev": "3654d25ec346ee8ce71a68431025458d52a38ac0"
+		},
+		{
+			"ImportPath": "github.com/google/btree",
+			"Rev": "7d79101e329e5a3adf994758c578dab82b90c017"
+		},
+		{
+			"ImportPath": "github.com/qiniu/api.v7/kodo",
+			"Comment": "v7.0.5-3-g2244dcb",
+			"Rev": "2244dcb77d05ea48beceb4635bcdd099b05762bd"
+		},
+		{
+			"ImportPath": "github.com/ryszard/goskiplist/skiplist",
+			"Rev": "2dfbae5fcf46374f166f8969cb07e167f1be6273"
+		},
+		{
+			"ImportPath": "github.com/tylertreat/BoomFilters",
+			"Rev": "ae0b9585d4b87b2fe0b49ee09270abae7aaad179"
+		},
+		{
+			"ImportPath": "github.com/willf/bitset",
+			"Comment": "v1.0.0-56-g2e6e809",
+			"Rev": "2e6e8094ef4745224150c88c16191c7dceaad16f"
+		},
+		{
+			"ImportPath": "github.com/willf/bloom",
+			"Comment": "v2.0.0-3-gaa3071d",
+			"Rev": "aa3071d9203598166c09553d43e74b588c3d91be"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "bc3663df0ac92f928d419e31e0d2af22e683a5a2"
+		},
+		{
+			"ImportPath": "qiniupkg.com/api.v7/auth/qbox",
+			"Comment": "v7.0.5-3-g2244dcb",
+			"Rev": "2244dcb77d05ea48beceb4635bcdd099b05762bd"
+		},
+		{
+			"ImportPath": "qiniupkg.com/api.v7/conf",
+			"Comment": "v7.0.5-3-g2244dcb",
+			"Rev": "2244dcb77d05ea48beceb4635bcdd099b05762bd"
+		},
+		{
+			"ImportPath": "qiniupkg.com/api.v7/kodocli",
+			"Comment": "v7.0.5-3-g2244dcb",
+			"Rev": "2244dcb77d05ea48beceb4635bcdd099b05762bd"
+		},
+		{
+			"ImportPath": "qiniupkg.com/x/bytes.v7",
+			"Rev": "f512abcf45ab4e2ba0fd4784c57b53d495997d66"
+		},
+		{
+			"ImportPath": "qiniupkg.com/x/bytes.v7/seekable",
+			"Rev": "f512abcf45ab4e2ba0fd4784c57b53d495997d66"
+		},
+		{
+			"ImportPath": "qiniupkg.com/x/ctype.v7",
+			"Rev": "f512abcf45ab4e2ba0fd4784c57b53d495997d66"
+		},
+		{
+			"ImportPath": "qiniupkg.com/x/errors.v7",
+			"Rev": "f512abcf45ab4e2ba0fd4784c57b53d495997d66"
+		},
+		{
+			"ImportPath": "qiniupkg.com/x/log.v7",
+			"Rev": "f512abcf45ab4e2ba0fd4784c57b53d495997d66"
+		},
+		{
+			"ImportPath": "qiniupkg.com/x/reqid.v7",
+			"Rev": "f512abcf45ab4e2ba0fd4784c57b53d495997d66"
+		},
+		{
+			"ImportPath": "qiniupkg.com/x/rpc.v7",
+			"Rev": "f512abcf45ab4e2ba0fd4784c57b53d495997d66"
+		},
+		{
+			"ImportPath": "qiniupkg.com/x/url.v7",
+			"Rev": "f512abcf45ab4e2ba0fd4784c57b53d495997d66"
+		},
+		{
+			"ImportPath": "qiniupkg.com/x/xlog.v7",
+			"Rev": "f512abcf45ab4e2ba0fd4784c57b53d495997d66"
+		}
+	]
+}

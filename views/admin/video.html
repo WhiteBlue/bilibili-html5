@@ -1,0 +1,82 @@
+{{template "admin/base/layout.html" .}}
+
+{{define "style"}}
+{{end}}
+
+{{define "content"}}
+
+<section class="content-header">
+    <h1>
+        分集
+
+        {{if .Bangumi}}
+
+        <small>{{.Bangumi.NameCn}}</small>
+
+        {{else}}
+
+        <small>分集管理</small>
+
+        {{end}}
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">Dashboard</li>
+    </ol>
+</section>
+
+
+<section class="content">
+    <div class="box">
+        <div class="box-body">
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th>标题</th>
+                        <th>简介</th>
+                        <th style="width: 100px">所属番剧</th>
+                        <th style="width: 50px">文件名</th>
+                        <th>操作</th>
+                    </tr>
+
+                    {{ range $index, $elem := .Datas }}
+
+                    <tr>
+                        <td>{{ $elem.Id }}</td>
+                        <td>{{ $elem.Title }}</td>
+                        <td>{{ $elem.Description }}</td>
+                        <td>{{ $elem.Bangumi.NameCn }}</td>
+                        <td>{{ $elem.VideoKey }}</td>
+                        <td>
+
+                            <a href="/admin/video/delete/{{ $elem.Id }}" class="badge bg-red">删除</a>
+                        </td>
+                    </tr>
+
+                    {{ end }}
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="box-footer clearfix">
+
+                {{template "admin/base/pagination.html" .}}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+{{end}}
+
+
+{{define "script"}}
+<script>
+    $(document).ready(function () {
+        initVideoList();
+    });
+</script>
+{{end}}

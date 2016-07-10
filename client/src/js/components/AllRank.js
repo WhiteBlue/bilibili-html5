@@ -1,5 +1,6 @@
 var React = require('react');
 var Config = require('../Config');
+var reqwest = require('reqwest');
 
 const VideoItem = React.createClass({
   getDefaultProps(){
@@ -85,17 +86,19 @@ const VideoBlock = React.createClass({
 
 module.exports = React.createClass({
   _loadData(){
-    $.ajax({
-      type: 'GET',
-      url: Config.base_url + Config.routes.ALL_RANK,
-      context: this,
-      success: function (data) {
-        this.setState({
-          videoList: data
-        });
-      },
-      error: function () {
+    var _this = this;
+    reqwest({
+      url: Config.base_url + Config.routes.ALL_RANK
+      , type: 'json'
+      , method: 'get'
+      , crossOrigin: true
+      , error: function (err) {
         console.log('error');
+      }
+      , success: function (resp) {
+        _this.setState({
+          videoList: resp
+        });
       }
     });
   },

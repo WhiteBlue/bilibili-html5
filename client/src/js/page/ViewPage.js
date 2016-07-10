@@ -1,6 +1,6 @@
 var React = require('react');
 
-var Video = require('../components/Video');
+var Video = require('../components/VideoInfo');
 
 
 function titleCallback(content) {

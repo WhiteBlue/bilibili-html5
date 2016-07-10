@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+  <link rel="stylesheet" href="../assets/css/main.css">
+  <link rel="stylesheet" href="http://vjs.zencdn.net/5.6.0/video-js.css">
+  <link rel="stylesheet" href="../assets/css/player.css">
+
+  <style>
+    @keyframes cmt-move-left {
+      100% {
+        right: 100%;
+      }
+    }
+
+    @keyframes cmt-move-right {
+      100% {
+        left: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div id="main-header">
+  <div class="main-header-background"
+       style="background-image: url('http://i0.hdslb.com/group1/M00/B7/30/oYYBAFcjKTGANfoVAAGAcG7aL64682.jpg');"></div>
+  <div class="main-header-nav">
+    <div class="main-header-image"></div>
+    <ul class="main-header-nav-body">
+      <li class="nav-li floatleft now">
+        <a href="#">首页</a>
+      </li>
+
+      <li class="nav-li floatleft">
+        <a href="#">分类</a>
+        <div class="nav-li-list">
+          <a href="#">音乐</a>
+          <a href="#">动画</a>
+        </div>
+      </li>
+
+      <li class="nav-li floatleft">
+        <a href="#">新番</a>
+      </li>
+
+      <li class="nav-li floatleft">
+        <a href="#">移动端</a>
+      </li>
+
+      <li class="nav-li floatleft">
+        <a href="#">项目</a>
+      </li>
+
+      <li class="nav-li floatleft">
+        <a href="#">关于</a>
+      </li>
+
+      <div class="header-search floatright">
+        <form action="#" method="post">
+          <input name="content" placeholder="这里搜索">
+          <input type="submit" value="搜 索" title="搜索" class="btn-search">
+        </form>
+      </div>
+    </ul>
+  </div>
+</div>
+
+<div id="main-container" class="concat">
+  <div class="area">
+    <div class="video-info">
+      <div class="area-inner">
+        <div class="left floatleft">
+          <div class="title">
+            <h1>【4月】黑色残骸 05【生肉】</h1>
+          </div>
+
+          <div class="info floatleft">
+            <div class="info-text floatleft">分类: 连载动画</div>
+            <div class="info-text floatright">时间: 2016-05-05 21:50</div>
+          </div>
+          <div class="clear"></div>
+
+          <div class="play-info floatleft">
+          </div>
+          <div class="clear"></div>
+
+        </div>
+        <div class="right floatleft">
+          <div class="up-face floatleft">
+            <a href="http://space.bilibili.com/813355">
+              <img src="http://i2.hdslb.com/bfs/face/419c02508755532d8522b9309b28bd88b2a6f1de.jpg"></a>
+          </div>
+          <div class="up-info floatleft">
+            <a href="#" class="title">八云境界</a>
+            <div class="brief">【F宅字幕组】【群：233862998】~境界无处不在~~我与你之间的境界在哪呢~</div>
+          </div>
+        </div>
+        <div class="clear"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="area area-player">
+    <div class="area-inner">
+      <div class="video-part-select floatleft">
+        <span class="active floatleft">1、失去的存在</span>
+      </div>
+      <div class="clear"></div>
+
+      <video id="danmu_player" class="video-js vjs-default-skin" controls preload="auto" width="980" height="614"
+             poster="http://i0.hdslb.com/video/a3/a3b5e36e23c95ac048fee00871b630f8.jpg">
+        <p class="vjs-no-js">换换浏览器吧</p>
+      </video>
+    </div>
+  </div>
+
+  <div class="area">
+    <div class="area-inner">
+      <div class="video-brief">
+        <ul class="tags floatleft">
+          <li class="floatleft">黑色残骸</li>
+          <li class="floatleft">クロムクロ</li>
+          <div class="clear"></div>
+        </ul>
+        <div class="clear"></div>
+        <div class="desc">~ 第5話 「学び舎に来た男」</div>
+
+        <div class="comments">
+          <span class="label">评论</span>
+          <p>(施工中)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div id="footer">
+  <div class="area-inner">
+    <div class="about-block floatleft">
+      <div class="about-item left floatleft">
+        <div class="about-title">About</div>
+        <div class="about-links">
+          <a href="#">BiliBili弹幕视频网</a>
+          <a href="#">更新日志</a>
+          <a href="#">项目地址</a>
+        </div>
+      </div>
+      <div class="about-item floatleft">
+        <div class="about-title">WhiteBlue</div>
+        <div class="about-links">
+          <a href="#">Blog</a>
+          <a href="#">Email</a>
+        </div>
+      </div>
+      <div class="about-item right floatleft">
+        <div class="about-title">空位</div>
+        <div class="about-links">
+          <a href="#">没想好放什么orz</a>
+        </div>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+</div>
+
+<script src="../assets/js/jquery.js"></script>
+<script src="../assets/js/comment_library.js"></script>
+<script src="../assets/js/player.js"></script>
+<script src="http://vjs.zencdn.net/5.6.0/video.js"></script>
+<script>
+  function loadVideo(vjs, videoUrl, danmuUrl) {
+    vjs.src(videoUrl);
+    if (!vjs.danmu) {
+      vjs.ABP();
+    }
+    vjs.danmu.load(danmuUrl);
+  }
+
+  $(document).ready(function () {
+    loadVideoJsPlugin();
+
+    vjs = videojs('danmu_player');
+
+    loadVideo(vjs, '', 'http://comment.bilibili.cn/6024768.xml');
+
+  });
+</script>
+
+</body>
+</html>

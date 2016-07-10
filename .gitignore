@@ -3,14 +3,11 @@
 .idea/
 
 .idea_modules/
+
 atlassian-ide-plugin.xml
 
-### Laravel ###
-/bootstrap/compiled.php
-.env.*.php
-.env.php
-.env
+bilibili-html5
 
-vendor
+conf/app.conf
 
-node_modules
+conf/config.json

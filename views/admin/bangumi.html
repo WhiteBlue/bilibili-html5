@@ -1,0 +1,142 @@
+{{template "admin/base/layout.html" .}}
+
+{{define "style"}}
+{{end}}
+
+{{define "content"}}
+
+<section class="content-header">
+    <h1>
+        番剧
+        <small>番剧管理</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="/admin"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active">番剧管理</li>
+    </ol>
+</section>
+
+<section class="content" id="admin_content">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-1" id="info_content"></div>
+    </div>
+
+    <div class="row">
+        <button type="button" id="update_btn" class="update-btn btn btn-primary">同步信息</button>
+    </div>
+
+    <div class="box">
+        <div class="box-body">
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <tbody>
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th style="width: 80px">缩略图</th>
+                        <th>名称</th>
+                        <th>完结</th>
+                        <th>展示</th>
+                        <th>操作</th>
+                    </tr>
+
+                    {{ range $index, $elem := .Datas }}
+
+                    <tr>
+                        <td>{{ $elem.Id }}</td>
+                        <td><img src="{{ $elem.PicCommon }}"></td>
+                        <td>{{ $elem.NameCn }} [{{ $elem.NameJp }}]</td>
+                        <td>
+                            {{ if not $elem.End }}
+                            <a href="/admin/bangumi/end/{{$elem.Id}}?end=true"
+                               class="btn-bangumi btn btn-success">未完结</a>
+                            {{else}}
+                            <a href="/admin/bangumi/end/{{$elem.Id}}?end=false"
+                               class="btn-bangumi btn btn-warning">完结!</a>
+                            {{end}}
+                        </td>
+                        <td>
+                            {{ if $elem.Show }}
+                            <a href="/admin/bangumi/show/{{$elem.Id}}?show=true"
+                               class="btn-bangumi btn btn-info">展示</a>
+                            {{else}}
+                            <a href="/admin/bangumi/show/{{$elem.Id}}?show=false"
+                               class="btn-bangumi btn btn-default">隐藏</a>
+                            {{end}}
+                        </td>
+                        <td>
+                            <a type="button" class="btn btn-primary btn-newtask" bangumi-id="{{$elem.Id}}"
+                               data-toggle="modal"
+                               data-target="#submitDialog">新任务
+                            </a>
+                        </td>
+                    </tr>
+
+                    {{ end }}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="box-footer clearfix">
+
+                {{template "admin/base/pagination.html" .}}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="submitDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">新建任务</h4>
+            </div>
+            <div class="modal-body">
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form role="form">
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="videoTitle">标题</label>
+                            <input type="text" class="form-control" id="videoTitle"
+                                   placeholder="分集标题">
+                        </div>
+                        <div class="form-group">
+                            <label>简介</label>
+                                        <textarea class="form-control" id="videoContent" rows="3"
+                                                  placeholder="介绍 ..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="videoMagnet">磁链</label>
+                            <input type="text" class="form-control" id="videoMagnet"
+                                   placeholder="Magnet...">
+                        </div>
+                        <div class="form-group">
+                            <label for="videoFilename">文件名</label>
+                            <input type="text" class="form-control" id="videoFilename"
+                                   placeholder="空表示不指定...">
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                        <button type="button" id="submitBtn" class="btn btn-primary">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{end}}
+
+
+{{define "script"}}
+
+<script>
+    $(document).ready(function () {
+        initBangumiList();
+    });
+
+</script>
+{{end}}

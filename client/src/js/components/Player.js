@@ -1,5 +1,6 @@
 var React = require('react');
 var Config = require('../Config');
+var reqwest = require('reqwest');
 
 function loadVideoJsPlugin(loadVideoFunc) {
   videojs.plugin('ABP', function () {
@@ -223,17 +224,19 @@ module.exports = React.createClass({
   },
   _loadVideoData(){
     if (this._cid !== null) {
-      $.ajax({
-        type: 'GET',
-        url: Config.base_url + Config.routes.VIDEO_URL + this._cid + "?quality=" + this._quality,
-        context: this,
-        success: function (data) {
-          this.setState({
+      var _this = this;
+      reqwest({
+        url: Config.base_url + Config.routes.VIDEO_URL + this._cid + "?quality=" + this._quality
+        , type: 'json'
+        , method: 'get'
+        , crossOrigin: true
+        , error: function (err) {
+          console.log('error');
+        }
+        , success: function (data) {
+          _this.setState({
             data: data
           });
-        },
-        error: function () {
-          console.log('error');
         }
       });
     }
