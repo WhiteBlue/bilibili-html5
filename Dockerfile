@@ -10,6 +10,5 @@ RUN go get -u github.com/tools/godep \
 
 EXPOSE 8000
 
-
-ENTRYPOINT ["$GOPATH/src/github/src/github.com/whiteblue/bilibili-html5/run.sh"]
+ENTRYPOINT ["source $GOPATH/src/github/src/github.com/whiteblue/bilibili-html5/run.sh"]
 
