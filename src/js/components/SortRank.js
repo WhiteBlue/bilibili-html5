@@ -92,7 +92,7 @@ module.exports = React.createClass({
   //分页
   _changePage(page){
     this._page = page;
-    this._loadData();
+    this._loadData(this.props.tid);
     //翻页后大传送术
     $('body,html').animate({scrollTop: 0}, 700);
   },
