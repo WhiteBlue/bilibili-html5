@@ -49,8 +49,6 @@ gulp.task('watchify', () => {
     return bundler.bundle()
       .pipe(source(paths.bundle))
       .pipe(buffer())
-      .pipe(sourcemaps.init({loadMaps: true}))
-      .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest(paths.distJs))
   }
 
@@ -65,18 +63,14 @@ gulp.task('browserify', () => {
     .bundle()
     .pipe(source(paths.bundle))
     .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(uglify())
-    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(paths.distJs));
 });
 
 gulp.task('styles', () => {
   gulp.src(paths.srcCss)
     .pipe(rename({extname: '.css'}))
-    .pipe(sourcemaps.init())
     .pipe(postcss([vars, extend, nested, autoprefixer, cssnano]))
-    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(paths.distCss))
 });
 
