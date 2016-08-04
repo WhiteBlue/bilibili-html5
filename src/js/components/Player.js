@@ -282,7 +282,7 @@ module.exports = React.createClass({
         </div>
         <div className="clear"></div>
         {this.state.data === null ? <div></div> :
-          <VideoBlock url={this.state.data.url} commentUrl={"http://comment.bilibili.cn/"+this._cid+".xml"}
+          <VideoBlock url={this.state.data.durl[0].url} commentUrl={"http://comment.bilibili.cn/"+this._cid+".xml"}
                       pic={this.props.pic} loadQualityFunc={this._selectQuality}/>}
       </div>
     </div>;

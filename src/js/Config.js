@@ -1,13 +1,13 @@
 module.exports = {
-  base_url: "http://bilibili-service.daoapp.io/",
+  base_url: "http://localhost:8080/",
   routes: {
-    ALL_RANK: "allrank",
+    INDEX_RANK: "top/",
     TOP_RANK: "toprank",
-    BANNER: "appbanner",
+    BANNER: "bangumiindex",
     VIDEO_INFO: "view/",
     VIDEO_URL: "video/",
     SORT_VIDEOS: "sort/",
     SEARCH: "search"
   },
-  index_order: ["动画", "番剧", "音乐", "舞蹈", "娱乐", "游戏", "鬼畜", "科技", "电视剧", "电影"]
+  index_order: [1, 13, 3, 129, 5, 4, 119, 36]
 };

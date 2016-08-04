@@ -173,7 +173,7 @@ module.exports = React.createClass({
         this.setState({
           bangumiList: data.result.bangumi,
           videoList: data.result.video,
-          allPage: data.page_info.video.pages
+          allPage: data.pageinfo.video.pages
         });
       },
       error: function () {
@@ -257,8 +257,6 @@ module.exports = React.createClass({
           </div>
         </div>
       </div>
-
-
     </div>;
   }
 });

@@ -63,7 +63,7 @@ module.exports = React.createClass({
       }
       , success: function (data) {
         _this.setState({
-          banner: data.list
+          banner: data.banners
         });
       }
     });

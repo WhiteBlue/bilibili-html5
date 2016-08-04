@@ -52,24 +52,43 @@ const VideoItem = React.createClass({
 
 
 const VideoBlock = React.createClass({
-  getDefaultProps(){
+  _loadData(tid){
+    var _this = this;
+    reqwest({
+      url: Config.base_url + Config.routes.INDEX_RANK + tid
+      , type: 'json'
+      , method: 'get'
+      , crossOrigin: true
+      , error: function (err) {
+        console.log('error');
+      }
+      , success: function (resp) {
+        _this.setState({
+          videoList: resp.videos,
+          labelName: resp.sort_name
+        });
+      }
+    });
+  },
+  getInitialState(){
     return {
       videoList: [],
       labelName: ''
     };
   },
+  componentDidMount(){
+    this._loadData(this.props.tid);
+  },
   render(){
     var renderVideos = [];
-    for (var i in this.props.videoList) {
-      if (i != 'num') {
-        renderVideos.push(<VideoItem key={i} data={this.props.videoList[i]}/>);
-      }
+    for (var i in this.state.videoList) {
+      renderVideos.push(<VideoItem key={i} data={this.state.videoList[i]}/>);
     }
     return <div className="area">
       <div className="area-inner">
         <div className="area-banner">
           <a className="area-banner-ch">
-            <h3>{this.props.labelName}</h3>
+            <h3>{this.state.labelName}</h3>
             <i className="area-banner-line-left"></i>
           </a>
           <i className="area-banner-line-right"></i>
@@ -85,37 +104,11 @@ const VideoBlock = React.createClass({
 });
 
 module.exports = React.createClass({
-  _loadData(){
-    var _this = this;
-    reqwest({
-      url: Config.base_url + Config.routes.ALL_RANK
-      , type: 'json'
-      , method: 'get'
-      , crossOrigin: true
-      , error: function (err) {
-        console.log('error');
-      }
-      , success: function (resp) {
-        _this.setState({
-          videoList: resp
-        });
-      }
-    });
-  },
-  componentDidMount(){
-    this._loadData();
-  },
-  getInitialState(){
-    return {
-      videoList: {}
-    }
-  },
   render(){
     var renderList = [];
-    for (var i = 0; i < Config.index_order.length; i++) {
-      var key = Config.index_order[i];
-      renderList.push(<VideoBlock key={"list-"+key} videoList={this.state.videoList[key]}
-                                  labelName={key}/>)
+    for (var i in Config.index_order) {
+      var id = Config.index_order[i];
+      renderList.push(<VideoBlock key={"list-"+id} tid={id}/>)
     }
     return <div>{renderList}</div>;
   }

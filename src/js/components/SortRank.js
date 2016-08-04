@@ -87,7 +87,7 @@ module.exports = React.createClass({
   _changeSort(sort){
     this._order = sort;
     this._page = 1;
-    this._loadData();
+    this._loadData(this.props.tid);
   },
   //分页
   _changePage(page){
@@ -99,7 +99,7 @@ module.exports = React.createClass({
   _loadData(tid){
     var _this = this;
     reqwest({
-      url: Config.base_url + Config.routes.SORT_VIDEOS + tid + "?page=" + _this._page
+      url: Config.base_url + Config.routes.SORT_VIDEOS + tid + "?page=" + _this._page + "&order=" + this._order
       , type: 'json'
       , method: 'get'
       , crossOrigin: true
@@ -142,19 +142,21 @@ module.exports = React.createClass({
     this._loadData(this.props.tid);
   },
   render(){
+    var _this = this;
+
     return <div className="sort-left floatleft">
       <div className="banner">
         <p>{this.state.title}</p>
       </div>
 
       <div className="sort-tool-box floatleft">
-        <a onClick={this._changeSort.bind(null,"hot")}
+        <a onClick={_this._changeSort.bind(null,"hot")}
            className={(this._order=="hot"?"active":"")+" btn floatleft"}>点击数</a>
 
-        <a onClick={this._changeSort.bind(null,"default")}
+        <a onClick={_this._changeSort.bind(null,"default")}
            className={(this._order=="default"?"active":"")+" btn floatleft"}>发布时间</a>
 
-        <a onClick={this._changeSort.bind(null,"damku")}
+        <a onClick={_this._changeSort.bind(null,"damku")}
            className={(this._order=="damku"?"active":"")+" btn floatleft"}>弹幕数</a>
       </div>
 
