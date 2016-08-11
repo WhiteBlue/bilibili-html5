@@ -34,7 +34,7 @@ function loadVideoJsPlugin(loadVideoFunc) {
         //CCL init
         this.cmManager = new CommentManager(this.danmuDiv);
         //弹幕播放时间
-        this.cmManager.options.global.scale = 1.7;
+        this.cmManager.options.global.scale = 2;
         this.cmManager.init();
         this.cmManager.clear();
 
@@ -88,9 +88,9 @@ function loadVideoJsPlugin(loadVideoFunc) {
         }
         this.danmuShowControl.addEventListener("click", function () {
           if (_this.cmManager.display === true) {
-              _this.cmManager.clear();
-              _this.cmManager.display = false;
-              _this.danmuShowControlContent.innerHTML = "无";
+            _this.cmManager.clear();
+            _this.cmManager.display = false;
+            _this.danmuShowControlContent.innerHTML = "无";
           } else {
             _this.cmManager.display = true;
             _this.danmuShowControlContent.innerHTML = "弹幕";
@@ -174,6 +174,23 @@ const VideoBlock = React.createClass({
   _loadVideoJs(){
     if (this._vjs === null) {
       this._vjs = videojs('danmu_player');
+      this._vjs.ready(function () {
+        if (this.hotkeys) {
+          this.hotkeys({
+            volumeStep: 0.1,
+            seekStep: 5,
+            //音量键(M)
+            enableMute: true,
+            //滚轮调节音量
+            enableVolumeScroll: false,
+            //全屏(F)
+            enableFullscreen: true,
+            //数字选择分P
+            enableNumbers: false,
+            alwaysCaptureHotkeys: false
+          });
+        }
+      });
     }
     loadVideo(this._vjs, this.props.url, this.props.commentUrl, this.props.loadQualityFunc);
   },
