@@ -10,6 +10,6 @@ function titleCallback(content) {
 module.exports = React.createClass({
   render(){
     return <div id="main-container" className="concat">
-      <SearchContent cb={titleCallback} keyword={this.props.keyword}/></div>;
+      <SearchContent cb={titleCallback} keyword={this.props.params.keyword}/></div>;
   }
 });

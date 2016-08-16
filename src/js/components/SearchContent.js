@@ -213,6 +213,10 @@ module.exports = React.createClass({
     this._keyword = this.props.keyword;
     this._loadData();
   },
+  componentWillReceiveProps(nextProps){
+    this._keyword = nextProps.keyword;
+    this._loadData();
+  },
   render(){
     var bangumiArray = [];
     for (var i in this.state.bangumiList) {
@@ -226,8 +230,6 @@ module.exports = React.createClass({
 
     return <div>
       <div className="search-info">
-        <SearchBlock keyword={this._keyword} searchCallBack={this._getSearch}/>
-
         <div className="search-fliter-block">
           <ul className="wrap floatleft">
             <li onClick={this._changeOrder.bind(null,"totalrank")}

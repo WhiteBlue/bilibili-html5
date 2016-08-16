@@ -34,7 +34,7 @@ function loadVideoJsPlugin(loadVideoFunc) {
         //CCL init
         this.cmManager = new CommentManager(this.danmuDiv);
         //弹幕播放时间
-        this.cmManager.options.global.scale = 2;
+        this.cmManager.options.scroll.scale = 2;
         this.cmManager.init();
         this.cmManager.clear();
 

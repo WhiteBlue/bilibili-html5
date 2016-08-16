@@ -1,18 +1,51 @@
 # bilibili-html5
 
-基于BiliBili-API, 使用Html5播放器, 提供更好的播放体验
+An unofficial website of [bilibili.com](http://bilibili.com). 
 
 
-## FrameWorks
-
-* [Video.js](https://github.com/videojs/video.js)
-* [React.js](https://github.com/facebook/react)
+![bh5](docs/bh5.png)
 
 
-## API
-* [bilibili-service](https://github.com/WhiteBlue/bilibili-service) : 基于B站IOS版APP接口的开放REST API
+## Features
+
+
+* html5 video player support "Danmu"
+* video part/quality select
+
+## Build
+
+
+```
+npm install 
+
+npm run build
+
+```
+
+## Others
+* [CommentCoreLibrary](https://github.com/jabbany/CommentCoreLibrary)
 
 
 ## License
-[MIT](http://www.opensource.org/licenses/mit-license.php).
 
+MIT License
+
+Copyright (c) 2016 Castaway Consulting LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

@@ -13,11 +13,7 @@ render(
     <Route path="/" component={App}>
       <Route path="/sort/:tid" component={SortPage}/>
       <Route path="/view/:aid" component={ViewPage}/>
+      <Route path="/search/:keyword" component={SearchPage}/>
     </Route>
   </Router>), document.getElementById('root')
 );
-
-
-window.loadSearchPage = function (content) {
-  render(<SearchPage keyword={content}/>, document.getElementById('root'));
-};

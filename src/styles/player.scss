@@ -100,15 +100,3 @@
   padding: 8px 6px;
   text-align: center;
 }
-
-@keyframes cmt-move-left {
-  100% {
-    right: 100%;
-  }
-}
-
-@keyframes cmt-move-right {
-  100% {
-    left: 100%;
-  }
-}
