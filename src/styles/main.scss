@@ -390,7 +390,7 @@ body {
   border-bottom: 2px solid #00a1d6;
 }
 
-/*首页壁纸*/
+//---- index background ----
 .main-header-image {
   width: 100%;
   height: 175px;
@@ -451,7 +451,6 @@ body {
   color: #fff
 }
 
-/*搜索框*/
 .header-search .btn-search {
   border-radius: 0 8px 8px 0;
   width: 80px;
@@ -471,7 +470,7 @@ body {
   border-color: #76c4d2;
 }
 
-/*首页banner*/
+//---- index banner ----
 .unslider-banner {
   width: 450px;
   overflow: hidden;
@@ -787,8 +786,7 @@ body {
   margin-top: 20px;
 }
 
-/*播放页面*/
-
+//---- player content ----
 #main-container.concat {
   margin-top: 0;
 }
@@ -958,7 +956,7 @@ body {
   background-color: #00a1d6;
 }
 
-/*搜索部分*/
+//---- search content ----
 .search-info {
   padding-top: 30px;
   padding-bottom: 30px;
@@ -1233,4 +1231,171 @@ body {
 
 .search-pager {
   margin: 30px auto 20px 20px;
+}
+
+//----- loading block -----
+
+@-webkit-keyframes rotate_pacman_half_up {
+  0% {
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+  }
+
+  50% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+  }
+}
+
+@keyframes rotate_pacman_half_up {
+  0% {
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+  }
+
+  50% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(270deg);
+    transform: rotate(270deg);
+  }
+}
+
+@-webkit-keyframes rotate_pacman_half_down {
+  0% {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+
+  50% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes rotate_pacman_half_down {
+  0% {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+
+  50% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+
+  100% {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+}
+
+@-webkit-keyframes pacman-balls {
+  75% {
+    opacity: 0.7;
+  }
+
+  100% {
+    -webkit-transform: translate(-100px, -6.25px);
+    transform: translate(-100px, -6.25px);
+  }
+}
+
+@keyframes pacman-balls {
+  75% {
+    opacity: 0.7;
+  }
+
+  100% {
+    -webkit-transform: translate(-100px, -6.25px);
+    transform: translate(-100px, -6.25px);
+  }
+}
+
+.pacman {
+  position: relative;
+}
+
+.pacman > div:nth-child(2) {
+  -webkit-animation: pacman-balls 1s 0s infinite linear;
+  animation: pacman-balls 1s 0s infinite linear;
+}
+
+.pacman > div:nth-child(3) {
+  -webkit-animation: pacman-balls 1s 0.33s infinite linear;
+  animation: pacman-balls 1s 0.33s infinite linear;
+}
+
+.pacman > div:nth-child(4) {
+  -webkit-animation: pacman-balls 1s 0.66s infinite linear;
+  animation: pacman-balls 1s 0.66s infinite linear;
+}
+
+.pacman > div:nth-child(5) {
+  -webkit-animation: pacman-balls 1s 0.99s infinite linear;
+  animation: pacman-balls 1s 0.99s infinite linear;
+}
+
+.pacman > div:first-of-type {
+  width: 0;
+  height: 0;
+  border-right: 25px solid transparent;
+  border-top: 25px solid #ffa5c7;
+  border-left: 25px solid #ffa5c7;
+  border-bottom: 25px solid #ffa5c7;
+  border-radius: 25px;
+  -webkit-animation: rotate_pacman_half_up 0.5s 0s infinite;
+  animation: rotate_pacman_half_up 0.5s 0s infinite;
+}
+
+.pacman > div:nth-child(2) {
+  width: 0px;
+  height: 0px;
+  border-right: 25px solid transparent;
+  border-top: 25px solid #ffa5c7;
+  border-left: 25px solid #ffa5c7;
+  border-bottom: 25px solid #ffa5c7;
+  border-radius: 25px;
+  -webkit-animation: rotate_pacman_half_down 0.5s 0s infinite;
+  animation: rotate_pacman_half_down 0.5s 0s infinite;
+  margin-top: -50px;
+}
+
+.pacman > div:nth-child(3), .pacman > div:nth-child(4), .pacman > div:nth-child(5), .pacman > div:nth-child(6) {
+  background-color: #ffa5c7;
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  margin: 2px;
+  position: absolute;
+  -webkit-transform: translate(0, -6.25px);
+  -ms-transform: translate(0, -6.25px);
+  transform: translate(0, -6.25px);
+  top: 25px;
+  left: 100px;
+}
+
+.loading-pacman-block {
+  width: 150px;
+  height: 70px;
+  padding-top: 10px;
+  margin: 100px auto
+}
+
+.loading-content {
+  width: 100%;
+  height: 300px;
 }

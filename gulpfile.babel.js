@@ -1,7 +1,6 @@
 import gulp from 'gulp';
 import autoprefixer from 'autoprefixer';
 import browserify from 'browserify';
-import watchify from 'watchify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import babelify from 'babelify';
@@ -30,40 +29,31 @@ const paths = {
   distImg: 'dist/img'
 };
 
-const customOpts = {
-  entries: [paths.entry],
-  debug: true
-};
-
-const opts = Object.assign({}, watchify.args, customOpts);
 
 gulp.task('clean', cb => {
   rimraf('dist', cb);
 });
 
 
-gulp.task('watchify', () => {
-  const bundler = watchify(browserify(opts));
-
-  function rebundle() {
-    return bundler.bundle()
-      .pipe(source(paths.bundle))
-      .pipe(buffer())
-      .pipe(gulp.dest(paths.distJs))
-  }
-
-  bundler.transform(babelify)
-    .on('update', rebundle);
-  return rebundle();
-});
-
 gulp.task('browserify', () => {
-  browserify(paths.entry, {debug: true})
+  browserify(paths.entry, {debug: false})
     .transform(babelify)
     .bundle()
     .pipe(source(paths.bundle))
     .pipe(buffer())
     .pipe(uglify())
+    .pipe(gulp.dest(paths.distJs));
+});
+
+gulp.task('browserify_debug', () => {
+  browserify(paths.entry, {debug: true})
+    .transform(babelify)
+    .bundle()
+    .pipe(source(paths.bundle))
+    .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(uglify())
+    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest(paths.distJs));
 });
 
@@ -88,13 +78,16 @@ gulp.task('watchTask', () => {
   gulp.watch(paths.srcCss, ['styles']);
 });
 
-gulp.task('watch', cb => {
-  runSequence('clean', ['watchTask', 'watchify', 'styles'], cb);
-});
 
 gulp.task('build', cb => {
   process.env.NODE_ENV = 'production';
-  runSequence('clean', ['browserify', 'styles', 'images'], cb);
+  runSequence('clean', ['browserify', 'styles', 'images', 'copyAssets'], cb);
+});
+
+
+gulp.task('source', cb=> {
+  process.env.NODE_ENV = 'debug';
+  runSequence('clean', ['browserify_debug', 'styles', 'images', 'copyAssets'], cb);
 });
 
 

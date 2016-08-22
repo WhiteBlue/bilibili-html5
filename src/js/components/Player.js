@@ -2,181 +2,45 @@ var React = require('react');
 var Config = require('../Config');
 var reqwest = require('reqwest');
 
-function loadVideoJsPlugin(loadVideoFunc) {
-  videojs.plugin('ABP', function () {
-    function Danmu(ele) {
-      var _this = this;
-      this.danmuDiv = document.createElement('div');
-      this.danmuDiv.className = 'vjs-danmu';
-      ele.el().insertBefore(this.danmuDiv, ele.el().getElementsByClassName('vjs-poster')[0]);
-
-      this.danmuShowControl = document.createElement('div');
-      this.danmuShowControl.className = 'vjs-danmu-control vjs-menu-button vjs-control';
-      this.danmuShowControlContent = document.createElement('span');
-      this.danmuShowControlContent.className = 'vjs-danmu-switch';
-      this.danmuShowControlContent.innerHTML = '弹幕';
-      this.danmuShowControl.appendChild(this.danmuShowControlContent);
-      ele.el().getElementsByClassName('vjs-control-bar')[0].appendChild(this.danmuShowControl);
-
-      this.videoQualityControl = document.createElement('div');
-      this.videoQualityControl.className = 'vjs-danmu-control vjs-menu-button vjs-control';
-      this.videoQualityControlContent = document.createElement('span');
-      this.videoQualityControlContent.className = 'vjs-danmu-switch';
-      this.videoQualityControlContent.innerHTML = '高清';
-      this.videoQualityControl.appendChild(this.videoQualityControlContent);
-
-      //清晰度
-      this._quality = 2;
-
-      ele.el().getElementsByClassName('vjs-control-bar')[0].appendChild(this.videoQualityControl);
-
-      if (typeof CommentManager !== "undefined") {
-        //CCL init
-        this.cmManager = new CommentManager(this.danmuDiv);
-        //弹幕播放时间
-        this.cmManager.options.scroll.scale = 2;
-        this.cmManager.init();
-        this.cmManager.clear();
-
-        this.cmManager.display = true;
-
-        //弹幕控制绑定
-        var video = ele.el().children[0];
-        var lastPosition = 0;
-        video.addEventListener("progress", function () {
-          if (lastPosition == video.currentTime) {
-            video.hasStalled = true;
-            _this.cmManager.stopTimer();
-          } else
-            lastPosition = video.currentTime;
-        });
-        //时间轴更新
-        video.addEventListener("timeupdate", function () {
-          if (_this.cmManager.display === false) return;
-          if (video.hasStalled) {
-            _this.cmManager.startTimer();
-            video.hasStalled = false;
-          }
-          _this.cmManager.time(Math.floor(video.currentTime * 1000));
-        });
-
-        video.addEventListener("play", function () {
-          _this.cmManager.startTimer();
-        });
-
-        video.addEventListener("pause", function () {
-          _this.cmManager.stopTimer();
-        });
-
-        video.addEventListener("waiting", function () {
-          _this.cmManager.stopTimer();
-        });
-
-        video.addEventListener("playing", function () {
-          _this.cmManager.startTimer();
-        });
-
-        video.addEventListener("seeked", function () {
-          _this.cmManager.seek(Math.floor(video.currentTime * 1000));
-          _this.cmManager.clear();
-        });
-
-        if (window) {
-          window.addEventListener("resize", function () {
-            _this.cmManager.setBounds();
-          });
-        }
-        this.danmuShowControl.addEventListener("click", function () {
-          if (_this.cmManager.display === true) {
-            _this.cmManager.clear();
-            _this.cmManager.display = false;
-            _this.danmuShowControlContent.innerHTML = "无";
-          } else {
-            _this.cmManager.display = true;
-            _this.danmuShowControlContent.innerHTML = "弹幕";
-          }
-        });
-
-        this.videoQualityControl.addEventListener("click", function () {
-          switch (_this._quality) {
-            case 1:
-            {
-              _this._quality = 2;
-              _this.videoQualityControlContent.innerHTML = "高清";
-              break;
-            }
-            default:
-            {
-              _this._quality = 1;
-              _this.videoQualityControlContent.innerHTML = "低清";
-            }
-          }
-          loadVideoFunc(_this._quality);
-          _this.cmManager.clear();
-        });
-
-        this.load = function (url, callback) {
-          if (callback == null)
-            callback = function () {
-              return;
-            };
-          var xmlhttp;
-          if (window.XMLHttpRequest) {
-            xmlhttp = new XMLHttpRequest();
-          }
-          else {
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-          }
-          xmlhttp.open("GET", url, true);
-          xmlhttp.send();
-          var cm = this.cmManager;
-          var cmvideo = video;
-          xmlhttp.onreadystatechange = function () {
-            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-              if (navigator.appName == 'Microsoft Internet Explorer') {
-                var f = new ActiveXObject("Microsoft.XMLDOM");
-                f.async = false;
-                f.loadXML(xmlhttp.responseText);
-                cm.load(BilibiliParser(f));
-                cm.seek(cmvideo.currentTime * 1000);
-                callback(true);
-              } else {
-                cm.seek(cmvideo.currentTime * 1000);
-                cm.load(BilibiliParser(xmlhttp.responseXML));
-                callback(true);
-              }
-            } else
-              callback(false);
-          }
-        }
-      }
-      return this;
-    }
-
-    this.danmu = new Danmu(this);
-  });
-}
-
-
-//加载视频弹幕
-function loadVideo(vjs, videoUrl, danmuUrl, loadQualityFunc) {
-  vjs.src(videoUrl);
-  if (!vjs.danmu) {
-    loadVideoJsPlugin(loadQualityFunc);
-    vjs.ABP();
-  }
-  vjs.danmu.load(danmuUrl);
-}
 
 const VideoBlock = React.createClass({
   _vjs: null,
   //初始化播放器
   _loadVideoJs(){
+    var _this = this;
     if (this._vjs === null) {
-      this._vjs = videojs('danmu_player');
-      this._vjs.ready(function () {
-        if (this.hotkeys) {
-          this.hotkeys({
+      var vjs = videojs('danmu_player', {
+          controls: true,
+          plugins: {
+            videoJsResolutionSwitcher: {
+              default: 'high',
+              dynamicLabel: true
+            }
+          }
+        }, function () {
+          var player = this;
+          var videoList = [
+            {
+              src: _this.props.urlList.url,
+              type: 'video/mp4',
+              label: 'source'
+            }
+          ];
+          for (var i in _this.props.urlList.backup_url) {
+            videoList.push({
+              src: _this.props.urlList.backup_url[i],
+              type: 'video/mp4',
+              label: 'backup:' + i
+            });
+          }
+          player.updateSrc(videoList);
+        }
+      );
+
+      vjs.ABP();
+      vjs.ready(function () {
+        if (_this.hotkeys) {
+          _this.hotkeys({
             volumeStep: 0.1,
             seekStep: 5,
             //音量键(M)
@@ -191,8 +55,9 @@ const VideoBlock = React.createClass({
           });
         }
       });
+      vjs.danmu.load(this.props.commentUrl);
+      this._vjs = vjs;
     }
-    loadVideo(this._vjs, this.props.url, this.props.commentUrl, this.props.loadQualityFunc);
   },
   getDefaultProps(){
     return {
@@ -215,6 +80,7 @@ const VideoBlock = React.createClass({
                   width="980"
                   height="614"
                   poster={this.props.pic}>
+      <source src="{this.props.url}" type='video/mp4'/>
       <p className="vjs-no-js">换换浏览器吧</p>
     </video>;
   }
@@ -234,10 +100,6 @@ module.exports = React.createClass({
     this.setState({
       nowPlay: partStr
     });
-  },
-  _selectQuality(quality){
-    this._quality = quality;
-    this._loadVideoData();
   },
   _loadVideoData(){
     if (this._cid !== null) {
@@ -299,8 +161,8 @@ module.exports = React.createClass({
         </div>
         <div className="clear"></div>
         {this.state.data === null ? <div></div> :
-          <VideoBlock url={this.state.data.durl[0].url} commentUrl={"http://comment.bilibili.cn/"+this._cid+".xml"}
-                      pic={this.props.pic} loadQualityFunc={this._selectQuality}/>}
+          <VideoBlock urlList={this.state.data.durl[0]} commentUrl={"http://comment.bilibili.cn/"+this._cid+".xml"}
+                      pic={this.props.pic}/>}
       </div>
     </div>;
   }

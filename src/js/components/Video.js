@@ -1,9 +1,10 @@
 var React = require('react');
-var Config = require('../Config');
+var reqwest = require('reqwest');
 var _ = require('lodash');
 
+var Config = require('../Config');
 var Player = require('./Player');
-var reqwest = require('reqwest');
+var Loading = require('./Loading');
 
 const Tags = React.createClass({
   getDefaltProps(){
@@ -84,7 +85,7 @@ const VideoInfo = React.createClass({
         </div>
       </div>
 
-      {this.props.data.list ? <Player parts={this.props.data.list} pic={this.props.data.pic}/> : <div></div>}
+      {this.props.data.list ? <Player parts={this.props.data.list} pic={this.props.data.pic}/> : <Loading />}
 
       <div className="area">
         <div className="area-inner">

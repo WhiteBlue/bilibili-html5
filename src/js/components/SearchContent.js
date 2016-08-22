@@ -1,6 +1,9 @@
 var React = require('react');
+var reqwest = require('reqwest');
+
 var Config = require('../Config');
 var Pager = require('./Pager');
+var Loading = require('./Loading');
 
 const VideoItem = React.createClass({
   getDefaultProps(){
@@ -157,27 +160,29 @@ module.exports = React.createClass({
   _order: "totalrank",
   _keyword: "",
   _loadData(){
-    $.ajax({
-      type: 'POST',
-      url: Config.base_url + Config.routes.SEARCH,
-      data: {
-        content: this._keyword,
+    var _this = this;
+    reqwest({
+      url: Config.base_url + Config.routes.SEARCH
+      , type: 'json'
+      , method: 'post'
+      , data: {
+        content: _this._keyword,
         count: 20,
-        page: this._page,
-        order: this._order
-      },
-      cache: true,
-      context: this,
-      success: function (data) {
-        this.props.cb(this._keyword);
-        this.setState({
+        page: _this._page,
+        order: _this._order
+      }
+      , crossOrigin: true
+      , error: function (err) {
+        console.log('error:' + err);
+      }
+      , success: function (data) {
+        _this.props.cb(_this._keyword);
+        _this.setState({
           bangumiList: data.result.bangumi,
           videoList: data.result.video,
-          allPage: data.pageinfo.video.pages
+          allPage: data.pageinfo.video.pages,
+          loading: false
         });
-      },
-      error: function () {
-        console.log('error');
       }
     });
   },
@@ -198,7 +203,8 @@ module.exports = React.createClass({
     return {
       bangumiList: [],
       videoList: [],
-      allPage: 0
+      allPage: 0,
+      loading: true
     }
   },
   getDefaultProps(){
@@ -216,6 +222,9 @@ module.exports = React.createClass({
   componentWillReceiveProps(nextProps){
     this._keyword = nextProps.keyword;
     this._loadData();
+    this.setState({
+      loading: true
+    });
   },
   render(){
     var bangumiArray = [];
@@ -249,16 +258,18 @@ module.exports = React.createClass({
         </div>
       </div>
 
-      <div className="area">
-        <div className="search-result-content">
-          {bangumiArray}
-          {videoArray}
-          <div className="clear"></div>
-          <div className="search-pager">
-            <Pager allPage={this.state.allPage} nowPage={this._page} pageCallBack={this._changePage}/>
+      {(this.state.loading) ? <Loading /> :
+        <div className="area">
+          <div className="search-result-content">
+            {bangumiArray}
+            {videoArray}
+            <div className="clear"></div>
+            <div className="search-pager">
+              <Pager allPage={this.state.allPage} nowPage={this._page} pageCallBack={this._changePage}/>
+            </div>
           </div>
-        </div>
-      </div>
+        </div>}
+
     </div>;
   }
 });

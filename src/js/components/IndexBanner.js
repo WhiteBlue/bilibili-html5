@@ -1,6 +1,8 @@
 var React = require('react');
-var Config = require('../Config');
 var reqwest = require('reqwest');
+
+var Config = require('../Config');
+
 
 const Banner = React.createClass({
   getDefaultProps(){

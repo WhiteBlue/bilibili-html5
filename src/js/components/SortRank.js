@@ -1,7 +1,9 @@
 var React = require('react');
+var reqwest = require('reqwest');
+
 var Config = require('../Config');
 var Pager = require('./Pager');
-var reqwest = require('reqwest');
+var Loading = require('./Loading');
 
 const VideoItem = React.createClass({
   getDefaultProps(){
@@ -91,12 +93,15 @@ module.exports = React.createClass({
   },
   //分页
   _changePage(page){
-    this._page = page;
-    this._loadData(this.props.tid);
     //翻页后大传送术
     $('body,html').animate({scrollTop: 0}, 700);
+    this._page = page;
+    this._loadData(this.props.tid);
   },
   _loadData(tid){
+    this.setState({
+      loading: true
+    });
     var _this = this;
     reqwest({
       url: Config.base_url + Config.routes.SORT_VIDEOS + tid + "?page=" + _this._page + "&order=" + this._order
@@ -134,9 +139,6 @@ module.exports = React.createClass({
   },
   componentWillReceiveProps(nextProps){
     this._loadData(nextProps.tid);
-    this.setState({
-      loading: true
-    });
   },
   componentDidMount(){
     this._loadData(this.props.tid);
@@ -160,7 +162,7 @@ module.exports = React.createClass({
            className={(this._order=="damku"?"active":"")+" btn floatleft"}>弹幕数</a>
       </div>
 
-      {(this.state.loading) ? <div></div> :
+      {(this.state.loading) ? <Loading /> :
         <div>
           <VideoBlock videoList={this.state.videoList}/>
           <div className="clear"></div>
