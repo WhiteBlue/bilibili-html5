@@ -94,11 +94,14 @@ gulp.task('source', cb=> {
 gulp.task('copyAssets', ()=> {
   gulp.src([
     'assets/js/*'
-  ]).pipe(gulp.dest('dist/js'));
+  ]).pipe(buffer())
+    .pipe(uglify())
+    .pipe(gulp.dest('dist/js'));
 
   gulp.src([
     'assets/css/*'
-  ]).pipe(gulp.dest('dist/css'));
+  ]).pipe(postcss([vars, extend, nested, autoprefixer, cssnano]))
+    .pipe(gulp.dest('dist/css'));
 
   gulp.src([
     'favicon.ico'
