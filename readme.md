@@ -23,8 +23,11 @@ npm run build
 ```
 
 ## Others
-* [CommentCoreLibrary](https://github.com/jabbany/CommentCoreLibrary)
 
+* Video player
+  * video.js - [https://github.com/videojs/video.js](https://github.com/videojs/video.js)
+* Danmaku support
+  * edited from CommentCoreLibrary - [https://github.com/jabbany/CommentCoreLibrary](https://github.com/jabbany/CommentCoreLibrary)
 
 ## License
 

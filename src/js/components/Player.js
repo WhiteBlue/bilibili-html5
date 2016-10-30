@@ -4,65 +4,36 @@ var reqwest = require('reqwest');
 var Config = require('../Config');
 var Loading = require('./Loading');
 
-var vjs_his = null;
+var videojs = require("video.js");
+
+require("../danmaku/VideojsPlugin");
+require("../utils/VideojsHotKeys");
 
 const VideoBlock = React.createClass({
-  //初始化播放器
-  _loadVideoSrc(vjs){
-    var videoList = [
-      {
-        src: this.props.urlList.url,
-        type: 'video/mp4',
-        label: 'source'
-      }
-    ];
-    for (var i in this.props.urlList.backup_url) {
-      videoList.push({
-        src: this.props.urlList.backup_url[i],
-        type: 'video/mp4',
-        label: 'backup:' + i
-      });
-    }
-    vjs.updateSrc(videoList);
-  },
   _loadVideoJs(){
-    if (vjs_his != null) {
-      vjs_his.dispose();
-      vjs_his = null;
-    }
     var _this = this;
-    var vjs = videojs('danmu_player', {
-        controls: true,
-        plugins: {
-          videoJsResolutionSwitcher: {
-            default: 'high',
-            dynamicLabel: true
-          }
-        }
-      }
-    );
+    this.player = videojs('danmu_player', {
+      controls: true
+    }, function () {
+      this.initDanmaku();
 
-    vjs.ABP();
-    vjs.ready(function () {
-      if (_this.hotkeys) {
-        _this.hotkeys({
-          volumeStep: 0.1,
-          seekStep: 5,
-          //音量键(M)
-          enableMute: true,
-          //滚轮调节音量
-          enableVolumeScroll: false,
-          //全屏(F)
-          enableFullscreen: true,
-          //数字选择分P
-          enableNumbers: false,
-          alwaysCaptureHotkeys: false
-        });
-      }
+      this.hotkeys({
+        volumeStep: 0.1,
+        seekStep: 5,
+        //音量键(M)
+        enableMute: true,
+        //滚轮调节音量
+        enableVolumeScroll: false,
+        //全屏(F)
+        enableFullscreen: true,
+        //数字选择分P
+        enableNumbers: false,
+        alwaysCaptureHotkeys: false
+      });
+
+      this.danmu.load(_this.props.commentUrl);
+      this.src(_this.props.urlList.url);
     });
-    vjs.danmu.load(this.props.commentUrl);
-    this._loadVideoSrc(vjs);
-    vjs_his = vjs;
   },
   getDefaultProps(){
     return {
@@ -73,6 +44,12 @@ const VideoBlock = React.createClass({
   },
   componentDidMount(){
     this._loadVideoJs();
+  },
+  componentWillUnmount(){
+    if (this.player != null) {
+      this.player.dispose();
+      this.player = null;
+    }
   },
   render(){
     return <video id="danmu_player"

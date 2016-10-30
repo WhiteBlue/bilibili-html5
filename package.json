@@ -11,19 +11,11 @@
     "gulp",
     "react",
     "browserify",
-    "seed",
-    "boilerplate",
-    "kickstarter",
     "ES6",
     "ES2015",
     "babel"
   ],
-  "scripts": {
-    "watch": "gulp watch",
-    "build": "gulp build",
-    "deploy": "gulp deploy",
-    "source": "gulp source"
-  },
+  "scripts": {},
   "author": "WhiteBlue",
   "license": "MIT",
   "homepage": "https://bilibilih5.club",
@@ -32,7 +24,8 @@
     "react": "0.14.8",
     "react-dom": "0.14.0",
     "react-router": "1.0.3",
-    "reqwest": "^2.0.5"
+    "reqwest": "^2.0.5",
+    "video.js": "^5.11.9"
   },
   "devDependencies": {
     "autoprefixer": "^6.0.0",
@@ -43,23 +36,19 @@
     "babel-register": "^6.6.5",
     "babelify": "^7.2.0",
     "browserify": "^13.0.0",
-    "cssnano": "^3.0.0",
     "gulp": "^3.9.0",
     "gulp-gh-pages": "^0.5.4",
     "gulp-imagemin": "^2.4.0",
-    "gulp-postcss": "^6.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.4.0",
     "imagemin-pngquant": "^4.2.0",
     "lodash": "^4.6.0",
-    "postcss-nested": "^1.0.0",
-    "postcss-simple-extend": "^1.0.0",
-    "postcss-simple-vars": "^1.0.0",
     "rimraf": "^2.4.3",
     "run-sequence": "^1.1.2",
     "tap-nyan": "0.0.2",
     "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "vinyl-source-stream": "^1.1.0",
+    "w": "^2.0.13"
   }
 }

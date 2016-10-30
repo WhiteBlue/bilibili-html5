@@ -53,6 +53,10 @@ body {
   padding: 0;
 }
 
+#main-container.concat {
+  margin-top: 0;
+}
+
 #main-container > #index-head-area {
   padding-top: 26px;
 }
@@ -390,7 +394,7 @@ body {
   border-bottom: 2px solid #00a1d6;
 }
 
-//---- index background ----
+/*index background*/
 .main-header-image {
   width: 100%;
   height: 175px;
@@ -470,7 +474,7 @@ body {
   border-color: #76c4d2;
 }
 
-//---- index banner ----
+/*index banner*/
 .unslider-banner {
   width: 450px;
   overflow: hidden;
@@ -786,11 +790,7 @@ body {
   margin-top: 20px;
 }
 
-//---- player content ----
-#main-container.concat {
-  margin-top: 0;
-}
-
+/*player content*/
 .area-player {
   margin-top: 30px;
   margin-bottom: 30px;
@@ -956,7 +956,7 @@ body {
   background-color: #00a1d6;
 }
 
-//---- search content ----
+/*search content*/
 .search-info {
   padding-top: 30px;
   padding-bottom: 30px;
@@ -1233,7 +1233,47 @@ body {
   margin: 30px auto 20px 20px;
 }
 
-//----- loading block -----
+/*loading block*/
+
+@-webkit-keyframes scale {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  45% {
+    -webkit-transform: scale(0.1);
+    transform: scale(0.1);
+    opacity: 0.7;
+  }
+
+  80% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes scale {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  45% {
+    -webkit-transform: scale(0.1);
+    transform: scale(0.1);
+    opacity: 0.7;
+  }
+
+  80% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
 @-webkit-keyframes rotate_pacman_half_up {
   0% {
@@ -1350,8 +1390,8 @@ body {
 }
 
 .pacman > div:first-of-type {
-  width: 0;
-  height: 0;
+  width: 0px;
+  height: 0px;
   border-right: 25px solid transparent;
   border-top: 25px solid #ffa5c7;
   border-left: 25px solid #ffa5c7;
@@ -1362,8 +1402,8 @@ body {
 }
 
 .pacman > div:nth-child(2) {
-  width: 0px;
-  height: 0px;
+  width: 0;
+  height: 0;
   border-right: 25px solid transparent;
   border-top: 25px solid #ffa5c7;
   border-left: 25px solid #ffa5c7;

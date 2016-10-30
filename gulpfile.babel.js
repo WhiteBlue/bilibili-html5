@@ -1,5 +1,4 @@
 import gulp from 'gulp';
-import autoprefixer from 'autoprefixer';
 import browserify from 'browserify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
@@ -7,12 +6,7 @@ import babelify from 'babelify';
 import uglify from 'gulp-uglify';
 import rimraf from 'rimraf';
 import sourcemaps from 'gulp-sourcemaps';
-import postcss from 'gulp-postcss';
-import rename from 'gulp-rename';
-import nested from 'postcss-nested';
-import vars from 'postcss-simple-vars';
-import extend from 'postcss-simple-extend';
-import cssnano from 'cssnano';
+import cleancss from 'gulp-clean-css';
 import imagemin from 'gulp-imagemin';
 import pngquant from 'imagemin-pngquant';
 import runSequence from 'run-sequence';
@@ -21,7 +15,7 @@ import ghPages from 'gulp-gh-pages';
 const paths = {
   bundle: 'app.js',
   entry: 'src/js/Index.js',
-  srcCss: 'src/styles/*.scss',
+  srcCss: 'src/styles/*.css',
   srcImg: 'src/images/**',
   srcLint: ['src/**/*.js', 'test/**/*.js'],
   distCss: 'dist/css',
@@ -59,8 +53,7 @@ gulp.task('browserify_debug', () => {
 
 gulp.task('styles', () => {
   gulp.src(paths.srcCss)
-    .pipe(rename({extname: '.css'}))
-    .pipe(postcss([vars, extend, nested, autoprefixer, cssnano]))
+    .pipe(cleancss({advanced: false}))
     .pipe(gulp.dest(paths.distCss))
 });
 
@@ -100,7 +93,7 @@ gulp.task('copyAssets', ()=> {
 
   gulp.src([
     'assets/css/*'
-  ]).pipe(postcss([vars, extend, nested, autoprefixer, cssnano]))
+  ]).pipe(cleancss({advanced: false}))
     .pipe(gulp.dest('dist/css'));
 
   gulp.src([

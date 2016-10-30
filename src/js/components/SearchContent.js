@@ -103,20 +103,20 @@ const Topic = React.createClass({
   getDefaultProps(){
     return {
       data: {
-        arcurl: "http://www.bilibili.com/topic/610.html",
-        author: "NEET某翼",
-        click: 759032,
-        cover: "http://i1.hdslb.com/320_200/topic/201503/1427359314-08e9be86c0f3dfd9.jpg",
-        description: "有关fate原作，06TV版，UBW线剧场版，UBW线TV版的各类场景异同点的对比。° v°)...做一个月厨真是太好啦！",
-        favourite: 2953,
-        keyword: "FATE,TYPEMOON,型月,新番,UBW",
-        mid: 4404750,
-        pubdate: 1427359314,
-        review: 1259,
-        title: "Fate/Reading Divergence 多重世界观测",
-        tp_id: 610,
-        tp_type: 1,
-        update: 2016
+        arcurl: "",
+        author: "",
+        click: 0,
+        cover: "",
+        description: "",
+        favourite: 0,
+        keyword: "",
+        mid: 0,
+        pubdate: 0,
+        review: 0,
+        title: "",
+        tp_id: 0,
+        tp_type: 0,
+        update: 0
       }
     }
   },
@@ -160,6 +160,9 @@ module.exports = React.createClass({
   _order: "totalrank",
   _keyword: "",
   _loadData(){
+    this.setState({
+      loading: true
+    });
     var _this = this;
     reqwest({
       url: Config.base_url + Config.routes.SEARCH
