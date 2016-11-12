@@ -12,11 +12,10 @@ const Banner = React.createClass({
   },
   render(){
     var renderBanner = [];
-    for (var i in this.props.bannerList) {
+    for (var i = 0; i < this.props.bannerList.length; i++) {
       var data = this.props.bannerList[i];
-      var link = data.link;
       renderBanner.push(<li key={i}>
-        <a href={link} target="_blank"><img src={this.props.bannerList[i].img}/></a>
+        <a href={data.url} target="_blank"><img src={data.pic}/></a>
       </li>);
     }
     return <div className="unslider-banner floatleft">
@@ -65,7 +64,7 @@ module.exports = React.createClass({
       }
       , success: function (data) {
         _this.setState({
-          banner: data.banners
+          banners: data
         });
       }
     });
@@ -75,10 +74,10 @@ module.exports = React.createClass({
   },
   getInitialState(){
     return {
-      banner: []
+      banners: []
     }
   },
   render(){
-    return (this.state.banner.length !== 0) ? <BannerBlock bannerList={this.state.banner}/> : <div></div>;
+    return (this.state.banners.length !== 0) ? <BannerBlock bannerList={this.state.banners}/> : <div></div>;
   }
 });

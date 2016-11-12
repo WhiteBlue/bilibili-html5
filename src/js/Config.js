@@ -1,14 +1,16 @@
 module.exports = {
-  // base_url: "http://bilibili-service.daoapp.io/",
+  // base_url: "http://localhost:8080/",
   base_url: "http://api.bilibilih5.club/",
   routes: {
     INDEX_RANK: "top/",
     TOP_RANK: "toprank",
-    BANNER: "bangumiindex",
+    BANNER: "banner",
     VIDEO_INFO: "view/",
     VIDEO_URL: "video/",
     SORT_VIDEOS: "sort/",
-    SEARCH: "search"
+    BANGUMI_INFO: "bangumiinfo/",
+    SEARCH: "search",
+    SEARCH_BY_TYPE: "searchbytype"
   },
   index_order: [1, 13, 3, 129, 5, 4, 119, 36]
 };
