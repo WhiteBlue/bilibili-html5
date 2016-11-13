@@ -1,0 +1,248 @@
+/*index info*/
+.bangumi-banner-block {
+  margin: 20px auto;
+  width: 640px;
+  height: 200px;
+
+  position: relative;
+  overflow: hidden;
+}
+
+.bangumi-banner {
+  width: 640px;
+  height: 200px;
+}
+
+.area-banner > h2 {
+  margin: 20px 10px;
+  font-size: 25px;
+  font-weight: bold;
+  color: #666;
+}
+
+.bangumi_item {
+  width: 200px;
+  height: 120px;
+  margin: 10px 20px;
+
+  border-radius: 4px;
+  border: 1px solid #f6f6f6;;
+  overflow: hidden;
+
+  -webkit-transition: border .2s ease;
+  -moz-transition: border .2s ease;
+  -ms-transition: border .2s ease;
+  -o-transition: border .2s ease;
+  transition: border .2s ease;
+}
+
+.bangumi_item:hover {
+  border: 1px solid #666;
+  box-shadow: 0 0 5px rgb(179, 178, 178);
+}
+
+.bangumi_item:hover > .info > .title {
+  color: #e04270;
+}
+
+.bangumi_item > .img-small {
+  width: 99px;
+  height: 119px;
+  overflow: hidden;
+}
+
+.bangumi_item > .info {
+  width: 99px;
+  height: 119px;
+  padding: 0 5px;
+  overflow: hidden;
+}
+
+.bangumi_item > .info > .title {
+  display: block;
+
+  padding: 5px 5px;
+  position: relative;
+  font-size: 13px;
+  font-weight: bold;
+  color: #000;
+
+  height: 60px;
+  overflow: hidden;
+}
+
+.bangumi_item > .info > .other {
+  display: block;
+
+  padding: 10px 5px;
+  position: relative;
+  font-size: 11px;
+  font-weight: bold;
+  color: #666;
+
+  max-height: 50px;
+  overflow: hidden;
+}
+
+.img-small > img {
+  width: 100%;
+}
+
+.list-bangumi-block {
+  width: 960px;
+  max-height: 140px;
+  overflow: hidden;
+  margin: 20px auto;
+}
+
+.toggle-btn {
+  width: 100px;
+  height: 30px;
+  margin: 10px auto;
+
+  border-radius: 4px;
+  border: 1px solid #666;
+}
+
+.toggle-btn > a {
+  display: block;
+  text-align: center;
+  margin: 5px auto;
+  font-size: 13px;
+  font-weight: bold;
+  color: #555;
+}
+
+.toggle-btn > a:hover {
+  color: #e04270;
+}
+
+/*bangumi\sp info*/
+
+.bangumi-header {
+  width: 1000px;
+  min-height: 400px;
+  margin: 20px auto;
+  background-color: #fff;
+}
+
+.bangumi-header > h2 {
+  display: block;
+  position: relative;
+  left: 150px;
+  top: 25px;
+  width: 600px;
+
+  color: #525659;
+  overflow: hidden;
+  line-height: 24px;
+  text-overflow: ellipsis;
+  font-weight: 400;
+  white-space: nowrap;
+  font-size: 20px
+}
+
+.bangumi-header-img {
+  float: left;
+  position: relative;
+  left: 50px;
+  top: 25px;
+  width: 200px;
+  height: 293px;
+}
+
+.bangumi-header-img > img {
+  width: 200px;
+}
+
+.bangumi-header-info {
+  float: left;
+  position: relative;
+  left: 150px;
+  top: 80px;
+  width: 600px;
+  min-height: 250px;
+  color: #666;
+  font-weight: bold;
+}
+
+.bangumi-header-info > p {
+  font-size: 14px;
+  line-height: 150%;
+  font-weight: 100;
+}
+
+.bangumi-header-info > span {
+  font-size: 14px;
+  line-height: 150%;
+  font-weight: 100;
+}
+
+.bangumi-part {
+  background-color: #fff;
+  width: 1000px;
+  min-height: 200px;
+}
+
+.bangumi-part > ul {
+  margin: 0 0;
+  position: relative;
+  top: 40px;
+  left: 35px;
+  width: 90%;
+}
+
+.bangumi-part > p {
+  position: relative;
+  top: 20px;
+  left: 30px;
+  font-size: 25px;
+  font-weight: bold;
+  color: #666;
+}
+
+.bangumi-part > ul > li {
+  display: block;
+  margin: 5px 10px;
+  min-width: 64px;
+  padding: 0 5px;
+
+  height: 32px;
+  border: 1px solid #999;
+  border-radius: 4px;
+
+  -webkit-transition: background-color .2s ease;
+  -moz-transition: background-color .2s ease;
+  -ms-transition: background-color .2s ease;
+  -o-transition: background-color .2s ease;
+  transition: background-color .2s ease;
+}
+
+.bangumi-part > ul > li > a {
+  display: block;
+  height: 32px;
+  text-decoration: none;
+  text-align: center;
+}
+
+.bangumi-part > ul > li:hover {
+  background-color: #aeb7bf;
+}
+
+.bangumi-part-span {
+  text-decoration: none;
+  color: #999;
+  position: relative;
+  top: 6px;
+}
+
+.bangumi-part > ul > li:hover .video_more_span {
+  color: #fff;
+}
+
+.bangumi-season {
+  background-color: #fff;
+  margin: 20px auto;
+  padding: 0 10px;
+  width: 1000px;
+}

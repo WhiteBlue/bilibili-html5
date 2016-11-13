@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+  <link rel="stylesheet" href="../dist/css/main.css">
+  <link rel="stylesheet" href="../assets/unslider/css/unslider.css">
+
+</head>
+
+<body>
+
+<div id="main-header" class="hidden-background">
+  <div class="main-header-nav">
+    <div class="main-header-image"
+         style="background-image: url('http://i0.hdslb.com/group1/M00/B7/30/oYYBAFcjKTGANfoVAAGAcG7aL64682.jpg');"></div>
+    <div class="header-container needstick">
+      <ul class="main-header-nav-body">
+        <li class="nav-li floatleft now">
+          <a href="#">首页</a>
+        </li>
+
+        <li class="nav-li floatleft">
+          <a href="#">分类</a>
+          <div class="nav-li-list">
+            <a href="#">音乐</a>
+            <a href="#">动画</a>
+          </div>
+        </li>
+
+        <li class="nav-li floatleft">
+          <a href="#">新番</a>
+        </li>
+
+        <li class="nav-li floatleft">
+          <a href="#">移动端</a>
+        </li>
+
+        <li class="nav-li floatleft">
+          <a href="#">项目</a>
+        </li>
+
+        <li class="nav-li floatleft">
+          <a href="#">关于</a>
+        </li>
+
+        <div class="header-search floatright">
+          <form action="#" method="post">
+            <input name="content" placeholder="这里搜索">
+            <input type="submit" value="搜 索" title="搜索" class="btn-search">
+          </form>
+        </div>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div id="main-container" class="concat">
+
+  <div class="area">
+    <div class="bangumi-banner-block">
+      <div class="bangumi-banner block-banner">
+        <ul>
+          <li>
+            <a href="#" target="_blank">
+              <img src="http://i0.hdslb.com/bfs/archive/0325d5fa3fe3d0f29dd78f1c66b6d73631b08ef5.jpg" />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="area">
+    <div class="area-inner">
+      <div class="area-banner">
+        <h2>番剧推荐</h2>
+      </div>
+
+      <div class="list-video-block">
+        <div class="video-block floatleft">
+          <a href="#" class="video-block-main">
+            <img src="http://cdn.aixifan.com/dotnet/artemis/u/cms/www/201604/0413024317241glv.jpg"/>
+          </a>
+          <div class="video-block-time">20:04</div>
+          <a href="#" class="video-block-info">
+            标题: 【东方手绘剧场】东方现世幻想侭 -预告-【莳乃汉化组】
+            UP主: 莳乃字幕屋
+          </a>
+          <div class="video-block-info-hidden">
+            <div class="left floatleft">
+              播放: 2333
+            </div>
+            <div class="right floatright">
+              弹幕: 233
+            </div>
+          </div>
+        </div>
+
+        <div class="clear"></div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="area">
+    <div class="area-inner">
+      <div class="area-banner">
+        <h2>番剧列表</h2>
+      </div>
+      <div class="list-bangumi-block">
+        <a href="#">
+        <div class="bangumi_item floatleft">
+          <div class="img-small floatleft">
+            <img src="http://i0.hdslb.com/bfs/bangumi/3c3f4544bb6f8175d24c6022a23fc9bd4bc4ce59.jpg">
+          </div>
+          <div class="info floatleft">
+            <p class="title">乌冬面之国的金色毛球</p>
+            <p class="other">更新到: 第10集</p>
+          </div>
+          <div class="clear"></div>
+        </div>
+        </a>
+        <div class="bangumi_item floatleft hidden">
+          <div class="img-small floatleft">
+            <img src="http://i0.hdslb.com/bfs/bangumi/3c3f4544bb6f8175d24c6022a23fc9bd4bc4ce59.jpg">
+          </div>
+          <div class="info floatleft">
+            <p class="title">乌冬面之国的金色毛球</p>
+            <p class="other">更新到: 第10集</p>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+      </div>
+
+      <div class="toggle-btn">
+        <a class="active_toggle" action="hidden" href="javascript:void(0)">显示/隐藏</a>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/js/stickup.min.js"></script>
+<script type="text/javascript" src="../assets/js/slider.min.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+
+    $('.needstick').stickUp({});
+
+    $('.bangumi-banner').unslider({
+      animation: 'vertical',
+      autoplay: true,
+      arrows: false
+    });
+
+    $('.active_toggle').click(function () {
+      $('.' + $(this).attr('action')).slideToggle();
+    });
+
+  });
+</script>
+
+</body>
+</html>

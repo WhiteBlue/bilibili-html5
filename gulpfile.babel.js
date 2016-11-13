@@ -11,6 +11,7 @@ import imagemin from 'gulp-imagemin';
 import pngquant from 'imagemin-pngquant';
 import runSequence from 'run-sequence';
 import ghPages from 'gulp-gh-pages';
+import concatCss from 'gulp-concat-css';
 
 const paths = {
   bundle: 'app.js',
@@ -53,6 +54,7 @@ gulp.task('browserify_debug', () => {
 
 gulp.task('styles', () => {
   gulp.src(paths.srcCss)
+    .pipe(concatCss("main.css"))
     .pipe(cleancss({advanced: false}))
     .pipe(gulp.dest(paths.distCss))
 });

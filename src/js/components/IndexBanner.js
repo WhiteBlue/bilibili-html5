@@ -19,7 +19,7 @@ const Banner = React.createClass({
       </li>);
     }
     return <div className="unslider-banner floatleft">
-      <div className="block-banner" ref="index_banner">
+      <div className="block-banner index-banner" ref="index_banner">
         <ul>
           {renderBanner}
         </ul>
