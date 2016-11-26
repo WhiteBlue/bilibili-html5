@@ -9,31 +9,41 @@ var videojs = require("video.js");
 require("../danmaku/VideojsPlugin");
 require("../utils/VideojsHotKeys");
 
+var _oldPlayer = null; //Video.js的dispose()不能放在componentWillUnmount事件之前(和React.js自身清理相冲突)
+
 const VideoBlock = React.createClass({
-  _loadVideoJs(){
-    var _this = this;
-    this.player = videojs('danmu_player', {
-      controls: true
-    }, function () {
-      this.initDanmaku();
-
-      this.hotkeys({
-        volumeStep: 0.1,
-        seekStep: 5,
-        //音量键(M)
-        enableMute: true,
-        //滚轮调节音量
-        enableVolumeScroll: false,
-        //全屏(F)
-        enableFullscreen: true,
-        //数字选择分P
-        enableNumbers: false,
-        alwaysCaptureHotkeys: false
+  _player: null,
+  _loadVideoJs(commentUrl, videoUrl){
+    if (_oldPlayer != null) {
+      _oldPlayer.dispose();
+      _oldPlayer = null;
+    }
+    if (this._player == null) {
+      this._player = videojs('danmu_player', {
+        controls: true
+      }, function () {
+        this.initDanmaku();
+        this.hotkeys({
+          volumeStep: 0.1,
+          seekStep: 5,
+          //音量键(M)
+          enableMute: true,
+          //滚轮调节音量
+          enableVolumeScroll: false,
+          //全屏(F)
+          enableFullscreen: true,
+          //数字选择分P
+          enableNumbers: false,
+          alwaysCaptureHotkeys: false
+        });
+        this.danmu.load(commentUrl);
+        this.src(videoUrl);
       });
+    } else {
+      this._player.src(videoUrl);
+      this._player.danmu.load(commentUrl);
+    }
 
-      this.danmu.load(_this.props.commentUrl);
-      this.src(_this.props.urlList.url);
-    });
   },
   getDefaultProps(){
     return {
@@ -43,13 +53,17 @@ const VideoBlock = React.createClass({
     };
   },
   componentDidMount(){
-    this._loadVideoJs();
+    this._loadVideoJs(this.props.commentUrl, this.props.urlList.url);
+  },
+  componentWillReceiveProps(nextProps){
+    if (this._player != null) {
+      //避免初次加载调用
+      this._loadVideoJs(nextProps.commentUrl, nextProps.urlList.url);
+    }
   },
   componentWillUnmount(){
-    if (this.player != null) {
-      this.player.dispose();
-      this.player = null;
-    }
+    _oldPlayer = this._player;
+    this.player = null;
   },
   render(){
     return <video id="danmu_player"
@@ -105,7 +119,6 @@ module.exports = React.createClass({
   componentDidMount(){
     //初始化cid
     this._selectParts("0");
-    this._loadVideoData();
   },
   getDefaultProps(){
     return {
@@ -137,6 +150,8 @@ module.exports = React.createClass({
       display = "block";
     }
 
+    var commentUrl = Config.routes.GET_COMMENT + this._cid + ".xml";
+
     return <div className="area area-player">
       <div className="area-inner">
         <div className="video-part-select floatleft" style={{display:display}}>
@@ -144,7 +159,7 @@ module.exports = React.createClass({
         </div>
         <div className="clear"></div>
         {this.state.loading ? <Loading /> :
-          <VideoBlock urlList={this.state.data.durl[0]} commentUrl={"http://comment.bilibili.cn/"+this._cid+".xml"}
+          <VideoBlock urlList={this.state.data.durl[0]} commentUrl={commentUrl}
                       pic={this.props.pic}/>}
       </div>
     </div>;

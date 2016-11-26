@@ -12,7 +12,8 @@ module.exports = {
     BANGUMI_INDEX: "bangumiindex",
     BANGUMI_LIST: "bangumi",
     SEARCH: "search",
-    SEARCH_BY_TYPE: "searchbytype"
+    SEARCH_BY_TYPE: "searchbytype",
+    GET_COMMENT: "http://comment.bilibili.cn/",
   },
   index_order: [1, 13, 3, 129, 5, 4, 119, 36]
 };

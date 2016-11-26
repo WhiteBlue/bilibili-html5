@@ -96,7 +96,9 @@ videojs.plugin('initDanmaku', function () {
           console.log('error:', err);
         }
         , success: function (data) {
-          _this.cmManager.load(BilibiliParser(data));
+          if (data != null) {
+            _this.cmManager.load(BilibiliParser(data));
+          }
         }
       });
     };
