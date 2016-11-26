@@ -1,6 +1,6 @@
 module.exports = {
-  base_url: "http://localhost:8080/",
-  // base_url: "http://api.bilibilih5.club/",
+  // base_url: "http://localhost:8080/",
+  base_url: "http://api.bilibilih5.club/",
   routes: {
     INDEX_RANK: "top/",
     TOP_RANK: "toprank",
