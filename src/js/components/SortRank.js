@@ -9,22 +9,14 @@ const VideoItem = React.createClass({
   getDefaultProps(){
     return {
       data: {
-        aid: "",
-        author: "",
-        coins: 0,
-        comment: 0,
-        create: "",
-        description: "",
-        duration: "",
-        favorites: 0,
-        mid: 0,
-        pic: "",
-        play: 0,
-        review: 0,
         title: "",
-        typeid: 0,
-        typename: "",
-        video_review: 0
+        cover: "",
+        param: "",
+        name: "",
+        play: "",
+        reply: "",
+        danmaku: "",
+        favourite: ""
       }
     };
   },
@@ -34,25 +26,24 @@ const VideoItem = React.createClass({
     };
   },
   render() {
-    var linkUrl = this.state.hrefStr + this.props.data.aid;
+    var linkUrl = this.state.hrefStr + this.props.data.param;
     return <div className="video-item floatleft">
       <div className="video-block-small">
         <div className="left floatleft">
           <a href={linkUrl} target="_blank">
             <div className="thumb">
-              <img className="lazy" src={this.props.data.pic}/>
+              <img className="lazy" src={this.props.data.cover}/>
             </div>
           </a>
           <div className="info floatleft">
             <div className="info-text floatleft">播放: {this.props.data.play}</div>
-            <div className="info-text floatright">弹幕: {this.props.data.video_review}</div>
+            <div className="info-text floatright">弹幕: {this.props.data.danmaku}</div>
           </div>
         </div>
         <div className="right floatleft">
           <a href={linkUrl} target="_blank" className="title floatleft">{this.props.data.title}</a>
 
-          <a href={linkUrl} target="_blank" className="up floatleft">up: {this.props.data.author}</a>
-          <p className="desc">{this.props.data.description}</p>
+          <a href={linkUrl} target="_blank" className="up floatleft">up主: {this.props.data.name}</a>
         </div>
       </div>
     </div>;
@@ -84,7 +75,7 @@ const VideoBlock = React.createClass({
 
 module.exports = React.createClass({
   _page: 1,
-  _order: 'hot',
+  _order: 'view',
   //排序方式
   _changeSort(sort){
     this._order = sort;
@@ -103,6 +94,9 @@ module.exports = React.createClass({
       loading: true
     });
     var _this = this;
+
+    var labelName = Config.sort_tags[tid];
+
     reqwest({
       url: Config.base_url + Config.routes.SORT_VIDEOS + tid + "?page=" + _this._page + "&order=" + this._order
       , type: 'json'
@@ -114,9 +108,9 @@ module.exports = React.createClass({
       , success: function (data) {
         _this.props.cb(data.name);
         _this.setState({
-          videoList: data.list,
-          allPage: data.pages,
-          title: data.name,
+          videoList: data,
+          allPage: -1,
+          title: labelName,
           loading: false
         });
       }
@@ -152,13 +146,13 @@ module.exports = React.createClass({
       </div>
 
       <div className="sort-tool-box floatleft">
-        <a onClick={_this._changeSort.bind(null,"hot")}
+        <a onClick={_this._changeSort.bind(null,"view")}
            className={(this._order=="hot"?"active":"")+" btn floatleft"}>点击数</a>
 
-        <a onClick={_this._changeSort.bind(null,"default")}
+        <a onClick={_this._changeSort.bind(null,"senddate")}
            className={(this._order=="default"?"active":"")+" btn floatleft"}>发布时间</a>
 
-        <a onClick={_this._changeSort.bind(null,"damku")}
+        <a onClick={_this._changeSort.bind(null,"danmaku")}
            className={(this._order=="damku"?"active":"")+" btn floatleft"}>弹幕数</a>
       </div>
 

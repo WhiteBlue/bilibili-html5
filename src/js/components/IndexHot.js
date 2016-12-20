@@ -6,22 +6,14 @@ const VideoItem = React.createClass({
   getDefaultProps(){
     return {
       data: {
-        aid: "",
-        author: "",
-        coins: 0,
-        comment: 0,
-        create: "",
-        description: "",
-        duration: "",
-        favorites: 0,
-        mid: 0,
-        pic: "",
-        play: 0,
-        review: 0,
         title: "",
-        typeid: 0,
-        typename: "",
-        video_review: 0
+        cover: "",
+        param: "",
+        name: "",
+        play: "",
+        reply: "",
+        danmaku: "",
+        favourite: ""
       }
     };
   },
@@ -31,17 +23,17 @@ const VideoItem = React.createClass({
     };
   },
   render() {
-    var linkUrl = this.state.hrefStr + this.props.data.aid;
+    var linkUrl = this.state.hrefStr + this.props.data.param;
     return <div className="video-block-mask floatleft">
       <a href={linkUrl} target="_blank">
         <div className="video-block-mask-preview">
-          <img src={this.props.data.pic}/>
+          <img src={this.props.data.cover}/>
         </div>
         <div className="video-block-mask-mask"></div>
 
         <div className="video-block-mask-info">
           <div className="title">{this.props.data.title}</div>
-          <div className="up">up主：{this.props.data.author}</div>
+          <div className="up">up主：{this.props.data.name}</div>
           <div className="play">播放：{this.props.data.play}</div>
         </div>
       </a>
@@ -62,7 +54,7 @@ module.exports = React.createClass({
       }
       , success: function (data) {
         _this.setState({
-          top: data.list
+          top: data
         });
       }
     });

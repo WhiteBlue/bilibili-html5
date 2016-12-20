@@ -27,7 +27,7 @@ module.exports = React.createClass({
     var renderList = [];
 
     for (var i = 0; i < this.props.showPageCount; i++) {
-      if (i >= this.props.allPage) {
+      if (i >= this.props.allPage && this.props.allPage >= 0) {
         break;
       }
       var index = start + i;

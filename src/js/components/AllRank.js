@@ -6,22 +6,14 @@ const VideoItem = React.createClass({
   getDefaultProps(){
     return {
       data: {
-        aid: "",
-        author: "",
-        coins: 0,
-        comment: 0,
-        create: "",
-        description: "",
-        duration: "",
-        favorites: 0,
-        mid: 0,
-        pic: "",
-        play: 0,
-        review: 0,
         title: "",
-        typeid: 0,
-        typename: "",
-        video_review: 0
+        cover: "",
+        param: "",
+        name: "",
+        play: "",
+        reply: "",
+        danmaku: "",
+        favourite: ""
       }
     };
   },
@@ -31,19 +23,19 @@ const VideoItem = React.createClass({
     };
   },
   render() {
-    var linkUrl = this.state.hrefStr + this.props.data.aid;
+    var linkUrl = this.state.hrefStr + this.props.data.param;
     return <div className="video-block floatleft">
       <a href={linkUrl} target="_blank" className="video-block-main">
-        <img src={this.props.data.pic}/>
+        <img src={this.props.data.cover}/>
       </a>
-      <div className="video-block-time">{this.props.data.duration}</div>
+      <div className="video-block-time">弹幕: {this.props.data.danmaku}</div>
       <a href={linkUrl} target="_blank" className="video-block-info">{this.props.data.title}</a>
       <div className="video-block-info-hidden">
         <div className="left floatleft">
           播放: {this.props.data.play}
         </div>
         <div className="right floatright">
-          弹幕: {this.props.data.video_review}
+          回复: {this.props.data.reply}
         </div>
       </div>
     </div>;
@@ -54,6 +46,9 @@ const VideoItem = React.createClass({
 const VideoBlock = React.createClass({
   _loadData(tid){
     var _this = this;
+
+    var labelName = Config.sort_tags[tid];
+
     reqwest({
       url: Config.base_url + Config.routes.INDEX_RANK + tid
       , type: 'json'
@@ -65,7 +60,7 @@ const VideoBlock = React.createClass({
       , success: function (resp) {
         _this.setState({
           videoList: resp.videos,
-          labelName: resp.sort_name
+          labelName: labelName
         });
       }
     });
@@ -106,8 +101,8 @@ const VideoBlock = React.createClass({
 module.exports = React.createClass({
   render(){
     var renderList = [];
-    for (var i in Config.index_order) {
-      var id = Config.index_order[i];
+    for (var i in Config.index_sorts) {
+      var id = Config.index_sorts[i];
       renderList.push(<VideoBlock key={"list-"+id} tid={id}/>)
     }
     return <div>{renderList}</div>;
