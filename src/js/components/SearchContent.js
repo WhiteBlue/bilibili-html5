@@ -65,7 +65,7 @@ const UserItem = React.createClass({
     var date = new Date();
     date.setTime(this.props.data.pubdate * 1000);
 
-    var linkUrl = videoHrefStr + this.props.data.param;
+    var linkUrl = '#';
     return <div className="search-video-block floatleft">
       <a href={linkUrl} target="_blank">
         <div className="img">
@@ -102,7 +102,7 @@ const BangumiItem = React.createClass({
         <img src={this.props.data.cover}/>
       </div>
       <div className="info floatleft">
-        <a href={bangumiHrefStr+this.props.data.param} target="_blank" className="title">{this.props.data.title}</a>
+        <a href={bangumiHrefStr + this.props.data.param} target="_blank" className="title">{this.props.data.title}</a>
         <p className="desc">{this.props.data.cat_desc}</p>
         <div className="info">
           <div className="info-text floatleft">集数: {this.props.data.total_count}</div>
@@ -278,19 +278,16 @@ module.exports = React.createClass({
 
     for (var i = 0; i < this.state.list.length; i++) {
       switch (this._searchType) {
-        case "video":
-        {
-          renderArr.push(<VideoItem key={"video-"+i} data={this.state.list[i]}/>);
+        case "video": {
+          renderArr.push(<VideoItem key={"video-" + i} data={this.state.list[i]}/>);
           break;
         }
-        case "bangumi":
-        {
-          renderArr.push(<BangumiItem key={"bangumi-"+i} data={this.state.list[i]}/>);
+        case "bangumi": {
+          renderArr.push(<BangumiItem key={"bangumi-" + i} data={this.state.list[i]}/>);
           break;
         }
-        case "user":
-        {
-          renderArr.push(<UserItem key={"user-"+i} data={this.state.list[i]}/>);
+        case "user": {
+          renderArr.push(<UserItem key={"user-" + i} data={this.state.list[i]}/>);
         }
       }
     }
@@ -301,13 +298,13 @@ module.exports = React.createClass({
 
         <div className="search-select-block">
           <ul className="wrap floatleft">
-            <li className={(this._searchType=="video"?"active":"")+" sub floatleft"}
+            <li className={(this._searchType == "video" ? "active" : "") + " sub floatleft"}
                 onClick={this._changeType.bind(null, "video")}>视频
             </li>
-            <li className={(this._searchType=="bangumi"?"active":"")+" sub floatleft"}
+            <li className={(this._searchType == "bangumi" ? "active" : "") + " sub floatleft"}
                 onClick={this._changeType.bind(null, "bangumi")}>番剧
             </li>
-            <li className={(this._searchType=="user"?"active":"")+" sub floatleft"}
+            <li className={(this._searchType == "user" ? "active" : "") + " sub floatleft"}
                 onClick={this._changeType.bind(null, "user")}>UP主
             </li>
           </ul>
@@ -315,22 +312,22 @@ module.exports = React.createClass({
         </div>
 
         {(this._searchType == "video") ? <div className="search-fliter-block">
-          <ul className="wrap floatleft">
-            <li onClick={this._changeOrder.bind(null,"totalrank")}
-                className={(this._order=="totalrank"?"active":"")+" sub floatleft"}>综合排序
-            </li>
-            <li onClick={this._changeOrder.bind(null,"click")}
-                className={(this._order=="click"?"active":"")+" sub floatleft"}>最多点击
-            </li>
-            <li onClick={this._changeOrder.bind(null,"pubdate")}
-                className={(this._order=="pubdate"?"active":"")+" sub floatleft"}>最新发布
-            </li>
-            <li onClick={this._changeOrder.bind(null,"dm")}
-                className={(this._order=="dm"?"active":"")+" sub floatleft"}>弹幕
-            </li>
-          </ul>
-          <div className="clear"></div>
-        </div> : <div></div>}
+            <ul className="wrap floatleft">
+              <li onClick={this._changeOrder.bind(null, "totalrank")}
+                  className={(this._order == "totalrank" ? "active" : "") + " sub floatleft"}>综合排序
+              </li>
+              <li onClick={this._changeOrder.bind(null, "click")}
+                  className={(this._order == "click" ? "active" : "") + " sub floatleft"}>最多点击
+              </li>
+              <li onClick={this._changeOrder.bind(null, "pubdate")}
+                  className={(this._order == "pubdate" ? "active" : "") + " sub floatleft"}>最新发布
+              </li>
+              <li onClick={this._changeOrder.bind(null, "dm")}
+                  className={(this._order == "dm" ? "active" : "") + " sub floatleft"}>弹幕
+              </li>
+            </ul>
+            <div className="clear"></div>
+          </div> : <div></div>}
       </div>
 
       {(this.state.loading) ? <Loading /> :

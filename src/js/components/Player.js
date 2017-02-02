@@ -81,7 +81,7 @@ const VideoBlock = React.createClass({
 
 module.exports = React.createClass({
   _cid: null,
-  _quality: 2,
+  _quality: 4,
   _selectParts(partStr){
     var cid = null;
     if (this.props.parts.length !== 0) {
