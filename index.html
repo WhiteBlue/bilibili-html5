@@ -2,41 +2,20 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-
   <title>BH-5</title>
-
   <meta name="keywords" content="BiliBili,BiliBili助手">
   <meta name="description" content="BiliBili-html5，视频源解析，纯Html5播放器">
 
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/slider.css">
-  <link rel="stylesheet" href="css/player.css">
-
-
-  <link rel="stylesheet" href="http://cdn.bootcss.com/video.js/5.10.7/alt/video-js-cdn.min.css">
-  <script src="http://cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
-  <script src="http://cdn.bootcss.com/video.js/5.10.7/video.min.js"></script>
-
-  <style>
-    @keyframes cmt-move-left {
-      100% {
-        right: 100%;
-      }
-    }
-
-    @keyframes cmt-move-right {
-      100% {
-        left: 100%;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="//cdn.bootcss.com/video.js/5.13.0/alt/video-js-cdn.min.css">
 </head>
 <body>
 
 <div id="main-header">
   <div class="main-header-nav">
     <div class="main-header-image"
-         style="background-image: url('img/bg.png');"></div>
+         style="background-image: url('img/bg1.jpg');"></div>
     <div class="header-container needstick">
       <ul class="main-header-nav-body">
         <li class="nav-li floatleft now">
@@ -54,7 +33,7 @@
         </li>
 
         <li class="nav-li floatleft">
-          <a href="#/sort/13">番剧</a>
+          <a href="#/bangumiindex">番剧</a>
           <div class="nav-li-list">
             <a href="#/sort/33">连载动画</a>
             <a href="#/sort/32">完结动画</a>
@@ -142,9 +121,9 @@
 </div>
 
 
-<divc id="root">
+<div id="root">
   <div id="main-container"></div>
-</divc>
+</div>
 
 <div id="footer">
   <div class="area-inner">
@@ -167,7 +146,7 @@
       <div class="about-item right floatleft">
         <div class="about-title">空位</div>
         <div class="about-links">
-          <a href="#">没想好放什么orz</a>
+          <a href="#">没想好放什么...</a>
         </div>
       </div>
     </div>
@@ -176,21 +155,23 @@
 </div>
 
 
-
+<!--other depends-->
+<script src="//cdn.bootcss.com/jquery/2.2.0/jquery.min.js"></script>
 <script src="js/stickup.min.js"></script>
 <script src="js/slider.min.js"></script>
+
 <script src="js/app.js"></script>
-<script src="js/comment_library.js"></script>
+
 
 <script>
   $(document).ready(function () {
     $('.needstick').stickUp({});
 
+
     $('#search_form').on('submit', function (e) {
       e.preventDefault();
       var content = $(this).children('#search_content').val();
-      console.log(content);
-      loadSearchPage(content);
+      window.location = "#/search/" + content
     });
   })
 </script>
