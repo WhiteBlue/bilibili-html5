@@ -61,7 +61,7 @@ const VideoBlock = React.createClass({
 
     for (var i in this.props.videoList) {
       if (i != "num") {
-        renderList.push(<VideoItem key={"video-"+i} data={this.props.videoList[i]}/>);
+        renderList.push(<VideoItem key={"video-" + i} data={this.props.videoList[i]}/>);
       }
     }
 
@@ -93,9 +93,8 @@ module.exports = React.createClass({
     this.setState({
       loading: true
     });
-    var _this = this;
-
-    var labelName = Config.sort_tags[tid];
+    let _this = this;
+    let labelName = Config.sort_tags[tid];
 
     reqwest({
       url: Config.base_url + Config.routes.SORT_VIDEOS + tid + "?page=" + _this._page + "&order=" + this._order
@@ -106,10 +105,10 @@ module.exports = React.createClass({
         console.log('error:' + err);
       }
       , success: function (data) {
-        _this.props.cb(data.name);
+        _this.props.cb(labelName);
         _this.setState({
           videoList: data,
-          allPage: -1,
+          allPage: 999,
           title: labelName,
           loading: false
         });
@@ -146,14 +145,14 @@ module.exports = React.createClass({
       </div>
 
       <div className="sort-tool-box floatleft">
-        <a onClick={_this._changeSort.bind(null,"view")}
-           className={(this._order=="hot"?"active":"")+" btn floatleft"}>点击数</a>
+        <a onClick={_this._changeSort.bind(null, "view")}
+           className={(this._order == "hot" ? "active" : "") + " btn floatleft"}>点击数</a>
 
-        <a onClick={_this._changeSort.bind(null,"senddate")}
-           className={(this._order=="default"?"active":"")+" btn floatleft"}>发布时间</a>
+        <a onClick={_this._changeSort.bind(null, "senddate")}
+           className={(this._order == "default" ? "active" : "") + " btn floatleft"}>发布时间</a>
 
-        <a onClick={_this._changeSort.bind(null,"danmaku")}
-           className={(this._order=="damku"?"active":"")+" btn floatleft"}>弹幕数</a>
+        <a onClick={_this._changeSort.bind(null, "danmaku")}
+           className={(this._order == "damku" ? "active" : "") + " btn floatleft"}>弹幕数</a>
       </div>
 
       {(this.state.loading) ? <Loading /> :

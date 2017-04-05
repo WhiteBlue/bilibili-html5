@@ -78,6 +78,9 @@ const VideoBlock = React.createClass({
     var renderVideos = [];
     for (var i in this.state.videoList) {
       renderVideos.push(<VideoItem key={i} data={this.state.videoList[i]}/>);
+      if (i == 9) {
+        break;
+      }
     }
     return <div className="area">
       <div className="area-inner">
@@ -103,7 +106,7 @@ module.exports = React.createClass({
     var renderList = [];
     for (var i in Config.index_sorts) {
       var id = Config.index_sorts[i];
-      renderList.push(<VideoBlock key={"list-"+id} tid={id}/>)
+      renderList.push(<VideoBlock key={"list-" + id} tid={id}/>)
     }
     return <div>{renderList}</div>;
   }
