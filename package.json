@@ -15,7 +15,9 @@
     "ES2015",
     "babel"
   ],
-  "scripts": {},
+  "scripts": {
+    "build":"gulp build"
+  },
   "author": "WhiteBlue",
   "license": "MIT",
   "homepage": "https://bilibilih5.club",
