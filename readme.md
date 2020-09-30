@@ -1,6 +1,6 @@
 # bilibili-html5
 
-An unofficial website of [bilibili.com](http://bilibili.com). 
+An unofficial website of [bilibili.com](http://bilibili.com)
 
 
 ![bh5](docs/bh5.png)
