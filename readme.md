@@ -16,7 +16,7 @@ An unofficial website of [bilibili.com](http://bilibili.com).
 
 
 ```
-npm install 
+npm install or npm i
 
 npm run build
 
