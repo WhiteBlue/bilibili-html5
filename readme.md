@@ -1,4 +1,4 @@
-# bilibili-html5
+# bilibili-HTML5
 
 An unofficial website of [bilibili.com](http://bilibili.com). 
 
