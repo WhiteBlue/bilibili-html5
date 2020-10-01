@@ -14,7 +14,7 @@ An unofficial website of [bilibili.com](http://bilibili.com).
 
 ## Build
 
-
+how to install for npm  what type of application need to install for npm
 ```
 npm install 
 
